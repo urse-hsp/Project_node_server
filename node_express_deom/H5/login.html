@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>登录</title>
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="LoginBox">
+        <div class="LoginFormBox">
+          <h1>登录</h1>
+          <h2><span id="warn"></span></h2>
+          <form class="LoginForm">
+            <p>
+              <label for="user"><img src="./images/user.jpg" /></label>
+              <input type="text" name="user" placeholder="用户名：admin" autocomplete="off" id="user" />
+            </p>
+            <p>
+              <label for="password"><img src="./images/pwd.jpg" /></label>
+              <input type="password" name="password" placeholder="密码：123456" autocomplete="off" id="password" />
+            </p>
+            <div class="btnBox">
+              <button id="btn" type="button">登录</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="./js/Ajax.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script>
+      const token = window.sessionStorage.getItem('token')
+      if (token) window.location.href = './TableList.html'
+
+      var userInput = document.querySelector('#user')
+      var passWordInput = document.querySelector('#password')
+      const url = 'http://localhost:8888/api/'
+
+      // 点击登录
+      document.querySelector('#btn').addEventListener(
+        'click',
+        function (e) {
+          // 阻止form表单内btn点击
+          e.preventDefault()
+          // 判断为空时
+          if (userInput.value == '' || passWordInput.value == '') {
+            document.querySelector('#warn').innerHTML = '用户名或密码不能为空'
+            return false
+          }
+          document.querySelector('#warn').innerHTML = ''
+          ajax({
+            url: url + 'login',
+            type: 'post',
+            data: {
+              username: userInput.value,
+              password: passWordInput.value,
+            },
+            dataType: 'json',
+            timeout: 5000,
+            contentType: 'application/json',
+            success: function (res) {
+              const datas = JSON.parse(res)
+              if (!datas.success) return (document.querySelector('#warn').innerHTML = datas.meta.msg)
+              window.sessionStorage.setItem('token', datas.data.token)
+              window.location.href = './index.html'
+            },
+            //异常处理
+            error: function (e) {
+              console.log(e)
+            },
+          })
+        },
+        false
+      )
+    </script>
+  </body>
+</html>

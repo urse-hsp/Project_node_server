@@ -1,0 +1,21 @@
+hotnode 这个插件可以让你的node程序热更新，要全局安装这个插件，不然找不到命令。
+npm install -g hotnode
+package 中配置命令  "start": "hotnode app.js" 之后npm start运行我们的程序了，所有基于node的程序跑起来都是两步
+
+
+app.post("/test/:data", (req, res) => {
+  // 后面的表单参数会放到req.query里，
+  // 路径上的参数会放到req.params里，
+  // json参数会放到req.body里，
+  // 可以任意选择一种参数传递即可，路径以:开头表示此路径作为参数的意思。
+  return res.json({ query: req.query, data: req.params, json: req.body });
+});
+
+
+前后端联调的时候经常碰到跨域的问题，我们可以使用cors插件解决，
+跨域和参数都可以自己进行处理，利用路径自己提取参数，在*路径的请求的请求体req里自己加上跨域允许的header
+
+const bodyParser = require("body-parser"); // 解析参数
+app.use(bodyParser.json()); // json请求
+app.use(bodyParser.urlencoded({ extended: false })); // 表单请求
+

@@ -1,0 +1,3 @@
+gulp-imagemin 可能会报错
+
+在cnpm里安装即可
