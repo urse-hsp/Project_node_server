@@ -39,7 +39,7 @@ app.all('*', function (req, res, next) {
   /*让options请求快速返回*/
 })
 
-// // token权限验证
+// token权限验证
 // app.use(function (req, res, next) {
 //   // 这里知识把登陆和注册请求去掉了，其他的多有请求都需要进行token校验
 //   if (req.url != '/api/login' && req.url != '/test/:data') {
@@ -53,6 +53,17 @@ app.all('*', function (req, res, next) {
 //     } else next()
 //   } else next()
 // })
+// 获取验证模块
+// var authorization = require(path.join(process.cwd(), '/modules/authorization'))
+// // 设置全局权限
+// authorization.setAuthFn(function(req, res, next, serviceName, actionName, passFn) {
+//   if (!req.userInfo || isNaN(parseInt(req.userInfo.rid))) return res.sendResult('无角色ID分配')
+//   // 验证权限
+//   roleService.authRight(req.userInfo.rid, serviceName, actionName, function(err, pass) {
+//     passFn(pass)
+//   })
+// })
+
 
 // 初始化统一响应机制
 const resextra = require('./modules/resextra')
