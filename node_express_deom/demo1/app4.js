@@ -1,3 +1,4 @@
+// app4 配置完
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -7,13 +8,13 @@ const router = express.Router()
 
 const option = {
   // 连接数据库的基本配置
-  host: 'localhost', //数据库地址
+  host: 'localhost',
   user: 'root',
   password: '930985128',
   port: '3306',
   database: 'login', // 底层数据库
   connectTimeout: 5000, // 链接超时
-  multipleStatements: false, // 是否允许一个query中包含多条sql语句。 true //允许执行多条语句
+  multipleStatements: false, // 是否允许一个query中包含多条sql语句
 }
 
 app.use(cors()) // 解决跨域
@@ -24,19 +25,18 @@ app.use(urlencoded({ extended: false })) // 表单请求
 let pool
 reconn()
 
-app.listen(80, () => console.log('项目启动'))
+app.listen(8888, () => console.log('项目启动'))
 
-app.all('/login', (req, res) => {
+app.all('/api/login', (req, res) => {
   // conn.query就是执行一条sql语句，在回调函数里返回结果。
-  // conn.connect() // connect()并不能重连数据库
-
+  conn.connect() // connect()并不能重连数据库
   pool.query('SELECT * FROM students', (e, r) => res.json(new Result({ data: r })))
   pool.getConnection((err, conn) => {
     // 从连接池中哪一个链接
-    conn.query('SELECT * FROM  students', (e, r) => res.json(new Result({ data: r })))
+    conn.query('SELECT * FROM students', (e, r) => res.json(new Result({ data: r })))
     conn.release()
   })
-  // conn.end() // 断开数据库
+  conn.end() // 断开数据库
   // 这样操作只能链接地磁，之后断开。马虎cnnect不能重新链接数据库
 })
 
@@ -46,7 +46,6 @@ function Result({ code = 1, msg = '', data = {} }) {
   this.data = data
 }
 
-// 断开数据库重连机制
 function reconn() {
   pool = mysql.createPool({
     ...option,

@@ -11,10 +11,10 @@
   },
   "db_config": {
     "protocol": "mysql",
-    "host": "47.96.118.55",
-    "database": "form",
+    "host": "localhost",
+    "database": "farms",
     "user": "root",
-    "password": "123456",
+    "password": "12345",
     "port": 3306
   }
 }

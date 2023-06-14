@@ -4,7 +4,7 @@
   "description": "\"测试\"",
   "main": "index.js",
   "scripts": {
-    "start": "hotnode app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

@@ -23,9 +23,9 @@ app.use(cookieParser()) // 解析 方便操作客户端中的cookie值。
 // 利用 Express 托管静态文件
 app.use(express.static(path.join(__dirname, 'public'))) //
 app.use('/', express.static(path.join(__dirname, 'public/login'))) // 可以通过带有 /static 前缀地址来访问 public 目录中的文件了。
-// 俩后台管理项目启动必须放到路由根路径
-app.use('/vue', express.static(path.join(__dirname, 'public/vue-admin')))
-app.use('/react', express.static(path.join(__dirname, 'public/react-admin')))
+// // 俩后台管理项目启动必须放到路由根路径
+// app.use('/vue', express.static(path.join(__dirname, 'public/vue-admin')))
+// app.use('/react', express.static(path.join(__dirname, 'public/react-admin')))
 
 
 

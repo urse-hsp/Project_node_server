@@ -9,7 +9,7 @@ const option = {
   // 连接数据库的基本配置
   host: 'localhost', //数据库地址
   user: 'root',
-  password: '930985128',
+  password: '12345',
   port: '3306',
   database: 'login', // 底层数据库
   connectTimeout: 5000, // 链接超时
@@ -24,7 +24,7 @@ app.use(urlencoded({ extended: false })) // 表单请求
 let pool
 reconn()
 
-app.listen(80, () => console.log('项目启动'))
+app.listen(8888, () => console.log('项目启动'))
 
 app.all('/login', (req, res) => {
   // conn.query就是执行一条sql语句，在回调函数里返回结果。
@@ -57,24 +57,21 @@ function reconn() {
   pool.on('error', (err) => err.code === 'PROTOCOL_CONNECTION_LOST' && setTimeout(reconn, 2000))
 }
 
-module.exports = { pool, Result, router, app }
+// const login = require('./login/index')
 
-const { app, pool, Result } = require('./connect')
-const login = require('./login/index')
+// app.all('*', (req, res, next) => {
+//   // if (!login) return res.json('未登录')
+//   // 一搬来写全局拦截。
+//   next()
+// })
 
-app.all('*', (req, res, next) => {
-  // if (!login) return res.json('未登录')
-  // 一搬来写全局拦截。
-  next()
-})
+// app.all('/', (req, res) => {
+//   pool.getConnection((err, conn) => {
+//     res.json({ a: 'b' })
+//     conn.release()
+//   })
+// })
 
-app.all('/', (req, res) => {
-  pool.getConnection((err, conn) => {
-    res.json({ a: 'b' })
-    conn.release()
-  })
-})
+// app.use('/login', login)
 
-app.use('/login', login)
-
-app.listen(88, () => console.log('服务启动'))
+// app.listen(88, () => console.log('服务启动'))

@@ -1,3 +1,4 @@
+// app3 联通数据库
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -23,9 +24,9 @@ app.use(urlencoded({ extended: false })) // 表单请求
 let conn
 reconn()
 
-app.listen(80, () => console.log('项目启动'))
+app.listen(8888, () => console.log('项目启动'))
 
-app.all('/login', (req, res) => {
+app.all('/api/login', (req, res) => {
   // conn.query就是执行一条sql语句，在回调函数里返回结果。
 
   conn.connect() // connect()并不能重连数据库
