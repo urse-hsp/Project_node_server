@@ -10,7 +10,7 @@ router.post('/login', (req, res) => {
   const sqlStr2 = `select * from user where password ='${req.body.password}'`
   conn.query(sqlStr, (err, results) => {
     if (results.length === 0) {
-      return res.sendResult(results, 401, '用户不存在')
+      return res.sendResult(results, '用户不存在', 401)
     } else {
       conn.query(sqlStr2, (err, results2) => {
         if (results2.length === 0) return res.sendResult(results2, '密码错误', false)

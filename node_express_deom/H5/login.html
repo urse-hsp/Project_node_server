@@ -64,9 +64,12 @@
             contentType: 'application/json',
             success: function (res) {
               const datas = JSON.parse(res)
-              if (!datas.success) return (document.querySelector('#warn').innerHTML = datas.meta.msg)
-              window.sessionStorage.setItem('token', datas.data.token)
-              window.location.href = './index.html'
+              if (datas?.code === 200) {
+                window.sessionStorage.setItem('token', datas.data.token)
+                window.location.href = './index.html'
+              } else {
+                document.querySelector('#warn').innerHTML = datas.meta.msg
+              }
             },
             //异常处理
             error: function (e) {

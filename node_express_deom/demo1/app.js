@@ -20,23 +20,22 @@ app.use(cors()) // 解决跨域
 app.use(json()) // json请求
 app.use(urlencoded({ extended: false })) // 表单请求
 
-// const conn = mysql.createConnection(option)
+const conn = mysql.createConnection(option)
 let pool
 reconn()
 
 app.listen(8888, () => console.log('项目启动'))
 
-app.all('/login', (req, res) => {
+app.all('/api/login', (req, res) => {
   // conn.query就是执行一条sql语句，在回调函数里返回结果。
-  // conn.connect() // connect()并不能重连数据库
-
+  conn.connect() // connect()并不能重连数据库
   pool.query('SELECT * FROM students', (e, r) => res.json(new Result({ data: r })))
   pool.getConnection((err, conn) => {
     // 从连接池中哪一个链接
     conn.query('SELECT * FROM  students', (e, r) => res.json(new Result({ data: r })))
     conn.release()
   })
-  // conn.end() // 断开数据库
+  conn.end() // 断开数据库
   // 这样操作只能链接地磁，之后断开。马虎cnnect不能重新链接数据库
 })
 
@@ -54,24 +53,8 @@ function reconn() {
     connectionLimit: 100, // 链接数限制
     queueLimit: 0, //最大链接等待数 (0为不限制)
   }) // 创建链接池
-  pool.on('error', (err) => err.code === 'PROTOCOL_CONNECTION_LOST' && setTimeout(reconn, 2000))
+  pool.on(
+    'error',
+    (err) => err.code === 'PROTOCOL_CONNECTION_LOST' && setTimeout(reconn, 2000)
+  )
 }
-
-// const login = require('./login/index')
-
-// app.all('*', (req, res, next) => {
-//   // if (!login) return res.json('未登录')
-//   // 一搬来写全局拦截。
-//   next()
-// })
-
-// app.all('/', (req, res) => {
-//   pool.getConnection((err, conn) => {
-//     res.json({ a: 'b' })
-//     conn.release()
-//   })
-// })
-
-// app.use('/login', login)
-
-// app.listen(88, () => console.log('服务启动'))

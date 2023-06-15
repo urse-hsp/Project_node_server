@@ -16,11 +16,6 @@ app.listen(8888, () => console.log('启动服务'))
 // app.all方法，这个方法支持所有请求方式，不必每个  请求都写好几遍了。
 // 方法有三个返回值。第一个是传过来的。第二个是以什么形式返回 json等格式。第三个是继续执行下去
 
-// app.all('*', (req, res, next) => {
-//   if (!login) return res.json('未登录')
-//   next()
-// })
-
 // 设置跨域和相应数据格式
 app.all('*', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*') // 跨域
