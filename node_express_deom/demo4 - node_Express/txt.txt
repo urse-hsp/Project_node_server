@@ -1,0 +1,10 @@
+在 MacOS 或 Linux 中，通过如下命令启动此应用：
+  $ DEBUG=myapp:* npm start
+
+在 Windows 中，通过如下命令启动此应用：
+  > set DEBUG=myapp:* & npm start
+  
+
+  升级 
+npm i winston 打印日志文件
+npm install -save knex 增删改查数据库

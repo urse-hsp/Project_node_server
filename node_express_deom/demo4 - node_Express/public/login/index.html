@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Document</title><style>.interval {margin: 15px 0 !important;}</style><link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" /><script src="./js/vue.min.js"></script><script src="https://unpkg.com/element-ui/lib/index.js"></script></head><body><div><div id="app"><el-button size="mini" type="primary" @click="quit" class="interval">退出登录</el-button><el-table :data="tableData" border style="width: 100%"><el-table-column prop="name" label="姓名" width="180"></el-table-column><el-table-column prop="age" label="年龄" width="180"></el-table-column><el-table-column prop="sex" label="性别"><template slot-scope="scope"><div>{{scope.row.sex | sexs}}</div></template></el-table-column><el-table-column prop="location" label="地址"></el-table-column><el-table-column label="操作"><template slot-scope="scope"><el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button><el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button></template></el-table-column></el-table><el-button size="mini" type="primary" @click="addUser" class="interval">添加用户</el-button><el-pagination @size-change="handleSizeChange"@current-change="handleCurrentChange":current-page="pagination.currentPage":page-sizes="[5, 10, 15, 20]":page-size="pagination.pageSize"layout="total, sizes, prev, pager, next, jumper":total="pagination.total"></el-pagination><el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose"><el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm"><el-form-item label="姓名" prop="name"><el-input v-model="ruleForm.name" autocomplete="off"></el-input></el-form-item><el-form-item label="年龄" prop="age"><el-input v-model="ruleForm.age" autocomplete="off"></el-input></el-form-item><el-form-item label="性别" prop="sex"><el-radio v-model="ruleForm.sex" label="0">男</el-radio><el-radio v-model="ruleForm.sex" label="1">女</el-radio><el-radio v-model="ruleForm.sex" label=" ">不填</el-radio></el-form-item><el-form-item label="地址" prop="location"><el-input v-model="ruleForm.location"></el-input></el-form-item></el-form><span slot="footer" class="dialog-footer"><el-button @click="shutBox">取 消</el-button><el-button type="primary" @click="confirm">确 定</el-button></span></el-dialog></div></div><script src="./js/axios.min.js"></script><script>axios.defaults.baseURL = 'http://localhost:8888/api/'
+axios.interceptors.request.use((config) => {
+config.headers.token = window.sessionStorage.getItem('token')
+return config
+})
+new Vue({
+el: '#app',
+data() {
+return {
+// 表格数据
+tableData: [],
+dialogVisible: false,
+// 表单数据绑定
+ruleForm: {
+name: '',
+age: '',
+sex: ' ',
+location: '',
+},
+// 表单的验证规则
+rules: {
+name: [
+{
+required: true,
+trigger: 'blur',
+message: '请输入姓名!',
+},
+],
+age: [
+{
+required: true,
+trigger: 'blur',
+message: '请输入年龄!',
+},
+],
+sex: [
+{
+trigger: 'blur',
+},
+],
+location: [
+{
+required: true,
+trigger: 'blur',
+message: '请输入地址!',
+},
+],
+},
+FormType: true,
+// 分页器的配置数据
+pagination: {
+total: 10,
+pageSize: 5,
+currentPage: 1,
+},
+}
+},
+beforeCreate() {
+const token = window.sessionStorage.getItem('token')
+if (!token) window.location.href = './login.html'
+},
+created() {
+this.getList()
+},
+methods: {
+// 获取数据
+async getList() {
+const { data } = await axios.get('getlist', { params: { ...this.pagination } })
+if (data.success) {
+this.tableData = data.data.list
+this.pagination.total = data.data.total
+}
+},
+// 编辑用户信息
+handleEdit(index, row) {
+var objString = JSON.stringify(row)
+var obj2 = JSON.parse(objString)
+this.FormType = false
+this.ruleForm = obj2
+this.dialogVisible = true
+},
+// 删除用户信息
+handleDelete(row) {
+this.$confirm('彻底删除该用户信息, 是否继续?', '提示', {
+confirmButtonText: '确定',
+cancelButtonText: '取消',
+type: 'warning',
+}).then(async () => {
+const { data } = await axios.delete(`deleteList`, { params: { id: row.id } })
+if (!data.success) {
+return this.$message({
+type: 'error',
+message: data.msg,
+})
+}
+this.getList()
+this.$message({
+type: 'success',
+message: '删除成功!',
+})
+})
+},
+// 控制每页显示多少条
+handleSizeChange(val) {
+this.pagination.pageSize = val
+this.getList()
+},
+// 控制显示第几页
+handleCurrentChange(val) {
+this.pagination.currentPage = val
+this.getList()
+},
+// 点击模态框取消对话框
+handleClose(done) {
+done()
+console.log(123)
+this.$refs.ruleForm.resetFields()
+},
+// 对话框取消
+shutBox() {
+this.dialogVisible = false
+},
+// 退出登录
+quit() {
+this.$confirm('是否要退出登录', '提示', {
+confirmButtonText: '确定',
+cancelButtonText: '取消',
+type: 'warning',
+}).then(() => {
+window.sessionStorage.removeItem('token')
+window.location.href = './login.html'
+})
+},
+// 添加用户信息
+addUser() {
+this.FormType = true
+this.dialogVisible = true
+},
+// 对话框确定按钮
+confirm() {
+this.$refs.ruleForm.validate((valid) => {
+if (valid) {
+if (this.FormType) {
+this.setUserList()
+} else {
+this.amendUserList()
+}
+this.getList()
+this.$refs.ruleForm.resetFields()
+this.dialogVisible = false
+} else {
+return false
+}
+})
+},
+// 添加用户 请求
+async setUserList() {
+const { data } = await axios.post('setList', {
+...this.ruleForm,
+})
+console.log(data)
+if (!data.success) {
+console.log('')
+return this.$message({
+type: 'error',
+message: data.msg,
+})
+}
+this.$message({
+type: 'success',
+message: '添加成功',
+})
+},
+// 修改用户 请求
+async amendUserList() {
+const { data } = await axios.put(`alterList`, {
+...this.ruleForm,
+id: this.ruleForm.id,
+})
+if (!data.success) {
+return this.$message({
+type: 'error',
+message: data.msg,
+})
+}
+this.$message({
+type: 'success',
+message: '修改成功',
+})
+},
+},
+filters: {
+sexs(data) {
+let sex
+if (data === '0') {
+sex = '男'
+} else if (data === '1') {
+sex = '女'
+} else {
+sex = ''
+}
+return sex
+},
+},
+})</script></body></html>
