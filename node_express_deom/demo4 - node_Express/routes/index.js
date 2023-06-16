@@ -15,7 +15,3 @@ router.get('/', function (req, res, next) {
 })
 
 module.exports = router
-
-// const userController = require('../controllers/user')
-// // 获取用户信息
-// router.get('/get_user', userController.showUser)

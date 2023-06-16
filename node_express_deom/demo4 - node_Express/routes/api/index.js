@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const { conn } = require('../../utils/connectMysql')
+const userController = require('../../controllers/user')
 
+// // 获取用户信息
+// router.get('/getlist', userController.showUser)
 router.get('/getlist', (req, res, next) => {
   const json = req.query
   const sqlStr2 = 'SELECT * FROM students'
