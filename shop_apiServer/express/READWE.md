@@ -2,10 +2,10 @@
 
 - `config` 配置文件目录
   - `default.json` 默认配置文件（其中包含数据库配置，jwt 配置）
-- `dao` 数据访问层，存放对数据库的增删改查操作
+- `dao` 数据访问层，存放对数据库的增删改查操作 \*\*（操作数据库的地方）
   - `DAO.js` 提供的公共访问数据库的方法
-- `models` 存放具体数据库 ORM 模型文件
-- `modules` 当前项目模块
+- `models` 存放具体数据库 ORM 模型文件 \*\* (数据库数据模型)
+- `modules` 当前项目模块 \*\* （项目的底层功能工具）
   - `authorization.js` API 权限验证模块
   - `database.js` 数据库模块（数据库加载基于 nodejs-orm2 库加载）
   - `passport.js` 基于 passport 模块的登录搭建

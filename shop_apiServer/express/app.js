@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public'))) // 托管静态文件
 
 // 设置跨域和相应数据格式  /api/*
 app.all('*', function (req, res, next) {
-  // res.header('Access-Control-Allow-Origin', '*') // 跨域
+  res.header('Access-Control-Allow-Origin', '*') // 跨域
   res.header('Access-Control-Allow-Headers', 'X-Requested-With') // 请求头中设置允许的请求方法。
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Authorization')
   res.setHeader('Content-Type', 'application/json;charset=utf-8') // 使用Content-Type来表示具体请求中的媒体类型信息
