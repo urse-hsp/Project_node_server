@@ -185,17 +185,20 @@ module.exports.updateMgrState = function (id, state, cb) {
   managersDAO.show(id, function (err, manager) {
     if (err || !manager) cb('管理员ID不存在')
 
-    managersDAO.update({ mg_id: manager.mg_id, mg_state: state }, function (err, manager) {
-      if (err) return cb('设置失败')
-      cb(null, {
-        id: manager.mg_id,
-        rid: manager.role_id,
-        username: manager.mg_name,
-        mobile: manager.mg_mobile,
-        email: manager.mg_email,
-        mg_state: manager.mg_state ? 1 : 0,
-      })
-    })
+    managersDAO.update(
+      { mg_id: manager.mg_id, mg_state: state },
+      function (err, manager) {
+        if (err) return cb('设置失败')
+        cb(null, {
+          id: manager.mg_id,
+          rid: manager.role_id,
+          username: manager.mg_name,
+          mobile: manager.mg_mobile,
+          email: manager.mg_email,
+          mg_state: manager.mg_state ? 1 : 0,
+        })
+      }
+    )
   })
 }
 

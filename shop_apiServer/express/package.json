@@ -13,6 +13,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "node-php-password": "^0.1.2"
+    "node-php-password": "^0.1.2",
+    "passport": "^0.6.0"
   }
 }
