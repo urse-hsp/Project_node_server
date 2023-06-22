@@ -96,9 +96,9 @@ var ueditor = require(path.join(process.cwd(), '/modules/ueditor'))
 // 富文本控件处理qing q
 app.use('/ueditor/ue', ueditor)
 //. 设置富文本空间地址
-app.use('/ueditor', express.static('public/ueditor'))
 app.use('/', express.static('public/vueAdmin'))
-app.use('/reactAdmin', express.static('public/reactAdmin'))
+// app.use('/reactAdmin', express.static('public/reactAdmin'))
+// app.use('/ueditor', express.static('public/ueditor'))
 
 app.use('/tmp_uploads', express.static('tmp_uploads'))
 app.use('/x/common', express.static('uploads/common'))
