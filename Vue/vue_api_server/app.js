@@ -7,7 +7,6 @@ var mount = require('mount-routes')
 
 var app = express()
 
-
 /**
  *
  * 公共系统初始化
