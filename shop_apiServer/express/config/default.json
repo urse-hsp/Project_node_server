@@ -1,5 +1,4 @@
 {
-  "title": "管理系统-开发环境",
   "jwt_config": {
     "secretKey": "itcast",
     "expiresIn": 86400
@@ -9,12 +8,13 @@
     "upload_ueditor": "uploads/ueditor",
     "simple_upload_redirect": "http://127.0.0.1/reload"
   },
-  "db": {
-    "protocol": "mysql",
-    "host": "47.96.118.55",
-    "database": "form",
+  "mysql": {
+    "host": "localhost",
     "user": "root",
-    "password": "123456",
-    "port": 3306
+    "password": "12345",
+    "port": "3306",
+    "database": "login",
+    "connectTimeout": 5000,
+    "multipleStatements": false
   }
 }

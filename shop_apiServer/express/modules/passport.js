@@ -1,17 +1,20 @@
+const passport = require('passport')
+var jwt = require('jsonwebtoken')
+
 /**
- * token验证函数
+ * 登录验证逻辑
  *
- * @param  {[type]}   req  请求对象
- * @param  {[type]}   res  响应对象
- * @param  {Function} next 传递事件函数
+ * @param  {[type]}   req  请求
+ * @param  {[type]}   res  响应
+ * @param  {Function} next [description]
  */
- module.exports.tokenAuth = function (req, res, next) {
-  passport.authenticate('bearer', { session: false }, function (err, tokenData) {
-    if (err) return res.sendResult(null, 400, '无效token')
-    if (!tokenData) return res.sendResult(null, 400, '无效token')
-    req.userInfo = {}
-    req.userInfo.uid = tokenData['uid']
-    req.userInfo.rid = tokenData['rid']
-    next()
+module.exports.login = function (req, res, next) {
+  passport.authenticate('local', function (err, user, info) {
+    if (err) return res.sendResult(null, 400, err)
+    if (!user) return res.sendResult(null, 400, '参数错误')
+    // 获取角色信息
+    var token = jwt.sign({ uid: user.id, rid: user.rid }, jwt_config.get('secretKey'), { expiresIn: jwt_config.get('expiresIn') })
+    user.token = 'Bearer ' + token
+    return res.sendResult(user, 200, '登录成功')
   })(req, res, next)
 }
