@@ -16,18 +16,21 @@ const sequelize = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlCon
     idle: 30000,
   },
 })
-exports.sequelize = sequelize
 
 // 测试数据库是否连接成功
-exports.initialize = (req, res, next) => {
+const initialize = (req, res, next) => {
   try {
     sequelize.authenticate()
     console.log('Connection has been established successfully.')
+
     next()
   } catch (error) {
-    console.error('Unable to connect to the database:', error)
+    console.error('连接数据库失败失败 %s', err)
   }
 }
+// 模型同步 https://www.sequelize.cn/core-concepts/model-basics#%E6%A8%A1%E5%9E%8B%E5%90%8C%E6%AD%A5
+// sequelize.sync()
+// console.log('所有模型均已成功同步.')
 
 // sequelize
 //   .authenticate()
@@ -37,3 +40,5 @@ exports.initialize = (req, res, next) => {
 //   .catch((err) => {
 //     console.log('Connection Error')
 //   })
+exports.sequelize = sequelize
+exports.initialize = initialize

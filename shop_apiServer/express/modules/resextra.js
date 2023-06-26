@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
       res.json({
         code,
         success: code === 200,
-        msg: message,
+        message: message,
         data,
         ...params,
       })

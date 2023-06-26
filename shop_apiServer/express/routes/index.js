@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const User = require('../models/user')
+const { sequelize } = require('../modules/database')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -25,6 +26,7 @@ router.post('/test/:data', (req, res) => {
 
 router.get('/getlist2', async (req, res, next) => {
   const data = await User.findAll()
+  // const [results, metadata] = await sequelize.query('SELECT * FROM user')
   return res.sendResult(data)
 })
 

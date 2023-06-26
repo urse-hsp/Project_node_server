@@ -14,6 +14,14 @@ var app = express()
 var { initialize } = require('./modules/database')
 app.use(initialize)
 
+/**
+ *
+ *	后台管理系统初始化
+ *
+ */
+// 获取管理员逻辑模块
+var managerService = require(path.join(process.cwd(), 'services/ManagerService'))
+
 // // view engine setup
 // app.set('views', path.join(__dirname, 'views'))
 // app.set('view engine', 'jade')
@@ -49,10 +57,11 @@ app.all('*', function (req, res, next) {
 // 初始化统一响应机制
 const resextra = require('./modules/resextra')
 app.use(resextra)
-// 初始化 后台登录 passport 策略
-// admin_passport = require('./modules/passport')
-// 设置登录模块的登录函数衔接 passport 策略
 
+// 初始化 后台登录 passport 策略
+admin_passport = require('./modules/passport')
+// 设置登录模块的登录函数衔接 passport 策略
+admin_passport.setup(app, managerService.login)
 app.use('/', indexRouter)
 // app.use('/users', usersRouter)
 // app.use('/api', usersRouter)
