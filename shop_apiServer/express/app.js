@@ -3,16 +3,16 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 const morgan = require('morgan')
-<<<<<<< HEAD
-const logger = require('./modules/logger')
-=======
 const logger = require('./config/logger')
->>>>>>> 42bb8276a7d58071a2362d5983885093d1e5739c
 
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
 
 var app = express()
+
+// 初始化数据库模块
+var { initialize } = require('./modules/database')
+app.use(initialize)
 
 // // view engine setup
 // app.set('views', path.join(__dirname, 'views'))
@@ -26,7 +26,7 @@ app.use(cookieParser()) // 解析 方便操作客户端中的cookie值。
 app.use(express.static(path.join(__dirname, 'public'))) // 托管静态文件
 app.use('/', express.static(path.join(__dirname, 'public/vueAdmin'))) // 可以通过带有 /static 前缀地址来访问 public 目录中的文件了。
 
-// // 初始化数据库模块
+// 初始化数据库模块
 // const database = require('./modules/database')
 // database.initialize(app, function (err) {
 //   if (err) console.error('连接数据库失败失败 %s', err)
@@ -46,48 +46,23 @@ app.all('*', function (req, res, next) {
   /*让options请求快速返回*/
 })
 
-// token权限验证
-// app.use(function (req, res, next) {
-//   // 这里知识把登陆和注册请求去掉了，其他的多有请求都需要进行token校验
-//   if (req.url != '/api/login' && req.url != '/test/:data') {
-//     let jwt = new JwtUtil(req.headers.token)
-//     let result = jwt.verifyToken()
-//     // 如果考验通过就next，否则就返回登陆信息不正确
-//     if (result == 'err') {
-//       console.log(result)
-//       res.send({ success: false, msg: '登录已过期,请重新登录' })
-//       // res.render('login.html');
-//     } else next()
-//   } else next()
-// })
-// 获取验证模块
-// var authorization = require(path.join(process.cwd(), '/modules/authorization'))
-// // 设置全局权限
-// authorization.setAuthFn(function(req, res, next, serviceName, actionName, passFn) {
-//   if (!req.userInfo || isNaN(parseInt(req.userInfo.rid))) return res.sendResult('无角色ID分配')
-//   // 验证权限
-//   roleService.authRight(req.userInfo.rid, serviceName, actionName, function(err, pass) {
-//     passFn(pass)
-//   })
-// })
-
 // 初始化统一响应机制
 const resextra = require('./modules/resextra')
 app.use(resextra)
+// 初始化 后台登录 passport 策略
+// admin_passport = require('./modules/passport')
+// 设置登录模块的登录函数衔接 passport 策略
 
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
-app.use('/api', usersRouter)
+// app.use('/users', usersRouter)
+// app.use('/api', usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404))
 })
 
-<<<<<<< HEAD
-=======
 // //  默认的错误处理
->>>>>>> 42bb8276a7d58071a2362d5983885093d1e5739c
 // // error handler
 // app.use(function (err, req, res, next) {
 //   // set locals, only providing error in development
@@ -98,13 +73,10 @@ app.use(function (req, res, next) {
 //   res.status(err.status || 500)
 //   res.render('error')
 // })
-<<<<<<< HEAD
-=======
 /**
  * error handler
  * @private
  */
->>>>>>> 42bb8276a7d58071a2362d5983885093d1e5739c
 // 处理非404的错误（throw 出来的错误)
 const _errorHandler = (err, req, res, next) => {
   logger.error(`${req.method} ${req.originalUrl} ` + err.message)

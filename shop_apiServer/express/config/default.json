@@ -1,5 +1,5 @@
 {
-  "jwt_config": {
+  "jwt": {
     "secretKey": "itcast",
     "expiresIn": 86400
   },

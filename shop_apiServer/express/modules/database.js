@@ -1,49 +1,39 @@
-const mysql = require('mysql')
+var path = require('path')
+const config = require('../config/default.json')
+const { Sequelize } = require('sequelize')
 
-const conn = mysql.createConnection({
-  host: 'localhost', // 数据库地址
-  user: 'root',
-  password: '',
-  port: '3306',
-  database: 'form', // 底层数据库
-  connectTimeout: 5000, // 链接超时
-  multipleStatements: false, // 是否允许一个query中包含多条sql语句
+const mysqlConfig = config.mysql
+const sequelize = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlConfig.password, {
+  dialect: 'mysql' /* 选择 'mysql' | 'mariadb' | 'postgres' | 'mssql' 其一 */,
+  host: mysqlConfig.host, // 数据库地址
+  port: mysqlConfig.port,
+  connectTimeout: mysqlConfig.connectTimeout, // 链接超时
+  multipleStatements: mysqlConfig.multipleStatements, // 是否允许一个query中包含多条sql语句
+  pool: {
+    //使用连接池连接，默认为true
+    max: 50,
+    min: 0,
+    idle: 30000,
+  },
 })
+exports.sequelize = sequelize
 
-module.exports = conn
-
-let sqlConnection = (sql, sqlArr, callback) => {
-  let pool = mysql.createPool(config)
-  pool.getConnection(function (err, conn) {
-    console.log('连接池查询')
-    if (err) {
-      console.log(err)
-    } else {
-      conn.query(sql, sqlArr, callback)
-      conn.release()
-      console.log('连接池断开！')
-    }
-  })
+// 测试数据库是否连接成功
+exports.initialize = (req, res, next) => {
+  try {
+    sequelize.authenticate()
+    console.log('Connection has been established successfully.')
+    next()
+  } catch (error) {
+    console.error('Unable to connect to the database:', error)
+  }
 }
 
-let SySqlConnection = (sql, sqlArr) => {
-  return new Promise((resolve, reject) => {
-    let pool = mysql.createPool(config)
-    pool.getConnection((err, conn) => {
-      if (err) {
-        reject(err)
-      } else {
-        conn.query(sql, sqlArr, (err, data) => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve(data)
-            conn.release()
-          }
-        })
-      }
-    })
-  }).catch((err) => {
-    console.log(err)
-  })
-}
+// sequelize
+//   .authenticate()
+//   .then((res) => {
+//     console.log('Connection Success!')
+//   })
+//   .catch((err) => {
+//     console.log('Connection Error')
+//   })
