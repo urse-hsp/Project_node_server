@@ -13,7 +13,7 @@
     "user": "root",
     "password": "12345",
     "port": "3306",
-    "database": "login",
+    "database": "farms",
     "connectTimeout": 5000,
     "multipleStatements": false
   }

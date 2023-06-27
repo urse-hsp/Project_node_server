@@ -3,20 +3,21 @@ const { Sequelize, DataTypes, Model } = require('sequelize')
 const { sequelize } = require('../modules/database')
 
 // const User = sequelize.define(
-//   'user', // 别名
+//   'sp_user', // 别名
 //   {
 //     // 定义模型属性
 //     // 需要根据数据库的结构定义
 //     username: {
 //       type: DataTypes.STRING,
 //       allowNull: false,
+//       primaryKey: true,
 //     },
 //   },
 //   {
 //     // 这是其他模型参数
 //     // 用来设置字段以外的其他信息
-//     tableName: 'user',
-//     timestamps: false,
+//     tableName: 'sp_user',
+//     // timestamps: false,
 //     freezeTableName: true,
 //   }
 // ) // 查询所有
@@ -29,7 +30,20 @@ class User extends Model {}
 User.init(
   {
     // 在这里定义模型属性
+    user_id: {
+      type: Number,
+      allowNull: false,
+      primaryKey: true, // 主键属性
+    },
     username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    create_time: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    update_time: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -39,9 +53,10 @@ User.init(
     // 这是其他模型参数
     timestamps: false,
     freezeTableName: true,
-    tableName: 'user',
+    tableName: 'sp_user',
   }
 )
 // `sequelize.define` 会返回模型
-console.log(User === sequelize.models.User) // true
+// console.log(User === sequelize.models.User) // true
 module.exports = User
+// module.exports.User = User

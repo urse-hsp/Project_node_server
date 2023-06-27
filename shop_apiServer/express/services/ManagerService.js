@@ -1,6 +1,7 @@
-const { log } = require('console')
 const path = require('path')
 const managersDAO = require(path.join(process.cwd(), 'dao/ManagerDAO'))
+const User = require('../models/user')
+const logger = require('../modules/logger')
 
 /**
  * 管理员登录
@@ -8,12 +9,20 @@ const managersDAO = require(path.join(process.cwd(), 'dao/ManagerDAO'))
  * @param  {[type]}   password 密码
  * @param  {Function} cb       回调
  */
-module.exports.login = function (username, password, cb) {
+module.exports.login = async function (username, password, cb) {
   logger.debug('login => username:%s,password:%s', username, password)
   logger.debug(username)
-  console.log(6)
-  // managersDAO.findOne({ mg_name: username }, function (err, manager) {
+  const data = await User.findAll({
+    where: {
+      mg_name: username
+    }
+  })
+  console.log(data)
+  cb('用户名不存在')
+  // User.findOne({ mg_name: username }, function (err, manager) {
   //   logger.debug(err)
+  //   console.log(2)
+
   //   if (err || !manager) return cb('用户名不存在')
   //   if (manager.role_id < 0) {
   //     return cb('该用户没有权限登录')

@@ -1,12 +1,9 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const Strategy = require('passport-http-bearer').Strategy
-
 const config = require('../config/default.json')
 const jwt = require('jsonwebtoken')
 const jwt_config = config.mysql.jwt
-
-const User = require('../models/user')
 
 // 通过登录函数初始化
 /**
@@ -16,7 +13,7 @@ const User = require('../models/user')
  * @param  {[type]}   loginFunc 登录函数
  * @param  {Function} callback  回调函数
  */
-module.exports.setup = function (app, loginFunc, callback) {
+module.exports.init = function (app, loginFunc, callback) {
   // 用户名密码 登录策略
   passport.use(
     new LocalStrategy(function (username, password, done) {
@@ -32,7 +29,7 @@ module.exports.setup = function (app, loginFunc, callback) {
   // token 验证策略
   passport.use(
     new Strategy(function (token, done) {
-      jwt.verify(token, jwt_config.get('secretKey'), function (err, decode) {
+      jwt.verify(token, jwt_config.secretKey, function (err, decode) {
         if (err) {
           return done('验证错误')
         }
@@ -43,7 +40,6 @@ module.exports.setup = function (app, loginFunc, callback) {
 
   // 初始化passport模块
   app.use(passport.initialize())
-
   if (callback) callback()
 }
 
@@ -57,7 +53,7 @@ module.exports.setup = function (app, loginFunc, callback) {
 module.exports.login = function (req, res, next) {
   passport.authenticate('local', function (err, user, info) {
     if (err) return res.sendResult(null, 400, err)
-    if (!user) return res.sendResult(null, 401, '参数错误')
+    if (!user) return res.sendResult(null, 400, '参数错误')
     // 获取角色信息
     var token = jwt.sign({ uid: user.id, rid: user.rid }, jwt_config.secretKey, { expiresIn: jwt_config.get('expiresIn') })
     user.token = 'Bearer ' + token

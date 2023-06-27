@@ -25,6 +25,7 @@
 1. winston log 日志
 1. passport NodeJS 的认证中间件
 1. Passport-local 是本地策略验证模块
+1. passport-http-bearer 是 Passport 提供的一个策略（strategy），用于基于 Bearer Token 的身份验证
 1. orm
    Node.js ORM 框架
    https://github.com/dresende/node-orm2

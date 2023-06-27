@@ -43,3 +43,111 @@
 2023-06-26 15:50:15 error [www]: GET /getlist2 conn is not defined
 2023-06-26 15:50:34 error [www]: GET /getlist2 res.conn.query is not a function
 2023-06-26 15:52:49 error [www]: GET /getlist2 res.conn.query is not a function
+2023-06-27 11:07:09 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:07:09 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:07:53 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:07:54 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:07:54 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:08:12 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:08:18 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:34:22 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:34:29 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:36:01 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:36:26 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:36:48 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:36:48 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:36:48 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:36:49 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:37:05 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:37:06 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:37:06 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:37:06 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:37:34 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:38:08 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:38:08 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:38:23 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:38:24 error [www]: GET /getlist2 app.use is not a function
+2023-06-27 11:45:53 error [www]: GET /login Not Found
+2023-06-27 11:45:54 error [www]: GET /login Not Found
+2023-06-27 11:45:54 error [www]: GET /login Not Found
+2023-06-27 11:46:12 error [www]: GET /login app.use is not a function
+2023-06-27 11:46:27 error [www]: GET /login app.use is not a function
+2023-06-27 11:46:33 error [www]: GET /login app.use is not a function
+2023-06-27 11:46:51 error [www]: GET /login app.use is not a function
+2023-06-27 11:46:52 error [www]: GET /login app.use is not a function
+2023-06-27 11:47:21 error [www]: GET /login app.use is not a function
+2023-06-27 11:47:21 error [www]: GET /login app.use is not a function
+2023-06-27 11:47:51 error [www]: GET /login app.use is not a function
+2023-06-27 11:47:51 error [www]: GET /login app.use is not a function
+2023-06-27 11:47:51 error [www]: GET /login app.use is not a function
+2023-06-27 11:47:52 error [www]: GET /login app.use is not a function
+2023-06-27 11:48:07 error [www]: GET /login app.use is not a function
+2023-06-27 11:48:08 error [www]: GET /login app.use is not a function
+2023-06-27 11:48:08 error [www]: GET /login app.use is not a function
+2023-06-27 11:48:49 error [www]: GET /login app.use is not a function
+2023-06-27 11:48:49 error [www]: GET /login app.use is not a function
+2023-06-27 11:48:55 error [www]: POST /login app.use is not a function
+2023-06-27 11:48:56 error [www]: POST /login app.use is not a function
+2023-06-27 11:48:56 error [www]: POST /login app.use is not a function
+2023-06-27 11:48:57 error [www]: POST /login app.use is not a function
+2023-06-27 11:48:58 error [www]: POST /login app.use is not a function
+2023-06-27 11:48:58 error [www]: POST /login app.use is not a function
+2023-06-27 11:48:59 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:00 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:00 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:32 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:33 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:33 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:38 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:38 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:39 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:39 error [www]: POST /login app.use is not a function
+2023-06-27 11:51:44 error [www]: POST /getlist2 app.use is not a function
+2023-06-27 11:51:45 error [www]: POST /getlist2 app.use is not a function
+2023-06-27 11:51:45 error [www]: POST /getlist2 app.use is not a function
+2023-06-27 11:51:50 error [www]: POST /getlist2 Not Found
+2023-06-27 11:51:50 error [www]: POST /getlist2 Not Found
+2023-06-27 11:54:06 error [www]: GET /login app.use is not a function
+2023-06-27 11:54:44 error [www]: GET /login app.use is not a function
+2023-06-27 11:54:44 error [www]: GET /login app.use is not a function
+2023-06-27 11:54:44 error [www]: GET /login app.use is not a function
+2023-06-27 11:54:44 error [www]: GET /login app.use is not a function
+2023-06-27 11:55:13 error [www]: GET /login app.use is not a function
+2023-06-27 14:23:55 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:12 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:12 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:12 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:18 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:18 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:18 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:19 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:19 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:19 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:19 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:20 error [www]: GET /login app.use is not a function
+2023-06-27 14:24:20 error [www]: GET /login app.use is not a function
+2023-06-27 14:25:51 error [www]: GET /login app.use is not a function
+2023-06-27 14:25:59 error [www]: GET /login app.use is not a function
+2023-06-27 14:26:00 error [www]: GET /login app.use is not a function
+2023-06-27 14:26:08 error [www]: GET /login app.use is not a function
+2023-06-27 14:31:34 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
+2023-06-27 14:31:48 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
+2023-06-27 14:31:48 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
+2023-06-27 14:31:49 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
+2023-06-27 14:31:49 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
+2023-06-27 14:32:45 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
+2023-06-27 14:32:46 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
+2023-06-27 15:42:11 debug [www]: login => username:%s,password:%s
+2023-06-27 15:42:11 debug [www]: admin
+2023-06-27 15:42:25 debug [www]: login => username:%s,password:%s
+2023-06-27 15:42:25 debug [www]: admin
+2023-06-27 15:42:25 debug [www]: login => username:%s,password:%s
+2023-06-27 15:42:25 debug [www]: admin
+2023-06-27 15:43:50 debug [www]: login => username:%s,password:%s
+2023-06-27 15:43:50 debug [www]: admin
+2023-06-27 15:46:52 debug [www]: login => username:%s,password:%s
+2023-06-27 15:46:52 debug [www]: admin
+2023-06-27 17:08:25 debug [www]: login => username:%s,password:%s
+2023-06-27 17:08:25 debug [www]: admin
+2023-06-27 17:30:48 debug [www]: login => username:%s,password:%s
+2023-06-27 17:30:48 debug [www]: admin
