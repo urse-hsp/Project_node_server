@@ -37,19 +37,24 @@ router.get('/getlist2', async (req, res, next) => {
   // // const [results, metadata] = await sequelize.query('SELECT * FROM sp_user')
   // const sqlStr1 = `INSERT into sp_user (username,create_time,update_time) values('${123}','23','23')`
   // const [results, metadata] = await sequelize.query(sqlStr1)
-  const info = { username: 'Jane', user_id: 3, update_time: '23', create_time: '23' }
+  // const info = { username: 'Jane', user_id: 3, update_time: '23', create_time: '23' }
   // const data = await User.create(info)
   // return res.sendResult(data)
 
-  // User.create(info, function (err, newGood) {
-  //   if (err) return res.sendResult(null, 400, err)
-  //   res.sendResult(newGood, 201, '创建成功')
-  // })
-
-  dao.list('User', {}, function (err, newGood) {
+  dao.list('ManagerModel', {}, function (err, newGood) {
     if (err) return res.sendResult(null, 400, err)
     res.sendResult(newGood, 201, '创建成功')
   })
+
+  // dao.create(
+  //   'User',
+  //   info,
+  //   function (err, newGood) {
+  //     if (err) return res.sendResult(null, 400, err)
+  //     res.sendResult(newGood, 201, '创建成功')
+  //   },
+  //   'user_id'
+  // )
 })
 
 // router.get('/login', async (req, res, next) => {

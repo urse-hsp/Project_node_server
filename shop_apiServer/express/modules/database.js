@@ -22,7 +22,6 @@ const initialize = (req, res, next) => {
   try {
     sequelize.authenticate()
     console.log('Connection has been established successfully.')
-
     next()
   } catch (error) {
     console.error('连接数据库失败失败 %s', err)

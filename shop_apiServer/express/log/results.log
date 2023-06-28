@@ -1,153 +1,74 @@
-2023-06-26 11:04:21 error [www]: GET /css/app.b85c42ca.css Not Found
-2023-06-26 11:04:21 error [www]: GET /js/app.ebe2084b.js Not Found
-2023-06-26 11:04:21 error [www]: GET /js/chunk-vendors.1e04798c.js Not Found
-2023-06-26 11:04:21 error [www]: GET /css/Cate_Params.f12dfea0.css Not Found
-2023-06-26 11:04:21 error [www]: GET /css/List_Add.f72e8916.css Not Found
-2023-06-26 11:04:21 error [www]: GET /css/Order_Report.0a970c9f.css Not Found
-2023-06-26 11:04:21 error [www]: GET /css/User_Rights_Roles.01667aa8.css Not Found
-2023-06-26 11:04:21 error [www]: GET /css/login_home_welcome.cad05166.css Not Found
-2023-06-26 11:04:21 error [www]: GET /js/Cate_Params.4bba86fa.js Not Found
-2023-06-26 11:04:21 error [www]: GET /js/Cate_Params~List_Add~login_home_welcome.a6243fbe.js Not Found
-2023-06-26 11:04:21 error [www]: GET /favicon.ico Not Found
-2023-06-26 11:04:21 error [www]: GET /js/List_Add.241e6cc6.js Not Found
-2023-06-26 11:04:21 error [www]: GET /js/Order_Report.ede72619.js Not Found
-2023-06-26 11:04:21 error [www]: GET /js/User_Rights_Roles.7141730e.js Not Found
-2023-06-26 11:04:21 error [www]: GET /js/login_home_welcome.a8b53b6f.js Not Found
-2023-06-26 11:04:21 error [www]: GET /favicon.ico Not Found
-2023-06-26 11:06:44 error [www]: GET /css/app.b85c42ca.css Not Found
-2023-06-26 11:06:44 error [www]: GET /js/app.ebe2084b.js Not Found
-2023-06-26 11:06:44 error [www]: GET /js/chunk-vendors.1e04798c.js Not Found
-2023-06-26 11:06:44 error [www]: GET /css/Cate_Params.f12dfea0.css Not Found
-2023-06-26 11:06:44 error [www]: GET /css/List_Add.f72e8916.css Not Found
-2023-06-26 11:06:44 error [www]: GET /css/Order_Report.0a970c9f.css Not Found
-2023-06-26 11:06:44 error [www]: GET /favicon.ico Not Found
-2023-06-26 11:06:44 error [www]: GET /css/User_Rights_Roles.01667aa8.css Not Found
-2023-06-26 11:06:44 error [www]: GET /css/login_home_welcome.cad05166.css Not Found
-2023-06-26 11:06:44 error [www]: GET /js/Cate_Params.4bba86fa.js Not Found
-2023-06-26 11:06:44 error [www]: GET /js/Cate_Params~List_Add~login_home_welcome.a6243fbe.js Not Found
-2023-06-26 11:06:44 error [www]: GET /js/List_Add.241e6cc6.js Not Found
-2023-06-26 11:06:44 error [www]: GET /js/Order_Report.ede72619.js Not Found
-2023-06-26 11:06:44 error [www]: GET /js/User_Rights_Roles.7141730e.js Not Found
-2023-06-26 11:06:44 error [www]: GET /js/login_home_welcome.a8b53b6f.js Not Found
-2023-06-26 14:47:35 error [www]: GET /getlist Not Found
-2023-06-26 14:48:14 error [www]: GET /getlist Not Found
-2023-06-26 14:48:54 error [www]: GET /getlist Not Found
-2023-06-26 14:49:38 error [www]: GET /getlist Not Found
-2023-06-26 14:49:39 error [www]: GET /getlist Not Found
-2023-06-26 14:49:39 error [www]: GET /getlist Not Found
-2023-06-26 14:49:40 error [www]: GET /getlist Not Found
-2023-06-26 14:49:40 error [www]: GET /getlist Not Found
-2023-06-26 14:49:55 error [www]: GET /getlist Not Found
-2023-06-26 14:50:58 error [www]: GET /getlist Not Found
-2023-06-26 14:51:33 error [www]: GET /getlist Not Found
-2023-06-26 15:50:15 error [www]: GET /getlist2 conn is not defined
-2023-06-26 15:50:34 error [www]: GET /getlist2 res.conn.query is not a function
-2023-06-26 15:52:49 error [www]: GET /getlist2 res.conn.query is not a function
-2023-06-27 11:07:09 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:07:09 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:07:53 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:07:54 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:07:54 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:08:12 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:08:18 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:34:22 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:34:29 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:36:01 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:36:26 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:36:48 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:36:48 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:36:48 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:36:49 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:37:05 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:37:06 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:37:06 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:37:06 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:37:34 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:38:08 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:38:08 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:38:23 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:38:24 error [www]: GET /getlist2 app.use is not a function
-2023-06-27 11:45:53 error [www]: GET /login Not Found
-2023-06-27 11:45:54 error [www]: GET /login Not Found
-2023-06-27 11:45:54 error [www]: GET /login Not Found
-2023-06-27 11:46:12 error [www]: GET /login app.use is not a function
-2023-06-27 11:46:27 error [www]: GET /login app.use is not a function
-2023-06-27 11:46:33 error [www]: GET /login app.use is not a function
-2023-06-27 11:46:51 error [www]: GET /login app.use is not a function
-2023-06-27 11:46:52 error [www]: GET /login app.use is not a function
-2023-06-27 11:47:21 error [www]: GET /login app.use is not a function
-2023-06-27 11:47:21 error [www]: GET /login app.use is not a function
-2023-06-27 11:47:51 error [www]: GET /login app.use is not a function
-2023-06-27 11:47:51 error [www]: GET /login app.use is not a function
-2023-06-27 11:47:51 error [www]: GET /login app.use is not a function
-2023-06-27 11:47:52 error [www]: GET /login app.use is not a function
-2023-06-27 11:48:07 error [www]: GET /login app.use is not a function
-2023-06-27 11:48:08 error [www]: GET /login app.use is not a function
-2023-06-27 11:48:08 error [www]: GET /login app.use is not a function
-2023-06-27 11:48:49 error [www]: GET /login app.use is not a function
-2023-06-27 11:48:49 error [www]: GET /login app.use is not a function
-2023-06-27 11:48:55 error [www]: POST /login app.use is not a function
-2023-06-27 11:48:56 error [www]: POST /login app.use is not a function
-2023-06-27 11:48:56 error [www]: POST /login app.use is not a function
-2023-06-27 11:48:57 error [www]: POST /login app.use is not a function
-2023-06-27 11:48:58 error [www]: POST /login app.use is not a function
-2023-06-27 11:48:58 error [www]: POST /login app.use is not a function
-2023-06-27 11:48:59 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:00 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:00 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:32 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:33 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:33 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:38 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:38 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:39 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:39 error [www]: POST /login app.use is not a function
-2023-06-27 11:51:44 error [www]: POST /getlist2 app.use is not a function
-2023-06-27 11:51:45 error [www]: POST /getlist2 app.use is not a function
-2023-06-27 11:51:45 error [www]: POST /getlist2 app.use is not a function
-2023-06-27 11:51:50 error [www]: POST /getlist2 Not Found
-2023-06-27 11:51:50 error [www]: POST /getlist2 Not Found
-2023-06-27 11:54:06 error [www]: GET /login app.use is not a function
-2023-06-27 11:54:44 error [www]: GET /login app.use is not a function
-2023-06-27 11:54:44 error [www]: GET /login app.use is not a function
-2023-06-27 11:54:44 error [www]: GET /login app.use is not a function
-2023-06-27 11:54:44 error [www]: GET /login app.use is not a function
-2023-06-27 11:55:13 error [www]: GET /login app.use is not a function
-2023-06-27 14:23:55 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:12 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:12 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:12 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:18 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:18 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:18 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:19 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:19 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:19 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:19 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:20 error [www]: GET /login app.use is not a function
-2023-06-27 14:24:20 error [www]: GET /login app.use is not a function
-2023-06-27 14:25:51 error [www]: GET /login app.use is not a function
-2023-06-27 14:25:59 error [www]: GET /login app.use is not a function
-2023-06-27 14:26:00 error [www]: GET /login app.use is not a function
-2023-06-27 14:26:08 error [www]: GET /login app.use is not a function
-2023-06-27 14:31:34 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
-2023-06-27 14:31:48 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
-2023-06-27 14:31:48 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
-2023-06-27 14:31:49 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
-2023-06-27 14:31:49 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
-2023-06-27 14:32:45 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
-2023-06-27 14:32:46 error [www]: GET /login Login sessions require session support. Did you forget to use `express-session` middleware?
-2023-06-27 15:42:11 debug [www]: login => username:%s,password:%s
-2023-06-27 15:42:11 debug [www]: admin
-2023-06-27 15:42:25 debug [www]: login => username:%s,password:%s
-2023-06-27 15:42:25 debug [www]: admin
-2023-06-27 15:42:25 debug [www]: login => username:%s,password:%s
-2023-06-27 15:42:25 debug [www]: admin
-2023-06-27 15:43:50 debug [www]: login => username:%s,password:%s
-2023-06-27 15:43:50 debug [www]: admin
-2023-06-27 15:46:52 debug [www]: login => username:%s,password:%s
-2023-06-27 15:46:52 debug [www]: admin
-2023-06-27 17:08:25 debug [www]: login => username:%s,password:%s
-2023-06-27 17:08:25 debug [www]: admin
-2023-06-27 17:30:48 debug [www]: login => username:%s,password:%s
-2023-06-27 17:30:48 debug [www]: admin
+2023-06-28 15:00:00 debug [www]: login => username:%s,password:%s
+2023-06-28 15:00:00 debug [www]: admin
+2023-06-28 15:00:00 debug [www]: null
+2023-06-28 15:00:00 debug [www]: 查询失败
+2023-06-28 15:00:11 debug [www]: login => username:%s,password:%s
+2023-06-28 15:00:11 debug [www]: admin
+2023-06-28 15:00:12 debug [www]: null
+2023-06-28 15:00:12 debug [www]: 查询失败1
+2023-06-28 15:00:49 debug [www]: login => username:%s,password:%s
+2023-06-28 15:00:49 debug [www]: admin
+2023-06-28 15:00:49 debug [www]: null
+2023-06-28 15:01:01 debug [www]: login => username:%s,password:%s
+2023-06-28 15:01:01 debug [www]: admin
+2023-06-28 15:01:01 debug [www]: null
+2023-06-28 15:01:06 debug [www]: login => username:%s,password:%s
+2023-06-28 15:01:06 debug [www]: admin
+2023-06-28 15:01:06 debug [www]: null
+2023-06-28 15:01:42 debug [www]: login => username:%s,password:%s
+2023-06-28 15:01:42 debug [www]: admin
+2023-06-28 15:01:42 debug [www]: 1
+2023-06-28 15:03:00 debug [www]: login => username:%s,password:%s
+2023-06-28 15:03:00 debug [www]: admin
+2023-06-28 15:03:00 debug [www]: null
+2023-06-28 15:03:18 debug [www]: login => username:%s,password:%s
+2023-06-28 15:03:18 debug [www]: admin
+2023-06-28 15:03:18 debug [www]: null
+2023-06-28 15:05:53 debug [www]: login => username:%s,password:%s
+2023-06-28 15:05:53 debug [www]: admin
+2023-06-28 15:05:53 debug [www]: null
+2023-06-28 15:06:13 debug [www]: login => username:%s,password:%s
+2023-06-28 15:06:13 debug [www]: admin
+2023-06-28 15:06:13 debug [www]: null
+2023-06-28 15:06:43 debug [www]: login => username:%s,password:%s
+2023-06-28 15:06:43 debug [www]: admin
+2023-06-28 15:06:43 debug [www]: null
+2023-06-28 15:07:09 debug [www]: login => username:%s,password:%s
+2023-06-28 15:07:09 debug [www]: admin
+2023-06-28 15:07:09 debug [www]: null
+2023-06-28 15:07:21 debug [www]: login => username:%s,password:%s
+2023-06-28 15:07:21 debug [www]: admin
+2023-06-28 15:07:21 debug [www]: null
+2023-06-28 15:09:59 debug [www]: login => username:%s,password:%s
+2023-06-28 15:09:59 debug [www]: admin
+2023-06-28 15:09:59 debug [www]: null
+2023-06-28 15:10:38 debug [www]: login => username:%s,password:%s
+2023-06-28 15:10:38 debug [www]: admin
+2023-06-28 15:10:38 debug [www]: null
+2023-06-28 15:10:50 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:11:05 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:11:09 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:12:07 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:12:08 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:13:34 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:16:41 debug [www]: login => username:%s,password:%s
+2023-06-28 15:16:41 debug [www]: admin
+2023-06-28 15:16:41 debug [www]: null
+2023-06-28 15:22:31 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:22:40 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:22:52 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:22:53 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:22:53 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:22:59 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:23:05 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:23:05 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:23:16 error [www]: GET /getlist2 Unknown authentication strategy "bearer"
+2023-06-28 15:29:08 debug [www]: login => username:%s,password:%s
+2023-06-28 15:29:08 debug [www]: admin
+2023-06-28 15:29:08 debug [www]: null
+2023-06-28 15:31:30 debug [www]: login => username:%s,password:%s
+2023-06-28 15:31:30 debug [www]: admin
+2023-06-28 15:31:31 debug [www]: null
+2023-06-28 15:31:38 debug [www]: login => username:%s,password:%s
+2023-06-28 15:31:38 debug [www]: admin
+2023-06-28 15:31:38 debug [www]: null
