@@ -4,7 +4,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const logger = require('./config/logger')
-const indexRouter = require('./routes/index')
+const mount = require('mount-routes') // 路由加载
+
 const app = express()
 
 // 初始化数据库模块
@@ -14,6 +15,11 @@ app.use(initialize)
 /**
  *	后台管理系统初始化
  */
+
+// 获取管理员逻辑模块
+const managerService = require('./services/ManagerService')
+// 获取角色服务模块
+var roleService = require(path.join(process.cwd(), 'services/RoleService'))
 
 //  view engine setup
 // app.set('views', path.join(__dirname, 'views'))
@@ -45,33 +51,33 @@ app.all('*', function (req, res, next) {
 const resextra = require('./modules/resextra')
 app.use(resextra)
 
-const { login: ManagerServicelogin } = require('./services/ManagerService')
-
 // 初始化 passport 框架
 const { setup, tokenAuth, login } = require('./modules/passport')
-setup(app, ManagerServicelogin)
-// 登录接口
-app.use('/api/private/v1/login', login)
-// token权限验证
-app.use('/*', tokenAuth)
-app.use('/', indexRouter)
+setup(app, managerService.login)
+app.use('/api/private/v1/login', login) // 登录接口
+app.use('/*', tokenAuth) // token权限验证
+
+// 获取验证模块
+// const authorization = require(path.join(process.cwd(), '/modules/authorization'))
+// // 设置全局权限
+// authorization.setAuthFn(function (req, res, next, serviceName, actionName, passFn) {
+//   if (!req.userInfo || isNaN(parseInt(req.userInfo.rid))) return res.sendResult('无角色ID分配')
+//   // 验证权限
+//   roleService.authRight(req.userInfo.rid, serviceName, actionName, function (err, pass) {
+//     passFn(pass)
+//   })
+// })
+
+/**
+ * 初始化路由
+ * 带路径的用法并且可以打印出路有表
+ */
+mount(app, path.join(process.cwd(), '/routes'), true)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404))
 })
-
-// //  默认的错误处理
-// // error handler
-// app.use(function (err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message
-//   res.locals.error = req.app.get('env') === 'development' ? err : {}
-
-//   // render the error page
-//   res.status(err.status || 500)
-//   res.render('error')
-// })
 
 /**
  * error handler

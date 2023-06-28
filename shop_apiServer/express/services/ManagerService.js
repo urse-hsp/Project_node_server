@@ -1,9 +1,6 @@
 const path = require('path')
-const managersDAO = require(path.join(process.cwd(), 'dao/ManagerDAO'))
 var dao = require(path.join(process.cwd(), 'dao/DAO'))
 var Password = require('node-php-password')
-
-const ManagerModel = require('../models/ManagerModel')
 const logger = require('../modules/logger')
 
 /**

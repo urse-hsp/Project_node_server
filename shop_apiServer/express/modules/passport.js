@@ -57,7 +57,7 @@ module.exports.login = function (req, res, next) {
     if (err) return res.sendResult(null, 401, err)
     if (!user) return res.sendResult(null, 401, '参数错误')
     // 获取角色信息
-    // 生成token
+    // 生成token: sign(生成token信息, 加密的key密钥, 时效)
     var token = jwt.sign({ uid: user.id, rid: user.rid }, jwt_config.secretKey, { expiresIn: jwt_config.expiresIn })
     user.token = 'Bearer ' + token
     return res.sendResult(user, 200, '登录成功')
@@ -76,9 +76,10 @@ module.exports.tokenAuth = function (req, res, next) {
   passport.authenticate('bearer', { session: false }, function (err, tokenData) {
     if (err) return res.sendResult(null, 400, '无效token')
     if (!tokenData) return res.sendResult(null, 400, '无效token')
-    req.userInfo = {}
-    req.userInfo.uid = tokenData['uid']
-    req.userInfo.rid = tokenData['rid']
+    req.userInfo = {
+      uid: tokenData['uid'],
+      rid: tokenData['rid'],
+    }
     next()
   })(req, res, next)
 }

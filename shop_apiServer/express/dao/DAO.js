@@ -33,9 +33,9 @@ module.exports.list = async function (modelName, conditions, cb) {
 
   try {
     const res = await model.findAll(conditions)
-    cb(false, res)
+    cb(null, res)
   } catch (error) {
-    cb(true)
+    cb('查询失败')
   }
 }
 
