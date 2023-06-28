@@ -32,8 +32,8 @@ app.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*') // 跨域
   res.header('Access-Control-Allow-Headers', 'X-Requested-With') // 请求头中设置允许的请求方法。
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Authorization')
-  res.setHeader('Content-Type', 'application/json;charset=utf-8') // 使用Content-Type来表示具体请求中的媒体类型信息
-  res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept,X-Requested-With', 'token')
+  res.setHeader('Content-Type', 'application/json; charset=utf-8') // 使用Content-Type来表示具体请求中的媒体类型信息
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, token')
   res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS') // 允许访问的方法
   res.header('X-Powered-By', ' 3.2.1')
   if (req.method == 'OPTIONS') res.send(200)
