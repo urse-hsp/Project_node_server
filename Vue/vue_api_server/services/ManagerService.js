@@ -22,6 +22,7 @@ module.exports.getAllManagers = function (conditions, cb) {
   // 通过关键词获取管理员数量
   managersDAO.countByKey(conditions['query'], function (err, count) {
     key = conditions['query']
+    console.log(key,6,count);
     pagenum = parseInt(conditions['pagenum'])
     pagesize = parseInt(conditions['pagesize'])
 

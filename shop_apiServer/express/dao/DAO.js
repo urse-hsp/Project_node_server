@@ -1,5 +1,8 @@
 const models = require('../models')
 
+// findOrCreate 查找创建
+// findAndCountAll 查找分页
+
 /**
  * 创建对象数据
  *
@@ -38,6 +41,20 @@ module.exports.list = async function (modelName, conditions, cb) {
     cb('查询失败')
   }
 }
+
+// 分页
+// module.exports.pagination = async function (modelName, conditions, cb) {
+//   const model = models[modelName]
+//   if (!model) return cb('模型不存在', null)
+
+//   try {
+//     // pageSize = 5, current = 1
+//     const res = await model.findAll({ offset: 5, limit: 5, ...conditions })
+//     cb(null, res)
+//   } catch (error) {
+//     cb('查询失败')
+//   }
+// }
 
 // 计数按条件
 module.exports.countByConditions = function (modelName, conditions, cb) {
@@ -164,13 +181,18 @@ module.exports.count = async function (modelName, cb) {
  * @param  {[type]}   conditions 条件
  * @param  {Function} cb         回调函数
  */
-module.exports.exists = function (modelName, conditions, cb) {
-  // var db = databaseModule.getDatabase()
-  // var Model = db.models[modelName]
-  // Model.exists(conditions, function (err, isExists) {
-  //   if (err) return cb('查询失败')
-  //   cb(null, isExists)
-  // })
+module.exports.exists = async function (modelName, conditions, cb) {
+  const model = models[modelName]
+  if (!model) return cb('模型不存在', null)
+
+  try {
+    const res = await model.findOne({
+      where: conditions,
+    })
+    cb(null, res)
+  } catch (error) {
+    cb('查询失败', null)
+  }
 }
 
 // 获取模型
@@ -178,4 +200,31 @@ module.exports.getModel = function (modelName) {
   const model = models[modelName]
   if (!model) return cb('模型不存在', null)
   return model
+}
+
+/**
+ * 分页有关的查询
+ *
+ * @param  {[type]}   modelName  模块名
+ * @param  {[type]}   conditions 条件
+ * @param  {Function} cb         回调函数
+ */
+module.exports.findAndCountAll = async function (modelName) {
+  const model = models[modelName]
+  if (!model) return cb('模型不存在', null)
+
+  try {
+    const { count, rows } = await Model.findAndCountAll({
+      where: {
+        title: {
+          [Op.like]: 'foo%',
+        },
+      },
+      offset: 10,
+      limit: 2,
+    })
+    cb(false, count)
+  } catch (error) {
+    cb(true)
+  }
 }

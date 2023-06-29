@@ -44,5 +44,5 @@ ManagerModel.init(
 )
 
 // `sequelize.define` 会返回模型
-console.log(ManagerModel === sequelize.models.ManagerModel) // true
+// console.log(ManagerModel === sequelize.models.ManagerModel) // true
 module.exports = ManagerModel
