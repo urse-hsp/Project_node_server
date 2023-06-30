@@ -1,6 +1,6 @@
-var express = require('express')
-var router = express.Router()
-var path = require('path')
+const express = require('express')
+const router = express.Router()
+const path = require('path')
 const ManagerService = require(path.join(process.cwd(), 'services/ManagerService'))
 
 // 查询用户列表
@@ -121,56 +121,50 @@ router.delete(
   }
 )
 
-// // 分配用户角色
-// router.put(
-//   '/:id/role',
-//   // 参数验证
-//   function (req, res, next) {
-//     if (!req.params.id) {
-//       return res.sendResult(null, 400, '用户ID不能为空')
-//     }
-//     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '用户ID必须是数字')
+// 分配用户角色
+router.put(
+  '/:id/role',
+  // 参数验证
+  function (req, res, next) {
+    if (!req.params.id) {
+      return res.sendResult(null, 400, '用户ID不能为空')
+    }
+    if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '用户ID必须是数字')
 
-//     if (req.params.id == 500) return res.sendResult(null, 400, '不允许修改admin账户')
+    if (req.params.id == 500) return res.sendResult(null, 400, '不允许修改admin账户')
 
-//     if (!req.body.rid) res.sendResult(null, 400, '权限ID不能为空')
-//     next()
-//   },
-//   // 处理业务逻辑
-//   function (req, res, next) {
-//     mgrServ.setRole(req.params.id, req.body.rid, function (err, manager) {
-//       if (err) return res.sendResult(null, 400, err)
-//       res.sendResult(manager, 200, '设置角色成功')
-//     })(req, res, next)
-//   }
-// )
+    if (!req.body.rid) res.sendResult(null, 400, '权限ID不能为空')
+    next()
+  },
+  // 处理业务逻辑
+  function (req, res, next) {
+    ManagerService.setRole(req.params.id, req.body.rid, function (err, manager) {
+      if (err) return res.sendResult(null, 400, err)
+      res.sendResult(manager, 200, '设置角色成功')
+    })
+  }
+)
 
-// router.put(
-//   '/:id/state/:state',
-//   // 参数验证
-//   function (req, res, next) {
-//     if (!req.params.id) {
-//       return res.sendResult(null, 400, '用户ID不能为空')
-//     }
-//     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '用户ID必须是数字')
-
-//     // // // if(!req.params.state) {
-//     // // // 	return res.sendResult(null,400,"状态不能为空");
-//     // // // }
-//     // // if(isNaN(parseInt(req.params.state))) return res.sendResult(null,400,"状态必须是数字");
-//     // if(parseInt(req.params.state) != 0 && parseInt(req.params.state) != 1) return res.sendResult(null,400,"管理状态只能为0或1");
-
-//     next()
-//   },
-//   // 处理业务逻辑
-//   function (req, res, next) {
-//     state = 0
-//     if (req.params.state && req.params.state == 'true') state = 1
-//     mgrServ.updateMgrState(req.params.id, state, function (err, manager) {
-//       if (err) return res.sendResult(null, 400, err)
-//       res.sendResult(manager, 200, '设置状态成功')
-//     })(req, res, next)
-//   }
-// )
+// 状态开关
+router.put(
+  '/:id/state/:state',
+  // 参数验证
+  function (req, res, next) {
+    if (!req.params.id) {
+      return res.sendResult(null, 400, '用户ID不能为空')
+    }
+    if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '用户ID必须是数字')
+    next()
+  },
+  // 处理业务逻辑
+  function (req, res, next) {
+    state = 0
+    if (req.params.state && req.params.state == 'true') state = 1
+    ManagerService.updateMgrState(req.params.id, state, function (err, manager) {
+      if (err) return res.sendResult(null, 400, err)
+      res.sendResult(manager, 200, '设置状态成功')
+    })
+  }
+)
 
 module.exports = router

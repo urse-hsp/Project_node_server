@@ -1,4 +1,4 @@
-var path = require('path')
+const path = require('path')
 const daoModule = require('./DAO')
 const { sequelize } = require(path.join(process.cwd(), 'modules/database'))
 const { QueryTypes } = require('sequelize')

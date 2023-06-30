@@ -55,7 +55,7 @@ app.use(resextra)
 const { setup, tokenAuth, login } = require('./modules/passport')
 setup(app, managerService.login)
 app.use('/api/private/v1/login', login) // 登录接口
-// app.use('/*', tokenAuth) // token权限验证
+app.use('/*', tokenAuth) // token权限验证
 
 // 获取验证模块
 // const authorization = require(path.join(process.cwd(), '/modules/authorization'))

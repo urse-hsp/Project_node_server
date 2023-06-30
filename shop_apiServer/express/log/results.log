@@ -291,3 +291,50 @@
 2023-06-29 17:01:43 error [www]: GET /api/private/v1/users/500 ManagerDAO.show is not a function
 2023-06-29 17:02:17 error [www]: GET /api/private/v1/users/500 ManagerDAO(...).show is not a function
 2023-06-29 17:07:09 error [www]: GET /api/private/v1/roles Not Found
+2023-06-30 10:10:19 debug [www]: login => username:%s,password:%s
+2023-06-30 10:10:19 debug [www]: admin
+2023-06-30 10:10:19 debug [www]: null
+2023-06-30 10:36:31 error [www]: PUT /api/private/v1/users/502/role Not Found
+2023-06-30 10:38:11 error [www]: PUT /api/private/v1/users/502/role ManagerService.setRole(...) is not a function
+2023-06-30 10:38:39 error [www]: PUT /api/private/v1/users/502/role ManagerService.setRole(...) is not a function
+2023-06-30 10:42:53 error [www]: PUT /api/private/v1/users/511/role ManagerService.setRole(...) is not a function
+2023-06-30 10:43:19 error [www]: PUT /api/private/v1/users/511/role ManagerService.setRole(...) is not a function
+2023-06-30 10:54:18 error [www]: GET /api/private/v1/rights/list Not Found
+2023-06-30 10:59:06 error [www]: GET /api/private/v1/rights/list Not Found
+2023-06-30 10:59:29 error [www]: POST /api/private/v1/roles roleServ.createRole is not a function
+2023-06-30 10:59:31 error [www]: POST /api/private/v1/roles roleServ.createRole is not a function
+2023-06-30 11:06:11 error [www]: DELETE /api/private/v1/roles/56 roleServ.deleteRole is not a function
+2023-06-30 11:06:39 error [www]: DELETE /api/private/v1/roles/56 roleServ.deleteRole is not a function
+2023-06-30 11:10:10 error [www]: GET /api/private/v1/rights/tree Not Found
+2023-06-30 11:13:37 error [www]: POST /api/private/v1/roles/54/rights roleServ.updateRoleRight is not a function
+2023-06-30 11:16:44 error [www]: GET /api/private/v1/goods?query=&pagenum=1&pagesize=10 Not Found
+2023-06-30 11:34:38 error [www]: GET /api/private/v1/goods?query=&pagenum=1&pagesize=10 dao.conditions is not a function
+2023-06-30 11:59:23 error [www]: GET /api/private/v1/goods?query=&pagenum=1&pagesize=10 pagenum is not defined
+2023-06-30 13:13:14 error [www]: GET /api/private/v1/categories Not Found
+2023-06-30 13:20:00 error [www]: GET /api/private/v1/goods?query=%E5%8D%97%E6%9E%81%E4%BA%BA&current=1&pageSize=10 orm is not defined
+2023-06-30 13:26:42 error [www]: GET /api/private/v1/categories Not Found
+2023-06-30 13:32:51 error [www]: GET /api/private/v1/categories Not Found
+2023-06-30 13:38:21 error [www]: GET /api/private/v1/categories catServ.getAllCategories(...) is not a function
+2023-06-30 15:19:28 debug [www]: login => username:%s,password:%s
+2023-06-30 15:19:28 debug [www]: admin
+2023-06-30 15:19:28 debug [www]: null
+2023-06-30 16:04:50 error [www]: GET /api/private/v1/orders?query=&pagenum=1&pagesize=10 Not Found
+2023-06-30 16:11:56 error [www]: GET /api/private/v1/orders?query=&current=1&pageSize=10 dao.countByConditions is not a function
+2023-06-30 16:11:58 error [www]: GET /api/private/v1/orders?query=&current=1&pageSize=10 dao.countByConditions is not a function
+2023-06-30 16:13:16 error [www]: GET /api/private/v1/orders?query=&current=1&pageSize=10 current is not defined
+2023-06-30 16:17:51 error [www]: GET /api/private/v1/kuaidi/1106975712662 Not Found
+2023-06-30 16:21:00 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:21:06 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:21:43 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:22:11 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:22:54 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:23:03 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:23:20 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:23:28 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:24:28 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:24:56 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:25:44 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:26:02 error [www]: GET /api/private/v1/categories?type=3&current=1&pageSize=5 Assignment to constant variable.
+2023-06-30 16:34:44 debug [www]: login => username:%s,password:%s
+2023-06-30 16:34:44 debug [www]: admin
+2023-06-30 16:34:44 debug [www]: null

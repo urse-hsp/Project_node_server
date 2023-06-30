@@ -1,4 +1,6 @@
 const models = require('../models')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 // findOrCreate 查找创建
 // findAndCountAll 查找分页
@@ -56,26 +58,36 @@ module.exports.list = async function (modelName, conditions, cb) {
 //   }
 // }
 
-// 计数按条件
-module.exports.countByConditions = function (modelName, conditions, cb) {
+/**
+ * 计数按条件查询
+ *
+ * @param  {[type]}   modelName  模块名
+ * @param  {[type]}   conditions 条件
+ * @param  {Function} cb         回调函数
+ */
+module.exports.findAndCountAll = async function (modelName, conditions, offset, limit, cb) {
   const model = models[modelName]
   if (!model) return cb('模型不存在', null)
+  console.log(offset, limit, 'limit')
 
-  // var resultCB = function (err, count) {
-  //   if (err) {
-  //     return cb('查询失败', null)
-  //   }
-  //   cb(null, count)
-  // }
-  // if (conditions) {
-  //   if (conditions['columns']) {
-  //     model = model.count(conditions['columns'], resultCB)
-  //   } else {
-  //     model = model.count(resultCB)
-  //   }
-  // } else {
-  //   model = model.count(resultCB)
-  // }
+  // sql 默认从0开始
+  let offsets = Number(offset)
+  if (offsets) {
+    offsets = offset - 1
+  }
+
+  console.log(conditions, 'conditions')
+  try {
+    const { count, rows } = await model.findAndCountAll({
+      ...conditions,
+      offset: offsets,
+      limit: Number(limit),
+    })
+    console.log(6666)
+    cb(null, { count, rows })
+  } catch (error) {
+    cb('查询失败1', null)
+  }
 }
 
 /**
@@ -200,31 +212,4 @@ module.exports.getModel = function (modelName) {
   const model = models[modelName]
   if (!model) return cb('模型不存在', null)
   return model
-}
-
-/**
- * 分页有关的查询
- *
- * @param  {[type]}   modelName  模块名
- * @param  {[type]}   conditions 条件
- * @param  {Function} cb         回调函数
- */
-module.exports.findAndCountAll = async function (modelName) {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-
-  try {
-    const { count, rows } = await Model.findAndCountAll({
-      where: {
-        title: {
-          [Op.like]: 'foo%',
-        },
-      },
-      offset: 10,
-      limit: 2,
-    })
-    cb(false, count)
-  } catch (error) {
-    cb(true)
-  }
 }

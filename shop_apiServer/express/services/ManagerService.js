@@ -1,5 +1,4 @@
 const path = require('path')
-var dao = require(path.join(process.cwd(), 'dao/DAO'))
 var Password = require('node-php-password')
 const logger = require('../modules/logger')
 var dao = require(path.join(process.cwd(), 'dao/DAO'))
@@ -159,50 +158,47 @@ module.exports.deleteManager = function (id, cb) {
   })
 }
 
-// /**
-//  * 为管理员设置角色
-//  *
-//  * @param {[type]}   id  管理员ID
-//  * @param {[type]}   rid 角色ID
-//  * @param {Function} cb  回调函数
-//  */
-// module.exports.setRole = function (id, rid, cb) {
-//   managersDAO.show(id, function (err, manager) {
-//     if (err || !manager) cb('管理员ID不存在')
+/**
+ * 为管理员设置角色
+ *
+ * @param {[type]}   id  管理员ID
+ * @param {[type]}   rid 角色ID
+ * @param {Function} cb  回调函数
+ */
+module.exports.setRole = function (id, rid, cb) {
+  console.log(6)
+  managersDAO.show(id, function (err, manager) {
+    if (err || !manager) cb('管理员ID不存在')
 
-//     managersDAO.update({ mg_id: manager.mg_id, role_id: rid }, function (err, manager) {
-//       if (err) return cb('设置失败')
-//       cb(null, {
-//         id: manager.mg_id,
-//         rid: manager.role_id,
-//         username: manager.mg_name,
-//         mobile: manager.mg_mobile,
-//         email: manager.mg_email,
-//       })
-//     })
-//   })
-// }
+    managersDAO.update({ mg_id: manager.mg_id, role_id: rid }, function (err, manager) {
+      if (err) return cb('设置失败')
+      cb(null, {
+        id: manager.mg_id,
+        rid: manager.role_id,
+        username: manager.mg_name,
+        mobile: manager.mg_mobile,
+        email: manager.mg_email,
+      })
+    })
+  })
+}
 
-// module.exports.updateMgrState = function (id, state, cb) {
-//   managersDAO.show(id, function (err, manager) {
-//     if (err || !manager) cb('管理员ID不存在')
-
-//     managersDAO.update(
-//       { mg_id: manager.mg_id, mg_state: state },
-//       function (err, manager) {
-//         if (err) return cb('设置失败')
-//         cb(null, {
-//           id: manager.mg_id,
-//           rid: manager.role_id,
-//           username: manager.mg_name,
-//           mobile: manager.mg_mobile,
-//           email: manager.mg_email,
-//           mg_state: manager.mg_state ? 1 : 0,
-//         })
-//       }
-//     )
-//   })
-// }
+module.exports.updateMgrState = function (id, state, cb) {
+  managersDAO.show(id, function (err, manager) {
+    if (err || !manager) cb('管理员ID不存在')
+    managersDAO.update({ mg_id: manager.mg_id, mg_state: state }, function (err, manager) {
+      if (err) return cb('设置失败')
+      cb(null, {
+        id: manager.mg_id,
+        rid: manager.role_id,
+        username: manager.mg_name,
+        mobile: manager.mg_mobile,
+        email: manager.mg_email,
+        mg_state: manager.mg_state ? 1 : 0,
+      })
+    })
+  })
+}
 
 /**
  * 管理员登录

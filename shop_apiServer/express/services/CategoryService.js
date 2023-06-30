@@ -1,6 +1,6 @@
-var _ = require('lodash')
-var path = require('path')
-var dao = require(path.join(process.cwd(), 'dao/DAO'))
+const _ = require('lodash')
+const path = require('path')
+const dao = require(path.join(process.cwd(), 'dao/DAO'))
 
 /**
  * 判断是否删除
@@ -58,24 +58,30 @@ function getTreeResult(keyCategories, categories, type) {
  * @param  {Function} cb      回调函数
  */
 module.exports.getAllCategories = function (type, conditions, cb) {
-  dao.list('CategoryModel', { cat_deleted: false }, function (err, categories) {
-    var keyCategories = _.keyBy(categories, 'cat_id')
+  dao.list('CategoryModel', { where: { cat_deleted: false } }, function (err, categories) {
+    console.log(err, 65)
+    keyCategories = _.keyBy(categories, 'cat_id')
     if (!type) type = 3
 
-    result = getTreeResult(keyCategories, categories, type)
+    const result = getTreeResult(keyCategories, categories, type)
+    cb(null, result)
 
-    if (conditions) {
-      count = result.length
-      pagesize = parseInt(conditions.pagesize)
-      pagenum = parseInt(conditions.pagenum) - 1
-      result = _.take(_.drop(result, pagenum * pagesize), pagesize)
-      var resultDta = {}
-      resultDta['total'] = count
-      resultDta['pagenum'] = pagenum
-      resultDta['pagesize'] = pagesize
-      resultDta['result'] = result
-      return cb(null, resultDta)
+    if (conditions.offset) {
+      console.log(10)
+      // count = result.length
+      // pageSize = parseInt(conditions.pageSize)
+      // current = parseInt(conditions.current) - 1
+      // result = _.take(_.drop(result, current * pageSize), pageSize)
+      // const resultDta = {}
+      // resultDta['total'] = count
+      // resultDta['current'] = current
+      // resultDta['pageSize'] = pageSize
+      // resultDta['result'] = result
+
+      // return cb(null, resultDta)
     }
+
+    console.log(6)
     cb(null, result)
   })
 }
@@ -86,12 +92,12 @@ module.exports.getAllCategories = function (type, conditions, cb) {
  * @param  {[type]}   id 分类ID
  * @param  {Function} cb 回调函数
  */
-module.exports.getCategoryById = function (id, cb) {
-  dao.show('CategoryModel', id, function (err, category) {
-    if (err) return cb('获取分类对象失败')
-    cb(null, category)
-  })
-}
+// module.exports.getCategoryById = function (id, cb) {
+//   dao.show('CategoryModel', id, function (err, category) {
+//     if (err) return cb('获取分类对象失败')
+//     cb(null, category)
+//   })
+// }
 
 /**
  * 添加分类
@@ -105,16 +111,12 @@ module.exports.getCategoryById = function (id, cb) {
  *
  * @param {Function} cb  回调函数
  */
-module.exports.addCategory = function (cat, cb) {
-  dao.create(
-    'CategoryModel',
-    { cat_pid: cat.cat_pid, cat_name: cat.cat_name, cat_level: cat.cat_level },
-    function (err, newCat) {
-      if (err) return cb('创建分类失败')
-      cb(null, newCat)
-    }
-  )
-}
+// module.exports.addCategory = function (cat, cb) {
+//   dao.create('CategoryModel', { cat_pid: cat.cat_pid, cat_name: cat.cat_name, cat_level: cat.cat_level }, function (err, newCat) {
+//     if (err) return cb('创建分类失败')
+//     cb(null, newCat)
+//   })
+// }
 
 /**
  * 更新分类
@@ -123,12 +125,12 @@ module.exports.addCategory = function (cat, cb) {
  * @param  {[type]}   newName 新的名称
  * @param  {Function} cb      回调函数
  */
-module.exports.updateCategory = function (cat_id, newName, cb) {
-  dao.update('CategoryModel', cat_id, { cat_name: newName }, function (err, newCat) {
-    if (err) return cb('更新失败')
-    cb(null, newCat)
-  })
-}
+// module.exports.updateCategory = function (cat_id, newName, cb) {
+//   dao.update('CategoryModel', cat_id, { cat_name: newName }, function (err, newCat) {
+//     if (err) return cb('更新失败')
+//     cb(null, newCat)
+//   })
+// }
 
 /**
  * 删除分类
@@ -136,9 +138,9 @@ module.exports.updateCategory = function (cat_id, newName, cb) {
  * @param  {[type]}   cat_id 分类ID
  * @param  {Function} cb     回调函数
  */
-module.exports.deleteCategory = function (cat_id, cb) {
-  dao.update('CategoryModel', cat_id, { cat_deleted: true }, function (err, newCat) {
-    if (err) return cb('删除失败')
-    cb('删除成功')
-  })
-}
+// module.exports.deleteCategory = function (cat_id, cb) {
+//   dao.update('CategoryModel', cat_id, { cat_deleted: true }, function (err, newCat) {
+//     if (err) return cb('删除失败')
+//     cb('删除成功')
+//   })
+// }

@@ -31,8 +31,18 @@
    https://github.com/dresende/node-orm2
 1. mount-routes 可以自动挂载 routes 目录的所有路由，以文件名称作为路由的根，也可以指定具体的路径（使用第二个参数）
 
-# api
+# api 接口
 
-## 接口
+## user
+
+1. /api/private/v1/users 管理员列表
+2. /api/private/v1/users:id 获取用户信息
+3. /api/private/v1/users post 创建用户
+4. /api/private/v1/users:id put 修改用户信息
+5. /api/private/v1/users:id delete 删除用户信息
+6. /api/private/v1/users:id/role put 分配用户角色
+7. /api/private/v1/users:id/state/:state put 状态开关
+
+## 其他
 
 1. /api/private/v1/login 登录

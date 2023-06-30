@@ -100,19 +100,19 @@ module.exports.getAllRoles = function (cb) {
  * @param  {[type]}   params [description]
  * @param  {Function} cb     [description]
  */
-// module.exports.createRole = function (params, cb) {
-//   if (!params.roleName) return cb('角色名称不能为空')
-//   if (!params.roleDesc) params.roleDesc = ''
+module.exports.createRole = function (params, cb) {
+  if (!params.roleName) return cb('角色名称不能为空')
+  if (!params.roleDesc) params.roleDesc = ''
 
-//   dao.create('RoleModel', { role_name: params.roleName, role_desc: params.roleDesc, ps_ids: '' }, function (err, role) {
-//     if (err) return cb('创建角色失败')
-//     cb(null, {
-//       roleId: role.role_id,
-//       roleName: role.role_name,
-//       roleDesc: role.role_desc,
-//     })
-//   })
-// }
+  dao.create('RoleModel', { role_name: params.roleName, role_desc: params.roleDesc, ps_ids: '' }, function (err, role) {
+    if (err) return cb('创建角色失败')
+    cb(null, {
+      roleId: role.role_id,
+      roleName: role.role_name,
+      roleDesc: role.role_desc,
+    })
+  })
+}
 
 /**
  * 通过角色 ID 获取角色详情
@@ -120,19 +120,24 @@ module.exports.getAllRoles = function (cb) {
  * @param  {[type]}   id 角色ID
  * @param  {Function} cb 回调函数
  */
-// module.exports.getRoleById = function (id, cb) {
-//   if (!id) return cb('角色ID不能为空')
-//   if (isNaN(parseInt(id))) return cb('角色ID必须为数字')
-//   dao.show('RoleModel', id, function (err, role) {
-//     if (err) return cb('获取角色详情失败')
-//     cb(null, {
-//       roleId: role.role_id,
-//       roleName: role.role_name,
-//       roleDesc: role.role_desc,
-//       rolePermissionDesc: role.ps_ca,
-//     })
-//   })
-// }
+module.exports.getRoleById = function (id, cb) {
+  if (!id) return cb('角色ID不能为空')
+  if (isNaN(parseInt(id))) return cb('角色ID必须为数字')
+  dao.show(
+    'RoleModel',
+    id,
+    function (err, role) {
+      if (err) return cb('获取角色详情失败')
+      cb(null, {
+        roleId: role.role_id,
+        roleName: role.role_name,
+        roleDesc: role.role_desc,
+        rolePermissionDesc: role.ps_ca,
+      })
+    },
+    'role_id'
+  )
+}
 
 /**
  * 更新角色信息
@@ -140,29 +145,35 @@ module.exports.getAllRoles = function (cb) {
  * @param  {[type]}   role 角色对象
  * @param  {Function} cb   回调函数
  */
-// module.exports.updateRole = function (params, cb) {
-//   if (!params) return cb('参数不能为空')
-//   if (!params.id) return cb('角色ID不能为空')
-//   if (isNaN(parseInt(params.id))) return cb('角色ID必须为数字')
+module.exports.updateRole = function (params, cb) {
+  if (!params) return cb('参数不能为空')
+  if (!params.id) return cb('角色ID不能为空')
+  if (isNaN(parseInt(params.id))) return cb('角色ID必须为数字')
 
-//   updateInfo = {}
-//   if (params.roleName) {
-//     updateInfo['role_name'] = params.roleName
-//   }
-//   if (params.roleDesc) {
-//     updateInfo['role_desc'] = params.roleDesc
-//   }
+  updateInfo = {}
+  if (params.roleName) {
+    updateInfo['role_name'] = params.roleName
+  }
+  if (params.roleDesc) {
+    updateInfo['role_desc'] = params.roleDesc
+  }
 
-//   dao.update('RoleModel', params.id, updateInfo, function (err, newRole) {
-//     if (err) return cb('更新角色信息失败')
-//     cb(null, {
-//       roleId: newRole.role_id,
-//       roleName: newRole.role_name,
-//       roleDesc: newRole.role_desc,
-//       rolePermissionDesc: newRole.ps_ca,
-//     })
-//   })
-// }
+  dao.update(
+    'RoleModel',
+    params.id,
+    updateInfo,
+    function (err, newRole) {
+      if (err) return cb('更新角色信息失败')
+      cb(null, {
+        roleId: newRole.role_id,
+        roleName: newRole.role_name,
+        roleDesc: newRole.role_desc,
+        rolePermissionDesc: newRole.ps_ca,
+      })
+    },
+    'role_id'
+  )
+}
 
 /**
  * 对角色进行授权
@@ -170,21 +181,27 @@ module.exports.getAllRoles = function (cb) {
  * @param  {[type]}   rights 以 "," 分割的权限列表
  * @param  {Function} cb     回调函数
  */
-// module.exports.updateRoleRight = function (rid, rights, cb) {
-//   if (!rid) return cb('角色ID不能为空')
-//   if (isNaN(parseInt(rid))) return cb('角色ID必须为数字')
+module.exports.updateRoleRight = function (rid, rights, cb) {
+  if (!rid) return cb('角色ID不能为空')
+  if (isNaN(parseInt(rid))) return cb('角色ID必须为数字')
 
-//   // 注意这里需要更新权限描述信息字段
-//   // 暂时实现
-//   //
-//   dao.update('RoleModel', rid, { ps_ids: rights }, function (err, newRole) {
-//     if (err) return cb('更新权限失败')
-//     cb(null, {
-//       roleId: newRole.role_id,
-//       roleName: newRole.role_name,
-//     })
-//   })
-// }
+  // 注意这里需要更新权限描述信息字段
+  // 暂时实现
+  //
+  dao.update(
+    'RoleModel',
+    rid,
+    { ps_ids: rights },
+    function (err, newRole) {
+      if (err) return cb('更新权限失败')
+      cb(null, {
+        roleId: newRole.role_id,
+        roleName: newRole.role_name,
+      })
+    },
+    'role_id'
+  )
+}
 
 /**
  * 删除权限
@@ -193,31 +210,36 @@ module.exports.getAllRoles = function (cb) {
  * @param  {[type]}   deletedRightId 删除的权限ID
  * @param  {Function} cb             回调函数
  */
-// module.exports.deleteRoleRight = function (rid, deletedRightId, cb) {
-//   daoModule.findOne('RoleModel', { role_id: rid }, function (err, role) {
-//     if (err || !role) return cb('获取角色信息失败', false)
-//     ps_ids = role.ps_ids.split(',')
-//     new_ps_ids = []
-//     for (idx in ps_ids) {
-//       ps_id = ps_ids[idx]
-//       if (parseInt(deletedRightId) == parseInt(ps_id)) {
-//         continue
-//       }
-//       new_ps_ids.push(ps_id)
-//     }
-//     new_ps_ids_string = new_ps_ids.join(',')
-//     role.ps_ids = new_ps_ids_string
-//     role.save(function (err, newRole) {
-//       if (err) return cb('删除权限失败')
-//       permissionAPIDAO.list(function (err, permissions) {
-//         if (err) return cb('获取权限数据失败')
-//         permissionIds = newRole.ps_ids.split(',')
-//         const permissionKeys = _.keyBy(permissions, 'ps_id')
-//         return cb(null, _.values(getPermissionsResult(permissionKeys, permissionIds)))
-//       })
-//     })
-//   })
-// }
+module.exports.deleteRoleRight = function (rid, deletedRightId, cb) {
+  daoModule.findOne(
+    'RoleModel',
+    { role_id: rid },
+    function (err, role) {
+      if (err || !role) return cb('获取角色信息失败', false)
+      ps_ids = role.ps_ids.split(',')
+      new_ps_ids = []
+      for (idx in ps_ids) {
+        ps_id = ps_ids[idx]
+        if (parseInt(deletedRightId) == parseInt(ps_id)) {
+          continue
+        }
+        new_ps_ids.push(ps_id)
+      }
+      new_ps_ids_string = new_ps_ids.join(',')
+      role.ps_ids = new_ps_ids_string
+      role.save(function (err, newRole) {
+        if (err) return cb('删除权限失败')
+        permissionAPIDAO.list(function (err, permissions) {
+          if (err) return cb('获取权限数据失败')
+          permissionIds = newRole.ps_ids.split(',')
+          const permissionKeys = _.keyBy(permissions, 'ps_id')
+          return cb(null, _.values(getPermissionsResult(permissionKeys, permissionIds)))
+        })
+      })
+    },
+    'role_id'
+  )
+}
 
 /**
  * 删除角色
@@ -225,14 +247,19 @@ module.exports.getAllRoles = function (cb) {
  * @param  {[type]}   id 角色ID
  * @param  {Function} cb 回调函数
  */
-// module.exports.deleteRole = function (id, cb) {
-//   if (!id) return cb('角色ID不能为空')
-//   if (isNaN(parseInt(id))) return cb('角色ID必须为数字')
-//   dao.destroy('RoleModel', id, function (err) {
-//     if (err) return cb('删除失败')
-//     cb(null, true)
-//   })
-// }
+module.exports.deleteRole = function (id, cb) {
+  if (!id) return cb('角色ID不能为空')
+  if (isNaN(parseInt(id))) return cb('角色ID必须为数字')
+  dao.destroy(
+    'RoleModel',
+    id,
+    function (err) {
+      if (err) return cb('删除失败')
+      cb(null, true)
+    },
+    'role_id'
+  )
+}
 
 /**
  * 权限验证函数
