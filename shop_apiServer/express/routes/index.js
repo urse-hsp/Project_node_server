@@ -1,11 +1,11 @@
 var express = require('express')
 var router = express.Router()
-// const User = require('../models/user')
+const User = require('../models/user')
 const { sequelize } = require('../modules/database')
 var _ = require('lodash')
 var path = require('path')
 var dao = require(path.join(process.cwd(), 'dao/DAO'))
-const User = require('../services/user')
+// const User = require('../services/user')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -28,7 +28,7 @@ router.post('test/:data', (req, res) => {
   return res.json({ query: req.query, data: req.params, json: req.body })
 })
 
-router.get('getlist2', async (req, res, next) => {
+router.get('/getlist2', async (req, res, next) => {
   // const data = await User.findAll({
   //   where: {
   //     user_id: 1
@@ -63,5 +63,12 @@ router.get('getlist2', async (req, res, next) => {
 //   console.log(6);
 //   return res.sendResult(data)
 // })
+
+router.get('/getlistsss', async (req, res, next) => {
+  console.log(1)
+  User.findByPk(2).then((response) => {
+    res.sendResult(response, 200, '创建成功')
+  })
+})
 
 module.exports = router

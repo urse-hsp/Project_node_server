@@ -70,7 +70,7 @@ module.exports.getLeftMenus = function (userInfo, cb) {
   if (rid == 0) {
     authFn(rid, null, cb)
   } else {
-    dao.show(
+    dao.findByPk(
       'RoleModel',
       userInfo.rid,
       function (err, role) {
@@ -83,8 +83,7 @@ module.exports.getLeftMenus = function (userInfo, cb) {
         }
 
         authFn(rid, keyRolePermissions, cb)
-      },
-      'role_id'
+      }
     )
   }
 }

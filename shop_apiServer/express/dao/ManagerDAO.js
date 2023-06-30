@@ -146,7 +146,6 @@ module.exports.destroy = function (id, cb) {
  * @param  {Function} cb  回调函数
  */
 module.exports.save = function (obj, cb) {
-  console.log(123, obj.mg_id)
   daoModule.show(
     'ManagerModel',
     obj.mg_id,

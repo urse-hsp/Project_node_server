@@ -3,7 +3,19 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
 // findOrCreate 查找创建
-// findAndCountAll 查找分页
+
+// 获取模型
+const getModel = async function (modelName, type, conditions, cb, errMeg = '查询失败') {
+  const model = models[modelName]
+  if (!model) return cb('模型不存在', null)
+
+  try {
+    const res = await model[type](conditions)
+    cb(null, res)
+  } catch (error) {
+    cb(errMeg)
+  }
+}
 
 /**
  * 创建对象数据
@@ -12,20 +24,12 @@ const Op = Sequelize.Op
  * @param  {[type]}   obj       模型对象
  * @param  {Function} cb        回调函数
  */
-module.exports.create = async function (modelName, obj, cb) {
-  const Model = models[modelName]
-  if (!Model) return cb('模型不存在', null)
-
-  try {
-    const res = await Model.create(obj)
-    cb(false, res)
-  } catch (error) {
-    cb(true)
-  }
+module.exports.create = async function (modelName, conditions, cb) {
+  getModel(modelName, 'create', conditions, cb)
 }
 
 /**
- * 获取所有数据
+ * 获取所有数据/查询所有数据
  *
  * @param  {[type]}   conditions 查询条件
  * 查询条件统一规范
@@ -33,30 +37,8 @@ module.exports.create = async function (modelName, obj, cb) {
  * @param  {Function} cb         回调函数
  */
 module.exports.list = async function (modelName, conditions, cb) {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-
-  try {
-    const res = await model.findAll(conditions)
-    cb(null, res)
-  } catch (error) {
-    cb('查询失败')
-  }
+  getModel(modelName, 'findAll', conditions, cb)
 }
-
-// 分页
-// module.exports.pagination = async function (modelName, conditions, cb) {
-//   const model = models[modelName]
-//   if (!model) return cb('模型不存在', null)
-
-//   try {
-//     // pageSize = 5, current = 1
-//     const res = await model.findAll({ offset: 5, limit: 5, ...conditions })
-//     cb(null, res)
-//   } catch (error) {
-//     cb('查询失败')
-//   }
-// }
 
 /**
  * 计数按条件查询
@@ -65,48 +47,30 @@ module.exports.list = async function (modelName, conditions, cb) {
  * @param  {[type]}   conditions 条件
  * @param  {Function} cb         回调函数
  */
-module.exports.findAndCountAll = async function (modelName, conditions, offset, limit, cb) {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-  console.log(offset, limit, 'limit')
+module.exports.findAndCountAll = async function (modelName, conditions, current, pageSize, cb) {
+  // sql 默认从0开始
+  let currentPage = Number(current)
+  if (currentPage === 1) {
+    currentPage = 0
+  }
 
   // sql 默认从0开始
-  let offsets = Number(offset)
-  if (offsets) {
-    offsets = offset - 1
+  const params = {
+    ...conditions,
+    offset: currentPage,
+    limit: Number(pageSize),
   }
-
-  console.log(conditions, 'conditions')
-  try {
-    const { count, rows } = await model.findAndCountAll({
-      ...conditions,
-      offset: offsets,
-      limit: Number(limit),
-    })
-    console.log(6666)
-    cb(null, { count, rows })
-  } catch (error) {
-    cb('查询失败1', null)
-  }
+  getModel(modelName, 'findAndCountAll', params, cb)
 }
 
 /**
- * 获取一条数据
+ * 获取一条数据 findOne 方法获得它找到的第一个条目(它可以满足提供的可选查询参数).
  * @param  {[type]}   modelName  模型名称
  * @param  {[数组]}   conditions  条件集合
  * @param  {Function} cb         回调函数
  */
 module.exports.findOne = async function (modelName, conditions, cb) {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-  if (!conditions) return cb('条件为空', null)
-
-  try {
-    const res = await model.findOne(conditions)
-    cb(null, res)
-  } catch (error) {
-    cb('查询失败', null)
-  }
+  getModel(modelName, 'findOne', conditions, cb)
 }
 
 /**
@@ -122,9 +86,14 @@ module.exports.update = async function (modelName, id, updateObj, cb, key = 'id'
   if (!model) return cb('模型不存在', null)
 
   try {
-    const res = await model.findOne({ where: { [key]: id } })
+    // *TOP1* 先查后改，执行两遍sql
+    const res = await model.findByPk(id)
     res.set(updateObj)
     await res.save()
+
+    // *TOP2* 直接修改，执行一遍sql
+    // const res = await model.update(updateObj, { where: { [key]: id } })
+
     cb(null, res)
   } catch (error) {
     cb('修改失败', null)
@@ -137,16 +106,8 @@ module.exports.update = async function (modelName, id, updateObj, cb, key = 'id'
  * @param  {[type]}   id        主键ID
  * @param  {Function} cb        回调函数
  */
-module.exports.show = async function (modelName, id, cb, key = 'id') {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-
-  try {
-    const res = await model.findOne({ where: { [key]: id } })
-    cb(null, res)
-  } catch (error) {
-    cb('查询失败', null)
-  }
+module.exports.findByPk = async function (modelName, id, cb) {
+  getModel(modelName, 'findByPk', id, cb)
 }
 
 /**
@@ -161,9 +122,13 @@ module.exports.destroy = async function (modelName, id, cb, key = 'id') {
   if (!model) return cb('模型不存在', null)
 
   try {
-    const res = await model.findOne({ where: { [key]: id } })
-    await res.destroy()
-    cb(null, res)
+    // *TOP1* 先查后改，执行两遍sql
+    // const res = await model.findByPk(id)
+    // const dest = await res.destroy()
+
+    // *TOP2* 直接删除，执行一遍sql
+    const res = await model.destroy({ where: { [key]: id } })
+    cb(null, dest)
   } catch (error) {
     cb('删除失败', null)
   }
@@ -176,14 +141,7 @@ module.exports.destroy = async function (modelName, id, cb, key = 'id') {
  * @param  {Function} cb        回调函数
  */
 module.exports.count = async function (modelName, cb) {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-  try {
-    const res = await model.count()
-    cb(null, res)
-  } catch (error) {
-    cb('查询失败', null)
-  }
+  getModel(modelName, 'count', null, cb)
 }
 
 /**
@@ -194,22 +152,5 @@ module.exports.count = async function (modelName, cb) {
  * @param  {Function} cb         回调函数
  */
 module.exports.exists = async function (modelName, conditions, cb) {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-
-  try {
-    const res = await model.findOne({
-      where: conditions,
-    })
-    cb(null, res)
-  } catch (error) {
-    cb('查询失败', null)
-  }
-}
-
-// 获取模型
-module.exports.getModel = function (modelName) {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-  return model
+  findOne(modelName, conditions, cb)
 }
