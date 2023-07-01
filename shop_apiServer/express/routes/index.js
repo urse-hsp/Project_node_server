@@ -21,13 +21,6 @@ router.get('/', function (req, res, next) {
   // res.json('respond with a resource2')
 })
 
-// 测试
-router.post('test/:data', (req, res) => {
-  // 后面的表单参数会放到req.query、 路径上的参数会放到req.params里、 json参数会放到req.body里，
-  // http://localhost:8888/test/123?a=b    /text是params
-  return res.json({ query: req.query, data: req.params, json: req.body })
-})
-
 router.get('/getlist2', async (req, res, next) => {
   // const data = await User.findAll({
   //   where: {

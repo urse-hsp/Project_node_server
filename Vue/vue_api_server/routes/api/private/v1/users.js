@@ -30,7 +30,7 @@ router.get(
         if (err) return res.sendResult(null, 400, err)
         res.sendResult(result, 200, '获取管理员列表成功')
       }
-    )(req, res, next)
+    )
   }
 )
 

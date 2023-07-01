@@ -224,16 +224,10 @@ module.exports.getAllOrders = function (params, cb) {
   dao.findAndCountAll('OrderModel', conditions, current, pageSize, function (err, data) {
     if (err) return cb(err)
     const { count, rows: list } = data
-    var resultDta = {
-      total: count,
-      current,
-      pageSize,
-      data: list,
-    }
     // resultDta['goods'] = _.map(goods, function (good) {
     //   return _.omit(good, 'goods_introduce', 'is_del', 'goods_big_logo', 'goods_small_logo', 'delete_time')
     // })
-    cb(null, resultDta)
+    cb(null, data)
   })
 }
 

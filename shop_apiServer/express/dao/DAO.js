@@ -24,7 +24,7 @@ const getModel = async function (modelName, type, conditions, cb, errMeg = '查�
  * @param  {[type]}   obj       模型对象
  * @param  {Function} cb        回调函数
  */
-module.exports.create = async function (modelName, conditions, cb) {
+module.exports.create = function (modelName, conditions, cb) {
   getModel(modelName, 'create', conditions, cb)
 }
 
@@ -36,7 +36,7 @@ module.exports.create = async function (modelName, conditions, cb) {
  * conditions
  * @param  {Function} cb         回调函数
  */
-module.exports.list = async function (modelName, conditions, cb) {
+module.exports.list = function (modelName, conditions, cb) {
   getModel(modelName, 'findAll', conditions, cb)
 }
 
@@ -47,7 +47,7 @@ module.exports.list = async function (modelName, conditions, cb) {
  * @param  {[type]}   conditions 条件
  * @param  {Function} cb         回调函数
  */
-module.exports.findAndCountAll = async function (modelName, conditions, current, pageSize, cb) {
+module.exports.findAndCountAll = function (modelName, conditions, current, pageSize, cb) {
   // sql 默认从0开始
   let currentPage = Number(current)
   if (currentPage === 1) {
@@ -60,7 +60,15 @@ module.exports.findAndCountAll = async function (modelName, conditions, current,
     offset: currentPage,
     limit: Number(pageSize),
   }
-  getModel(modelName, 'findAndCountAll', params, cb)
+  getModel(modelName, 'findAndCountAll', params, async (err, { count, rows }) => {
+    if (err) return cb(err)
+    cb(null, {
+      total: count,
+      current: Number(current),
+      pageSize: params.limit,
+      data: rows,
+    })
+  })
 }
 
 /**
@@ -69,7 +77,7 @@ module.exports.findAndCountAll = async function (modelName, conditions, current,
  * @param  {[数组]}   conditions  条件集合
  * @param  {Function} cb         回调函数
  */
-module.exports.findOne = async function (modelName, conditions, cb) {
+module.exports.findOne = function (modelName, conditions, cb) {
   getModel(modelName, 'findOne', conditions, cb)
 }
 
@@ -81,22 +89,28 @@ module.exports.findOne = async function (modelName, conditions, cb) {
  * @param  {[type]}   updateObj 更新对象数据
  * @param  {Function} cb        回调函数
  */
-module.exports.update = async function (modelName, id, updateObj, cb, key = 'id') {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-
-  try {
+module.exports.update = async function (modelName, id, updateObj, cb, key) {
+  if (key) {
+    //  *TOP2* 直接修改，执行一遍sql
+    const model = models[modelName]
+    if (!model) return cb('模型不存在', null)
+    try {
+      const res = await model.update(updateObj, { where: { [key]: id } })
+      cb(null, res)
+    } catch (error) {
+      cb('修改失败', null)
+    }
+  } else {
     // *TOP1* 先查后改，执行两遍sql
-    const res = await model.findByPk(id)
-    res.set(updateObj)
-    await res.save()
-
-    // *TOP2* 直接修改，执行一遍sql
-    // const res = await model.update(updateObj, { where: { [key]: id } })
-
-    cb(null, res)
-  } catch (error) {
-    cb('修改失败', null)
+    findByPk(modelName, id, async (err, res) => {
+      try {
+        res.set(updateObj)
+        await res.save()
+        cb(null, res)
+      } catch (error) {
+        cb('删除失败')
+      }
+    })
   }
 }
 
@@ -106,9 +120,10 @@ module.exports.update = async function (modelName, id, updateObj, cb, key = 'id'
  * @param  {[type]}   id        主键ID
  * @param  {Function} cb        回调函数
  */
-module.exports.findByPk = async function (modelName, id, cb) {
+const findByPk = async function (modelName, id, cb) {
   getModel(modelName, 'findByPk', id, cb)
 }
+module.exports.findByPk = findByPk
 
 /**
  * 通过主键ID删除对象
@@ -117,20 +132,20 @@ module.exports.findByPk = async function (modelName, id, cb) {
  * @param  {[type]}   id        主键ID
  * @param  {Function} cb        回调函数
  */
-module.exports.destroy = async function (modelName, id, cb, key = 'id') {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
-
-  try {
-    // *TOP1* 先查后改，执行两遍sql
-    // const res = await model.findByPk(id)
-    // const dest = await res.destroy()
-
+module.exports.destroy = function (modelName, id, cb, key) {
+  if (key) {
     // *TOP2* 直接删除，执行一遍sql
-    const res = await model.destroy({ where: { [key]: id } })
-    cb(null, dest)
-  } catch (error) {
-    cb('删除失败', null)
+    getModel(modelName, 'destroy', { where: { [key]: id } }, cb, '删除失败')
+  } else {
+    // *TOP1* 先查后改，执行两遍sql
+    findByPk(modelName, id, async (err, res) => {
+      try {
+        await res.destroy()
+        cb(null)
+      } catch (error) {
+        cb('删除失败')
+      }
+    })
   }
 }
 
@@ -140,7 +155,7 @@ module.exports.destroy = async function (modelName, id, cb, key = 'id') {
  * @param  {[type]}   modelName 模型名称
  * @param  {Function} cb        回调函数
  */
-module.exports.count = async function (modelName, cb) {
+module.exports.count = function (modelName, cb) {
   getModel(modelName, 'count', null, cb)
 }
 

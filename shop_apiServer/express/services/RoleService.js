@@ -123,19 +123,15 @@ module.exports.createRole = function (params, cb) {
 module.exports.getRoleById = function (id, cb) {
   if (!id) return cb('角色ID不能为空')
   if (isNaN(parseInt(id))) return cb('角色ID必须为数字')
-  dao.findByPk(
-    'RoleModel',
-    id,
-    function (err, role) {
-      if (err) return cb('获取角色详情失败')
-      cb(null, {
-        roleId: role.role_id,
-        roleName: role.role_name,
-        roleDesc: role.role_desc,
-        rolePermissionDesc: role.ps_ca,
-      })
-    }
-  )
+  dao.findByPk('RoleModel', id, function (err, role) {
+    if (err) return cb('获取角色详情失败')
+    cb(null, {
+      roleId: role.role_id,
+      roleName: role.role_name,
+      roleDesc: role.role_desc,
+      rolePermissionDesc: role.ps_ca,
+    })
+  })
 }
 
 /**
@@ -170,7 +166,7 @@ module.exports.updateRole = function (params, cb) {
         rolePermissionDesc: newRole.ps_ca,
       })
     },
-    'role_id'
+    // 'role_id'
   )
 }
 
@@ -253,10 +249,11 @@ module.exports.deleteRole = function (id, cb) {
     'RoleModel',
     id,
     function (err) {
+      console.log(err, 'err')
       if (err) return cb('删除失败')
       cb(null, true)
-    },
-    'role_id'
+    }
+    // 'role_id'
   )
 }
 

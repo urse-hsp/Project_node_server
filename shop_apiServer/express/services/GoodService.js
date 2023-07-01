@@ -1,3 +1,4 @@
+const { log } = require('console')
 var _ = require('lodash')
 var path = require('path')
 var dao = require(path.join(process.cwd(), 'dao/DAO'))
@@ -189,18 +190,19 @@ function createGoodInfo(info) {
  * @param  {[type]} info 查询内容
  * @return {[type]}      [description]
  */
-// function getGoodInfo(info) {
-//   return new Promise(function (resolve, reject) {
-//     if (!info || !info.goods_id || isNaN(info.goods_id)) return reject('商品ID格式不正确')
+function getGoodInfo(info) {
+  return new Promise(function (resolve, reject) {
+    if (!info || !info.goods_id || isNaN(info.goods_id)) return reject('商品ID格式不正确')
 
-//     dao.show('GoodModel', info.goods_id, function (err, good) {
-//       if (err) return reject('获取商品基本信息失败')
-//       good.goods_cat = good.getGoodsCat()
-//       info['good'] = good
-//       return resolve(info)
-//     })
-//   })
-// }
+    dao.findByPk('GoodModel', info.goods_id, function (err, good) {
+      if (err) return reject('获取商品基本信息失败')
+      good.goods_cat = good.getGoodsCat()
+      info['good'] = good
+      console.log(222)
+      return resolve(info)
+    })
+  })
+}
 
 /**
  * 删除商品图片
@@ -229,7 +231,7 @@ function createGoodInfo(info) {
 // function createGoodPic(pic) {
 //   return new Promise(function (resolve, reject) {
 //     if (!pic) return reject('图片对象不能为空')
-//     var GoodPicModel = dao.getModel('GoodPicModel')
+//     var GoodPicModel = dao.getModel('')
 //     GoodPicModel.create(pic, function (err, newPic) {
 //       if (err) return reject('创建图片数据失败')
 //       resolve()
@@ -392,56 +394,56 @@ function createGoodInfo(info) {
  * @param  {[type]} info [description]
  * @return {[type]}      [description]
  */
-// function doGetAllPics(info) {
-//   return new Promise(function (resolve, reject) {
-//     var good = info.good
-//     if (!good.goods_id) return reject('获取商品图片必须先获取商品信息')
-//     // 3. 组装最新的数据挂载在“info”中“good”对象下
-//     dao.list('GoodPicModel', { columns: { goods_id: good.goods_id } }, function (err, goodPics) {
-//       if (err) return reject('获取所有商品图片列表失败')
-//       _(goodPics).forEach(function (pic) {
-//         if (pic.pics_big.indexOf('http') == 0) {
-//           pic.pics_big_url = pic.pics_big
-//         } else {
-//           pic.pics_big_url = upload_config.get('baseURL') + pic.pics_big
-//         }
+function doGetAllPics(info) {
+  return new Promise(function (resolve, reject) {
+    var good = info.good
+    if (!good.goods_id) return reject('获取商品图片必须先获取商品信息')
+    // 3. 组装最新的数据挂载在“info”中“good”对象下
+    dao.list('GoodPicModel', { columns: { goods_id: good.goods_id } }, function (err, goodPics) {
+      if (err) return reject('获取所有商品图片列表失败')
+      _(goodPics).forEach(function (pic) {
+        if (pic.pics_big.indexOf('http') == 0) {
+          pic.pics_big_url = pic.pics_big
+        } else {
+          pic.pics_big_url = upload_config.get('baseURL') + pic.pics_big
+        }
 
-//         if (pic.pics_mid.indexOf('http') == 0) {
-//           pic.pics_mid_url = pic.pics_mid
-//         } else {
-//           pic.pics_mid_url = upload_config.get('baseURL') + pic.pics_mid
-//         }
-//         if (pic.pics_sma.indexOf('http') == 0) {
-//           pic.pics_sma_url = pic.pics_sma
-//         } else {
-//           pic.pics_sma_url = upload_config.get('baseURL') + pic.pics_sma
-//         }
+        if (pic.pics_mid.indexOf('http') == 0) {
+          pic.pics_mid_url = pic.pics_mid
+        } else {
+          pic.pics_mid_url = upload_config.get('baseURL') + pic.pics_mid
+        }
+        if (pic.pics_sma.indexOf('http') == 0) {
+          pic.pics_sma_url = pic.pics_sma
+        } else {
+          pic.pics_sma_url = upload_config.get('baseURL') + pic.pics_sma
+        }
 
-//         // pic.pics_mid_url = upload_config.get("baseURL") + pic.pics_mid;
-//         // pic.pics_sma_url = upload_config.get("baseURL") + pic.pics_sma;
-//       })
-//       info.good.pics = goodPics
-//       resolve(info)
-//     })
-//   })
-// }
+        // pic.pics_mid_url = upload_config.get("baseURL") + pic.pics_mid;
+        // pic.pics_sma_url = upload_config.get("baseURL") + pic.pics_sma;
+      })
+      info.good.pics = goodPics
+      resolve(info)
+    })
+  })
+}
 
 /**
  * 挂载属性
  * @param  {[type]} info [description]
  * @return {[type]}      [description]
  */
-// function doGetAllAttrs(info) {
-//   return new Promise(function (resolve, reject) {
-//     var good = info.good
-//     if (!good.goods_id) return reject('获取商品图片必须先获取商品信息')
-//     goodAttributeDao.list(good.goods_id, function (err, goodAttrs) {
-//       if (err) return reject('获取所有商品参数列表失败')
-//       info.good.attrs = goodAttrs
-//       resolve(info)
-//     })
-//   })
-// }
+function doGetAllAttrs(info) {
+  return new Promise(function (resolve, reject) {
+    var good = info.good
+    if (!good.goods_id) return reject('获取商品图片必须先获取商品信息')
+    goodAttributeDao.list(good.goods_id, function (err, goodAttrs) {
+      if (err) return reject('获取所有商品参数列表失败')
+      info.good.attrs = goodAttrs
+      resolve(info)
+    })
+  })
+}
 
 /**
  * 创建商品
@@ -531,17 +533,10 @@ module.exports.getAllGoods = function (params, cb) {
   const { current, pageSize } = params
   dao.findAndCountAll('GoodModel', { where: conditions, attributes }, current, pageSize, function (err, data) {
     if (err) return cb(err)
-    const { count, rows: list } = data
-    var resultDta = {
-      total: count,
-      current,
-      pageSize,
-      data: list,
-    }
     // resultDta['goods'] = _.map(goods, function (good) {
     //   return _.omit(good, 'goods_introduce', 'is_del', 'goods_big_logo', 'goods_small_logo', 'delete_time')
     // })
-    cb(null, resultDta)
+    cb(null, data)
   })
 }
 
@@ -630,14 +625,25 @@ module.exports.getAllGoods = function (params, cb) {
  * @param  {[type]}   id 商品ID
  * @param  {Function} cb 回调函数
  */
-// module.exports.getGoodById = function (id, cb) {
-//   getGoodInfo({ goods_id: id })
-//     .then(doGetAllPics)
-//     .then(doGetAllAttrs)
-//     .then(function (info) {
-//       cb(null, info.good)
-//     })
-//     .catch(function (err) {
-//       cb(err)
-//     })
-// }
+module.exports.getGoodById = function (id, cb) {
+  getGoodInfo({ goods_id: id })
+    // .then(doGetAllPics)
+    // .then(doGetAllAttrs)
+    .then(function (info) {
+      console.log(12312)
+      cb(null, info.good)
+    })
+    .catch(function (err) {
+      console.log(312)
+
+      cb(err)
+    })
+  // dao.findByPk('GoodModel', id, function (err, good) {
+  //   // if (err) return reject('获取商品基本信息失败')
+
+  //   // good.goods_cat = good.getGoodsCat()
+  //   let info = good
+  //   // return resolve(info)
+  //   cb(null,info)
+  // })
+}

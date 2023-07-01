@@ -381,3 +381,32 @@
 2023-06-30 17:58:44 debug [www]: login => username:%s,password:%s
 2023-06-30 17:58:44 debug [www]: admin
 2023-06-30 17:58:44 debug [www]: null
+2023-07-01 10:46:30 debug [www]: login => username:%s,password:%s
+2023-07-01 10:46:30 debug [www]: admin
+2023-07-01 10:46:30 debug [www]: null
+2023-07-01 10:46:43 debug [www]: login => username:%s,password:%s
+2023-07-01 10:46:43 debug [www]: admin
+2023-07-01 10:46:43 debug [www]: null
+2023-07-01 10:48:29 debug [www]: login => username:%s,password:%s
+2023-07-01 10:48:29 debug [www]: admin
+2023-07-01 10:48:29 debug [www]: null
+2023-07-01 10:49:07 debug [www]: login => username:%s,password:%s
+2023-07-01 10:49:07 debug [www]: admin
+2023-07-01 10:49:07 debug [www]: null
+2023-07-01 11:34:55 error [www]: GET /api/private/v1/goods/1 goodServ.getGoodById is not a function
+2023-07-01 11:35:45 error [www]: GET /api/private/v1/goods/1 getGoodInfo is not defined
+2023-07-01 11:36:40 error [www]: GET /api/private/v1/goods/1 doGetAllPics is not defined
+2023-07-01 11:37:46 error [www]: GET /api/private/v1/goods/1 doGetAllAttrs is not defined
+2023-07-01 11:38:03 error [www]: GET /api/private/v1/goods/1 doGetAllAttrs is not defined
+2023-07-01 11:44:06 error [www]: GET /api/private/v1/goods/1 info is not defined
+2023-07-01 11:44:32 error [www]: GET /api/private/v1/goods/1 info is not defined
+2023-07-01 11:44:51 error [www]: GET /api/private/v1/goods/1 info is not defined
+2023-07-01 11:45:12 error [www]: GET /api/private/v1/goods/1 info is not defined
+2023-07-01 11:46:36 debug [www]: login => username:%s,password:%s
+2023-07-01 11:46:36 debug [www]: admin
+2023-07-01 11:46:37 debug [www]: null
+2023-07-01 11:46:54 debug [www]: login => username:%s,password:%s
+2023-07-01 11:46:54 debug [www]: admin
+2023-07-01 11:46:54 debug [www]: null
+2023-07-01 16:30:31 error [www]: GET /api/private/v1/users/500 daoModule.show is not a function
+2023-07-01 16:30:37 error [www]: GET /api/private/v1/users/500 daoModule.show is not a function

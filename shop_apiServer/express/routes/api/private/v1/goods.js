@@ -71,24 +71,24 @@ router.post(
 // )
 
 // 获取商品详情
-// router.get(
-//   '/:id',
-//   // 参数验证
-//   function (req, res, next) {
-//     if (!req.params.id) {
-//       return res.sendResult(null, 400, '商品ID不能为空')
-//     }
-//     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '商品ID必须是数字')
-//     next()
-//   },
-//   // 业务逻辑
-//   function (req, res, next) {
-//     goodServ.getGoodById(req.params.id, function (err, good) {
-//       if (err) return res.sendResult(null, 400, err)
-//       return res.sendResult(good, 200, '获取成功')
-//     })(req, res, next)
-//   }
-// )
+router.get(
+  '/:id',
+  // 参数验证
+  function (req, res, next) {
+    if (!req.params.id) {
+      return res.sendResult(null, 400, '商品ID不能为空')
+    }
+    if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '商品ID必须是数字')
+    next()
+  },
+  // 业务逻辑
+  function (req, res, next) {
+    goodServ.getGoodById(req.params.id, function (err, good) {
+      if (err) return res.sendResult(null, 400, err)
+      return res.sendResult(good, 200, '获取成功')
+    })
+  }
+)
 
 // 删除商品
 router.delete(

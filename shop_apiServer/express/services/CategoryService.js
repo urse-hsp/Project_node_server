@@ -28,10 +28,8 @@ function isDelete(keyCategories, cat) {
  */
 function getTreeResult(keyCategories, categories, type) {
   var result = []
-  let a = {}
   for (idx in categories) {
     var cat = categories[idx]
-    a = cat
 
     // 判断是否被删除
     if (isDelete(keyCategories, cat)) continue
@@ -51,6 +49,24 @@ function getTreeResult(keyCategories, categories, type) {
   return result
 }
 
+// 简化升级版本
+/**
+ * 根据id将数据组织成树状结构
+ * @param ary 要组织的数据
+ * @param pid 最顶层数据的id值
+ * @param pidName 父id字段名
+ * @returns {*}
+ */
+function formatToTree(ary, pid, pidName = 'cat_pid') {
+  return ary
+    .filter((item) => item[pidName] === pid && !item[pidName].cat_deleted)
+    .map((item) => {
+      // 通过父节点ID查询所有子节点
+      item.children = formatToTree(ary, item.cat_id)
+      return item
+    })
+}
+
 /**
  * 获取所有分类
  *
@@ -59,29 +75,34 @@ function getTreeResult(keyCategories, categories, type) {
  */
 module.exports.getAllCategories = function (type, conditions, cb) {
   dao.list('CategoryModel', { where: { cat_deleted: false } }, function (err, categories) {
-    console.log(err, 65)
-    keyCategories = _.keyBy(categories, 'cat_id')
+    const data = []
+    for (idx in categories) {
+      permission = categories[idx]
+      data.push({
+        cat_id: permission.cat_id,
+        cat_deleted: !!permission.cat_deleted,
+        cat_level: permission.cat_level,
+        cat_name: permission.cat_name,
+        cat_pid: permission.cat_pid,
+      })
+    }
     if (!type) type = 3
 
-    const result = getTreeResult(keyCategories, categories, type)
-    cb(null, result)
-
-    if (conditions.offset) {
-      console.log(10)
-      // count = result.length
-      // pageSize = parseInt(conditions.pageSize)
-      // current = parseInt(conditions.current) - 1
-      // result = _.take(_.drop(result, current * pageSize), pageSize)
-      // const resultDta = {}
-      // resultDta['total'] = count
-      // resultDta['current'] = current
-      // resultDta['pageSize'] = pageSize
-      // resultDta['result'] = result
-
-      // return cb(null, resultDta)
+    // const result = formatToTree(data, 0)
+    const result = getTreeResult(_.keyBy(data, 'cat_id'), data, type)
+    if (conditions) {
+      pageSize = parseInt(conditions.pageSize)
+      current = parseInt(conditions.current) - 1
+      list = _.take(_.drop(result, current * pageSize), pageSize)
+      const resultDta = {
+        total: result.length,
+        current: parseInt(conditions.current),
+        pageSize,
+        data: list,
+      }
+      return cb(null, resultDta)
     }
 
-    console.log(6)
     cb(null, result)
   })
 }

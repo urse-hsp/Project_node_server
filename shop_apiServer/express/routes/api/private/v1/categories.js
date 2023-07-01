@@ -1,9 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
-
-// 获取验证模块
-// const authorization = require(path.join(process.cwd(), '/modules/authorization'))
+var _ = require('lodash')
 
 // 通过验证模块获取分类管理
 const catServ = require(path.join(process.cwd(), '/services/CategoryService'))
@@ -24,8 +22,8 @@ router.get(
     let conditions = null
     if (req.query.current && req.query.pageSize) {
       conditions = {
-        offset: req.query.current,
-        limit: req.query.pageSize,
+        current: req.query.current,
+        pageSize: req.query.pageSize,
       }
     }
     catServ.getAllCategories(req.query.type, conditions, function (err, result) {
