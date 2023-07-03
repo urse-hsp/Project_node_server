@@ -1,11 +1,12 @@
 var express = require('express')
 var router = express.Router()
 const User = require('../models/user')
+const GoodModel = require('../models/GoodModel')
+
 const { sequelize } = require('../modules/database')
 var _ = require('lodash')
 var path = require('path')
 var dao = require(path.join(process.cwd(), 'dao/DAO'))
-// const User = require('../services/user')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -13,7 +14,6 @@ router.get('/', function (req, res, next) {
   // res.render('index', { title: 'Express' });
 
   // res.send()和res.end(原生)用法基本一致,不过省去了请求头的字符集已经状态码等问题
-  // console.log(res)
   res.sendResult('respond with a resource')
   // res.sendResult('respond with a resource')
 
@@ -21,47 +21,19 @@ router.get('/', function (req, res, next) {
   // res.json('respond with a resource2')
 })
 
-router.get('/getlist2', async (req, res, next) => {
-  // const data = await User.findAll({
-  //   where: {
-  //     user_id: 1
-  //   }
-  // })
-  // // const [results, metadata] = await sequelize.query('SELECT * FROM sp_user')
-  // const sqlStr1 = `INSERT into sp_user (username,create_time,update_time) values('${123}','23','23')`
-  // const [results, metadata] = await sequelize.query(sqlStr1)
-  // const info = { username: 'Jane', user_id: 3, update_time: '23', create_time: '23' }
-  // const data = await User.create(info)
-  // return res.sendResult(data)
-
-  dao.list('ManagerModel', {}, function (err, newGood) {
-    if (err) return res.sendResult(null, 400, err)
-    res.sendResult(newGood, 201, '创建成功')
-  })
-
-  // dao.create(
-  //   'User',
-  //   info,
-  //   function (err, newGood) {
-  //     if (err) return res.sendResult(null, 400, err)
-  //     res.sendResult(newGood, 201, '创建成功')
+router.get('/getlis', async (req, res, next) => {
+  // user 数据，created是否是创建的
+  // const [user, created] = await User.findOrCreate({
+  //   where: { user_id: 1 },
+  //   // defaults 参数来定义必须创建的内容
+  //   defaults: {
+  //     job: 'Technical Lead JavaScript',
+  //     username: 1,
   //   },
-  //   'user_id'
-  // )
-})
+  // })
+  const godss = await GoodModel.findAll({ goods_name: '就这', is_del: '0' })
 
-// router.get('/login', async (req, res, next) => {
-//   const data = await User.findAll()
-//   // const [results, metadata] = await sequelize.query('SELECT * FROM user')
-//   console.log(6);
-//   return res.sendResult(data)
-// })
-
-router.get('/getlistsss', async (req, res, next) => {
-  console.log(1)
-  User.findByPk(2).then((response) => {
-    res.sendResult(response, 200, '创建成功')
-  })
+  res.sendResult(godss, 200, '成功')
 })
 
 module.exports = router

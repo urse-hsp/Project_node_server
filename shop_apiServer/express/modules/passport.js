@@ -34,7 +34,7 @@ module.exports.setup = function (app, loginFunc, callback) {
         if (err) {
           return done('验证错误')
         }
-        // console.log('通过')
+        // 通过
         return done(null, decode)
       })
     })

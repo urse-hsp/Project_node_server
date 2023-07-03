@@ -30,6 +30,7 @@
    Node.js ORM 框架
    https://github.com/dresende/node-orm2
 1. mount-routes 可以自动挂载 routes 目录的所有路由，以文件名称作为路由的根，也可以指定具体的路径（使用第二个参数）
+1. multer 实现本地文件/图片上传到服务器指定目录
 
 # api 接口
 

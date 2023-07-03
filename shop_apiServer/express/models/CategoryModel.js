@@ -1,11 +1,10 @@
-const { Sequelize, DataTypes, Model } = require('sequelize')
-// const sequelize = new Sequelize('sqlite::memory:')
+const { DataTypes } = require('sequelize')
 const { sequelize } = require('../modules/database')
 
 const CategoryModel = sequelize.define(
   'sp_category', // 别名
   {
-    cat_id: { type: 'serial', primaryKey: true },
+    cat_id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     cat_name: String,
     cat_pid: Number,
     cat_level: Number,

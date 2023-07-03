@@ -44,31 +44,31 @@ router.post(
     var params = req.body
     goodServ.createGood(params, function (err, newGood) {
       if (err) return res.sendResult(null, 400, err)
-      res.sendResult(newGood, 201, '创建商品成功')
+      res.sendResult(newGood, 200, '创建商品成功')
     })
   }
 )
 
 // 更新商品
-// router.put(
-//   '/:id',
-//   // 参数验证
-//   function (req, res, next) {
-//     if (!req.params.id) {
-//       return res.sendResult(null, 400, '商品ID不能为空')
-//     }
-//     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '商品ID必须是数字')
-//     next()
-//   },
-//   // 业务逻辑
-//   function (req, res, next) {
-//     var params = req.body
-//     goodServ.updateGood(req.params.id, params, function (err, newGood) {
-//       if (err) return res.sendResult(null, 400, err)
-//       res.sendResult(newGood, 200, '创建商品成功')
-//     })(req, res, next)
-//   }
-// )
+router.put(
+  '/:id',
+  // 参数验证
+  function (req, res, next) {
+    if (!req.params.id) {
+      return res.sendResult(null, 400, '商品ID不能为空')
+    }
+    if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '商品ID必须是数字')
+    next()
+  },
+  // 业务逻辑
+  function (req, res, next) {
+    var params = req.body
+    goodServ.updateGood(req.params.id, params, function (err, newGood) {
+      if (err) return res.sendResult(null, 400, err)
+      res.sendResult(newGood, 200, '创建商品成功')
+    })
+  }
+)
 
 // 获取商品详情
 router.get(

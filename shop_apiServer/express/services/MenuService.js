@@ -9,7 +9,6 @@ const permissionAPIDAO = require(path.join(process.cwd(), 'dao/PermissionAPIDAO'
  * @param  {Function} cb 回调函数
  */
 module.exports.getLeftMenus = function (userInfo, cb) {
-  console.log(userInfo,'userInfo');
   if (!userInfo) return cb('无权限访问')
 
   const authFn = function (rid, keyRolePermissions, cb) {

@@ -7,7 +7,7 @@ var _ = require('lodash')
 const catServ = require(path.join(process.cwd(), '/services/CategoryService'))
 
 // 通过验证模块获取分类属性
-// const attrServ = authorization.getService('AttributeService')
+const attrServ = require(path.join(process.cwd(), '/services/AttributeService'))
 
 // 获取分类列表
 router.get(
@@ -119,28 +119,28 @@ router.get(
 // )
 
 // 通过参数方式查询静态参数还是动态参数
-// router.get(
-//   '/:id/attributes',
-//   // 验证参数
-//   function (req, res, next) {
-//     if (!req.params.id) {
-//       return res.sendResult(null, 400, '分类ID不能为空')
-//     }
-//     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '分类ID必须是数字')
-//     if (!req.query.sel || (req.query.sel != 'only' && req.query.sel != 'many')) {
-//       return res.sendResult(null, 400, '属性类型必须设置')
-//     }
-//     next()
-//   },
-//   // 业务逻辑
-//   function (req, res, next) {
-//     // attrServ
-//     attrServ.getAttributes(req.params.id, req.query.sel, function (err, attributes) {
-//       if (err) return res.sendResult(null, 400, err)
-//       res.sendResult(attributes, 200, '获取成功')
-//     })(req, res, next)
-//   }
-// )
+router.get(
+  '/:id/attributes',
+  // 验证参数
+  function (req, res, next) {
+    if (!req.params.id) {
+      return res.sendResult(null, 400, '分类ID不能为空')
+    }
+    if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '分类ID必须是数字')
+    if (!req.query.sel || (req.query.sel != 'only' && req.query.sel != 'many')) {
+      return res.sendResult(null, 400, '属性类型必须设置')
+    }
+    next()
+  },
+  // 业务逻辑
+  function (req, res, next) {
+    // attrServ
+    attrServ.getAttributes(req.params.id, req.query.sel, function (err, attributes) {
+      if (err) return res.sendResult(null, 400, err)
+      res.sendResult(attributes, 200, '获取成功')
+    })
+  }
+)
 
 // 获取参数详情
 // router.get(

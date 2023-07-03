@@ -1,4 +1,4 @@
-var path = require('path')
+// var path = require('path')
 const config = require('../config/default.json')
 const { Sequelize } = require('sequelize')
 

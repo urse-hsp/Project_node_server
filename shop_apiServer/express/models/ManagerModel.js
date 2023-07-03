@@ -25,7 +25,7 @@ class ManagerModel extends Model {}
 ManagerModel.init(
   {
     // 在这里定义模型属性
-    mg_id: { type: 'serial', key: true, primaryKey: true },
+    mg_id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     mg_name: String,
     mg_pwd: String,
     mg_time: Number,
@@ -44,5 +44,4 @@ ManagerModel.init(
 )
 
 // `sequelize.define` 会返回模型
-// console.log(ManagerModel === sequelize.models.ManagerModel) // true
 module.exports = ManagerModel

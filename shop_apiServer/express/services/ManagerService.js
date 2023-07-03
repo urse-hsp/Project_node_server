@@ -166,7 +166,6 @@ module.exports.deleteManager = function (id, cb) {
  * @param {Function} cb  回调函数
  */
 module.exports.setRole = function (id, rid, cb) {
-  console.log(6)
   managersDAO.show(id, function (err, manager) {
     if (err || !manager) cb('管理员ID不存在')
 
@@ -209,7 +208,7 @@ module.exports.updateMgrState = function (id, state, cb) {
 module.exports.login = async function (username, password, cb) {
   logger.debug('login => username:%s,password:%s', username, password)
   logger.debug(username)
-  dao.findOne('ManagerModel', { where: { mg_name: username } }, function (err, manager) {
+  dao.findOne('ManagerModel', { mg_name: username }, function (err, manager) {
     logger.debug(err)
     if (err) return cb('用户名不存在')
     if (manager.role_id < 0) {

@@ -4,7 +4,7 @@
     "expiresIn": 86400
   },
   "upload_config": {
-    "baseURL": "http://127.0.0.1:8888",
+    "baseURL": "http://127.0.0.1:3333",
     "upload_ueditor": "uploads/ueditor",
     "simple_upload_redirect": "http://127.0.0.1/reload"
   },

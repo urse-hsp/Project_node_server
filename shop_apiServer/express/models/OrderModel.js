@@ -4,7 +4,7 @@ const { sequelize } = require('../modules/database')
 const OrderModel = sequelize.define(
   'sp_order', // 别名
   {
-    order_id: { type: 'serial', primaryKey: true },
+    order_id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     user_id: Number,
     order_number: String,
     order_price: Number,

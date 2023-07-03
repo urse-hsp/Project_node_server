@@ -1,11 +1,11 @@
 const { sequelize } = require('../modules/database')
-const { Model } = require('sequelize')
+const { Sequelize, DataTypes, Model } = require('sequelize')
 
 class RoleModel extends Model {}
 RoleModel.init(
   {
     // 在这里定义模型属性
-    role_id: { type: 'serial', key: true, primaryKey: true },
+    role_id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     role_name: String,
     ps_ids: String,
     ps_ca: String,
@@ -14,6 +14,7 @@ RoleModel.init(
 
   {
     sequelize,
+
     timestamps: false,
     freezeTableName: true,
     tableName: 'sp_role',

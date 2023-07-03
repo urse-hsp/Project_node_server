@@ -96,7 +96,7 @@ var ueditor = require(path.join(process.cwd(), '/modules/ueditor'))
 app.use('/ueditor/ue', ueditor)
 //. 设置富文本空间地址
 app.use('/', express.static('public/vueAdmin'))
-// app.use('/reactAdmin', express.static('public/reactAdmin'))
+app.use('/reactAdmin', express.static('public/reactAdmin'))
 // app.use('/ueditor', express.static('public/ueditor'))
 
 app.use('/tmp_uploads', express.static('tmp_uploads'))

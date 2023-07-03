@@ -1,8 +1,10 @@
 const { sequelize } = require('../modules/database')
+const { DataTypes } = require('sequelize')
+
 const GoodModel = sequelize.define(
   'sp_user', // 别名
   {
-    goods_id: { type: 'serial', key: true, primaryKey: true },
+    goods_id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     cat_id: Number,
     goods_name: String,
     goods_price: Number,
@@ -28,11 +30,11 @@ const GoodModel = sequelize.define(
     tableName: 'sp_goods',
     timestamps: false,
     freezeTableName: true,
-    methods: {
-      getGoodsCat: function () {
-        return this.cat_one_id + ',' + this.cat_two_id + ',' + this.cat_three_id
-      },
-    },
+    // methods: {
+    //   getGoodsCat: function () {
+    //     return this.cat_one_id + ',' + this.cat_two_id + ',' + this.cat_three_id
+    //   },
+    // },
   }
 ) // 查询所有
 

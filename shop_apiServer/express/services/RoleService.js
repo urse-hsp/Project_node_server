@@ -249,7 +249,6 @@ module.exports.deleteRole = function (id, cb) {
     'RoleModel',
     id,
     function (err) {
-      console.log(err, 'err')
       if (err) return cb('删除失败')
       cb(null, true)
     }

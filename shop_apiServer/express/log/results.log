@@ -410,3 +410,68 @@
 2023-07-01 11:46:54 debug [www]: null
 2023-07-01 16:30:31 error [www]: GET /api/private/v1/users/500 daoModule.show is not a function
 2023-07-01 16:30:37 error [www]: GET /api/private/v1/users/500 daoModule.show is not a function
+2023-07-03 10:03:09 debug [www]: login => username:%s,password:%s
+2023-07-03 10:03:09 debug [www]: admin
+2023-07-03 10:03:09 debug [www]: null
+2023-07-03 10:16:25 error [www]: GET /api/private/v1/goods/1 info is not defined
+2023-07-03 10:16:37 error [www]: GET /api/private/v1/goods/1 info is not defined
+2023-07-03 10:17:43 error [www]: GET /api/private/v1/categories/183/attributes?sel=many Not Found
+2023-07-03 10:17:44 error [www]: GET /api/private/v1/categories/183/attributes?sel=only Not Found
+2023-07-03 10:17:46 error [www]: GET /api/private/v1/categories/183/attributes?sel=only Not Found
+2023-07-03 10:28:31 error [www]: POST /api/private/v1//upload Not Found
+2023-07-03 10:53:26 error [www]: POST /api/private/v1//upload Not Found
+2023-07-03 10:55:15 error [www]: POST /api/private/v1//upload Not Found
+2023-07-03 10:55:44 error [www]: POST /api/private/v1//upload Not Found
+2023-07-03 10:57:05 error [www]: POST /api/private/v1//upload Not Found
+2023-07-03 10:57:53 error [www]: GET /api/private/v1/categories/111/attributes?sel=only Not Found
+2023-07-03 10:58:26 error [www]: GET /api/private/v1/categories/103/attributes?sel=only Not Found
+2023-07-03 10:58:50 debug [www]: login => username:%s,password:%s
+2023-07-03 10:58:50 debug [www]: admin
+2023-07-03 10:58:50 debug [www]: null
+2023-07-03 10:59:33 error [www]: GET /api/private/v1/categories/183/attributes?sel=only Not Found
+2023-07-03 10:59:34 error [www]: GET /api/private/v1/categories/183/attributes?sel=only Not Found
+2023-07-03 11:00:10 error [www]: POST /api/private/v1/goods goodServ.createGood is not a function
+2023-07-03 11:01:44 error [www]: POST /api/private/v1/upload fs is not defined
+2023-07-03 11:06:06 error [www]: POST /api/private/v1/upload targetPath is not defined
+2023-07-03 11:14:04 error [www]: PUT /api/private/v1/goods/undefined Not Found
+2023-07-03 11:15:09 error [www]: PUT /api/private/v1/goods/4 goodServ.updateGood is not a function
+2023-07-03 11:16:14 error [www]: PUT /api/private/v1/goods/4 goodServ.updateGood is not a function
+2023-07-03 11:33:07 error [www]: PUT /api/private/v1/goods/4 generateGoodInfo is not defined
+2023-07-03 11:34:36 error [www]: PUT /api/private/v1/goods/1 generateGoodInfo is not defined
+2023-07-03 11:36:04 error [www]: POST /api/private/v1/goods goodServ.createGood is not a function
+2023-07-03 11:36:18 error [www]: POST /api/private/v1/goods generateGoodInfo is not defined
+2023-07-03 11:47:57 error [www]: GET /getlistsss Not Found
+2023-07-03 11:48:27 error [www]: GET /getlistsss Not Found
+2023-07-03 11:48:41 error [www]: GET /getlistsss Not Found
+2023-07-03 11:48:53 error [www]: GET /getlistsss Not Found
+2023-07-03 13:40:22 debug [www]: login => username:%s,password:%s
+2023-07-03 13:40:22 debug [www]: admin
+2023-07-03 13:40:22 debug [www]: null
+2023-07-03 15:39:48 error [www]: GET /api/private/v1/goods?query=&current=1&pageSize=10 Assignment to constant variable.
+2023-07-03 15:41:07 error [www]: GET /api/private/v1/categories/73/attributes?sel=only Not Found
+2023-07-03 15:41:19 error [www]: GET /api/private/v1/categories/73/attributes?sel=only Not Found
+2023-07-03 15:41:22 error [www]: GET /api/private/v1/categories/73/attributes?sel=only Not Found
+2023-07-03 15:41:24 error [www]: GET /api/private/v1/categories/73/attributes?sel=many Not Found
+2023-07-03 15:57:01 debug [www]: login => username:%s,password:%s
+2023-07-03 15:57:01 debug [www]: admin
+2023-07-03 15:57:01 debug [www]: null
+2023-07-03 15:57:59 debug [www]: login => username:%s,password:%s
+2023-07-03 15:57:59 debug [www]: admin
+2023-07-03 15:57:59 debug [www]: null
+2023-07-03 16:03:01 error [www]: GET /api/private/v1/categories/6/attributes?sel=only Not Found
+2023-07-03 16:03:02 error [www]: GET /api/private/v1/categories/6/attributes?sel=many Not Found
+2023-07-03 16:03:03 error [www]: GET /api/private/v1/categories/6/attributes?sel=many Not Found
+2023-07-03 16:03:04 error [www]: GET /api/private/v1/categories/6/attributes?sel=only Not Found
+2023-07-03 16:03:05 error [www]: GET /api/private/v1/categories/6/attributes?sel=many Not Found
+2023-07-03 16:03:05 error [www]: GET /api/private/v1/categories/6/attributes?sel=only Not Found
+2023-07-03 16:03:12 error [www]: GET /api/private/v1/categories/6/attributes?sel=only Not Found
+2023-07-03 16:03:13 error [www]: GET /api/private/v1/categories/6/attributes?sel=many Not Found
+2023-07-03 16:03:13 error [www]: GET /api/private/v1/categories/6/attributes?sel=only Not Found
+2023-07-03 16:03:14 error [www]: GET /api/private/v1/categories/6/attributes?sel=many Not Found
+2023-07-03 16:03:14 error [www]: GET /api/private/v1/categories/6/attributes?sel=only Not Found
+2023-07-03 16:03:56 error [www]: GET /api/private/v1/categories/6/attributes?sel=many Not Found
+2023-07-03 16:08:45 error [www]: GET /api/private/v1/categories/6/attributes?sel=only attrServ is not defined
+2023-07-03 16:08:46 error [www]: GET /api/private/v1/categories/6/attributes?sel=many attrServ is not defined
+2023-07-03 16:09:05 error [www]: GET /api/private/v1/categories/6/attributes?sel=many attrServ is not defined
+2023-07-03 16:20:01 error [www]: PUT /api/private/v1/goods/987 request entity too large
+2023-07-03 16:20:18 error [www]: PUT /api/private/v1/goods/987 request entity too large
