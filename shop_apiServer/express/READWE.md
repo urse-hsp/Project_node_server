@@ -1,4 +1,4 @@
-#### 项目整体文件说明
+# 项目整体文件说明
 
 - `config` 配置文件目录
   - `default.json` 默认配置文件（其中包含数据库配置，jwt 配置）
@@ -19,7 +19,7 @@
 - `app.js` 主项目入口文件
 - `package.json` 项目配置文件
 
-### 插件说明
+# 插件说明
 
 1. mysql
 1. winston log 日志
@@ -47,3 +47,8 @@
 ## 其他
 
 1. /api/private/v1/login 登录
+
+
+
+# sql
+1. 
