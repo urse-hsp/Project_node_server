@@ -57,6 +57,10 @@ setup(app, managerService.login)
 app.use('/api/private/v1/login', login) // 登录接口
 app.use('/*', tokenAuth) // token权限验证
 
+const logistics = require('./modules/Logistics.js')
+app.get('/api/private/v1/kuaidi/:orderno', logistics.getLogisticsInfo)
+
+
 // 获取验证模块
 // const authorization = require(path.join(process.cwd(), '/modules/authorization'))
 // // 设置全局权限

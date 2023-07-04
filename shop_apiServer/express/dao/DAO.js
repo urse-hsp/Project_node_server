@@ -16,7 +16,7 @@ const getModel = async function (modelName, type, conditions, cb, errMeg = '查�
   if (!model) return cb('模型不存在', null)
 
   try {
-    const res = await model[type](conditions)
+    const res = await model[type](conditions ?? {})
     cb(null, res)
   } catch (error) {
     cb(errMeg)
@@ -123,7 +123,7 @@ module.exports.update = async function (modelName, id, updateObj, cb, key) {
 }
 
 /**
- * 通过主键ID获取对象
+ * 通过主键ID获取对象 / show
  * @param  {[type]}   modelName 模型名称
  * @param  {[type]}   id        主键ID
  * @param  {Function} cb        回调函数

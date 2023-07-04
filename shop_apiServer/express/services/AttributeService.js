@@ -23,12 +23,12 @@ module.exports.getAttributes = function (cat_id, sel, cb) {
  * @param  {[type]}   info 参数信息
  * @param  {Function} cb   回调函数
  */
-// module.exports.createAttribute = function (info, cb) {
-//   dao.create('AttributeModel', info, function (err, attribute) {
-//     if (err) return cb('创建失败')
-//     cb(null, attribute)
-//   })
-// }
+module.exports.createAttribute = function (info, cb) {
+  dao.create('AttributeModel', info, function (err, attribute) {
+    if (err) return cb('创建失败')
+    cb(null, attribute)
+  })
+}
 
 /**
  * 更新参数
@@ -38,12 +38,12 @@ module.exports.getAttributes = function (cat_id, sel, cb) {
  * @param  {[type]}   info   更新内容
  * @param  {Function} cb     回调函数
  */
-// module.exports.updateAttribute = function (attrId, info, cb) {
-//   dao.update('AttributeModel', attrId, info, function (err, newAttr) {
-//     if (err) return cb(err)
-//     cb(null, _.omit(newAttr, 'delete_time'))
-//   })
-// }
+module.exports.updateAttribute = function (attrId, info, cb) {
+  dao.update('AttributeModel', attrId, info, function (err, newAttr) {
+    if (err) return cb(err)
+    cb(null, _.omit(newAttr, 'delete_time'))
+  })
+}
 
 /**
  * 删除参数
@@ -59,9 +59,11 @@ module.exports.deleteAttribute = function (attrId, cb) {
   })
 }
 
-// module.exports.attributeById = function (attrId, cb) {
-//   dao.show('AttributeModel', attrId, function (err, attr) {
-//     if (err) return cb(err)
-//     cb(null, _.omit(attr, 'delete_time'))
-//   })
-// }
+// 获取参数
+module.exports.attributeById = function (attrId, cb) {
+  dao.findByPk('AttributeModel', attrId, function (err, attr) {
+    if (err) return cb(err)
+    //  cb(null, _.omit(attr, 'delete_time'))
+    cb(null, attr)
+  })
+}

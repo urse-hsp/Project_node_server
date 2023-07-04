@@ -122,23 +122,23 @@ router.post(
   }
 )
 
-// 删除角色权限
-// router.delete(
-//   '/:id/rights/:rightId',
-//   // 参数验证
-//   function (req, res, next) {
-//     if (!req.params.id) return res.sendResult(null, 400, '角色ID不能为空')
-//     if (isNaN(parseInt(req.params.id))) res.sendResult(null, 400, '角色ID必须为数字')
-//     if (isNaN(parseInt(req.params.rightId))) res.sendResult(null, 400, '权限ID必须为数字')
-//     next()
-//   },
-//   // 业务逻辑
-//   function (req, res, next) {
-//     roleServ.deleteRoleRight(req.params.id, req.params.rightId, function (err, result) {
-//       if (err) return res.sendResult(null, 400, err)
-//       res.sendResult(result, 200, '取消权限成功')
-//     })
-//   }
-// )
+// 删除角色权限 id 权限,attrId id的父级
+router.delete(
+  '/:id/rights/:rightId',
+  // 参数验证
+  function (req, res, next) {
+    if (!req.params.id) return res.sendResult(null, 400, '角色ID不能为空')
+    if (isNaN(parseInt(req.params.id))) res.sendResult(null, 400, '角色ID必须为数字')
+    if (isNaN(parseInt(req.params.rightId))) res.sendResult(null, 400, '权限ID必须为数字')
+    next()
+  },
+  // 业务逻辑
+  function (req, res, next) {
+    roleServ.deleteRoleRight(req.params.id, req.params.rightId, function (err, result) {
+      if (err) return res.sendResult(null, 400, err)
+      res.sendResult(result, 200, '取消权限成功')
+    })
+  }
+)
 
 module.exports = router

@@ -165,7 +165,7 @@ module.exports.updateRole = function (params, cb) {
         roleDesc: newRole.role_desc,
         rolePermissionDesc: newRole.ps_ca,
       })
-    },
+    }
     // 'role_id'
   )
 }
@@ -205,36 +205,38 @@ module.exports.updateRoleRight = function (rid, rights, cb) {
  * @param  {[type]}   deletedRightId 删除的权限ID
  * @param  {Function} cb             回调函数
  */
-// module.exports.deleteRoleRight = function (rid, deletedRightId, cb) {
-//   daoModule.findOne(
-//     'RoleModel',
-//     { role_id: rid },
-//     function (err, role) {
-//       if (err || !role) return cb('获取角色信息失败', false)
-//       ps_ids = role.ps_ids.split(',')
-//       new_ps_ids = []
-//       for (idx in ps_ids) {
-//         ps_id = ps_ids[idx]
-//         if (parseInt(deletedRightId) == parseInt(ps_id)) {
-//           continue
-//         }
-//         new_ps_ids.push(ps_id)
-//       }
-//       new_ps_ids_string = new_ps_ids.join(',')
-//       role.ps_ids = new_ps_ids_string
-//       role.save(function (err, newRole) {
-//         if (err) return cb('删除权限失败')
-//         permissionAPIDAO.list(function (err, permissions) {
-//           if (err) return cb('获取权限数据失败')
-//           permissionIds = newRole.ps_ids.split(',')
-//           const permissionKeys = _.keyBy(permissions, 'ps_id')
-//           return cb(null, _.values(getPermissionsResult(permissionKeys, permissionIds)))
-//         })
-//       })
-//     },
-//     'role_id'
-//   )
-// }
+module.exports.deleteRoleRight = function (rid, deletedRightId, cb) {
+  daoModule.findOne(
+    'RoleModel',
+    { role_id: rid },
+    function (err, role) {
+      if (err || !role) return cb('获取角色信息失败', false)
+      ps_ids = role.ps_ids.split(',')
+      new_ps_ids = []
+      for (idx in ps_ids) {
+        ps_id = ps_ids[idx]
+        if (parseInt(deletedRightId) == parseInt(ps_id)) {
+          continue
+        }
+        new_ps_ids.push(ps_id)
+      }
+      new_ps_ids_string = new_ps_ids.join(',')
+      role.ps_ids = new_ps_ids_string
+      try {
+        role.save()
+        permissionAPIDAO.list(function (err, permissions) {
+          if (err) return cb('获取权限数据失败')
+          permissionIds = role.ps_ids.split(',')
+          const permissionKeys = _.keyBy(permissions, 'ps_id')
+          return cb(null, _.values(getPermissionsResult(permissionKeys, permissionIds)))
+        })
+      } catch (error) {
+        cb('删除权限失败')
+      }
+    },
+    'role_id'
+  )
+}
 
 /**
  * 删除角色

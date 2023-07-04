@@ -487,3 +487,12 @@
 [2023-07-03T16:12:01.767] [DEBUG] cheese - null
 [2023-07-03T16:43:59.364] [DEBUG] cheese - null
 [2023-07-03T17:02:15.074] [DEBUG] cheese - null
+[2023-07-03T17:37:11.814] [DEBUG] cheese - login => username:admin,password:123456
+[2023-07-03T17:37:11.815] [DEBUG] cheese - admin
+[2023-07-03T17:37:11.823] [DEBUG] cheese - null
+[2023-07-03T17:37:11.824] [DEBUG] cheese - null
+[2023-07-03T18:01:13.218] [DEBUG] cheese - null
+[2023-07-04T10:20:58.094] [DEBUG] cheese - login => username:admin,password:123456
+[2023-07-04T10:20:58.096] [DEBUG] cheese - admin
+[2023-07-04T10:20:58.104] [DEBUG] cheese - null
+[2023-07-04T10:20:58.105] [DEBUG] cheese - null
