@@ -1,3 +1,4 @@
+// 验证模块
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const Strategy = require('passport-http-bearer').Strategy
@@ -27,7 +28,7 @@ module.exports.setup = function (app, loginFunc, callback) {
     })
   )
 
-  // token 验证策略 校验token
+  // token 验证策略 verify校验token
   passport.use(
     new Strategy(function (token, done) {
       jwt.verify(token, jwt_config.secretKey, function (err, decode) {
@@ -56,9 +57,10 @@ module.exports.login = function (req, res, next) {
   passport.authenticate('local', function (err, user, info) {
     if (err) return res.sendResult(null, 401, err)
     if (!user) return res.sendResult(null, 401, '参数错误')
-    // 获取角色信息
+    let created = Math.floor(Date.now() / 1000) + 1000 * 60 * 60 * 24 * jwt_config.day // 最后面一位设置过期天数
+
     // 生成token: sign(生成token信息, 加密的key密钥, 时效)
-    var token = jwt.sign({ uid: user.id, rid: user.rid }, jwt_config.secretKey, { expiresIn: jwt_config.expiresIn })
+    var token = jwt.sign({ uid: user.id, rid: user.rid }, jwt_config.secretKey, { expiresIn: created })
     user.token = 'Bearer ' + token
     return res.sendResult(user, 200, '登录成功')
   })(req, res, next)

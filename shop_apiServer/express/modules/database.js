@@ -1,4 +1,4 @@
-// var path = require('path')
+// 数据库
 const config = require('../config/default.json')
 const { Sequelize } = require('sequelize')
 
@@ -31,13 +31,5 @@ const initialize = (req, res, next) => {
 // sequelize.sync()
 // console.log('所有模型均已成功同步.')
 
-// sequelize
-//   .authenticate()
-//   .then((res) => {
-//     console.log('Connection Success!')
-//   })
-//   .catch((err) => {
-//     console.log('Connection Error')
-//   })
 exports.sequelize = sequelize
 exports.initialize = initialize

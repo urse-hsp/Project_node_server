@@ -588,3 +588,43 @@
 2023-07-04 16:27:32 error [www]: GET /tmp_uploads/big_45fc1b73ecdce75cc40c5203a9cf3d83.png Not Found
 2023-07-04 16:27:32 error [www]: GET /tmp_uploads/big_ab2c2f5479f19759e2a08acbe50b2911.png Not Found
 2023-07-04 16:27:49 error [www]: GET /tmp_uploads/big_45fc1b73ecdce75cc40c5203a9cf3d83.png Not Found
+2023-07-04 16:43:04 debug [www]: login => username:%s,password:%s
+2023-07-04 16:43:04 debug [www]: linken
+2023-07-04 16:43:04 debug [www]: null
+2023-07-04 16:43:15 error [www]: PUT /api/private/v1/users/502/state/true daoModule.show is not a function
+2023-07-04 16:44:46 error [www]: PUT /api/private/v1/users/502/state/true daoModule.show is not a function
+2023-07-04 16:45:20 error [www]: PUT /api/private/v1/users/502/state/true daoModule.show is not a function
+2023-07-04 16:46:23 debug [www]: login => username:%s,password:%s
+2023-07-04 16:46:23 debug [www]: linken
+2023-07-04 16:46:23 debug [www]: null
+2023-07-04 17:23:17 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 Cannot read properties of undefined (reading 'userInfo')
+2023-07-04 17:35:48 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:35:55 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:36:11 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:36:36 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:36:55 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:36:59 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:37:45 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:37:51 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:38:21 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:39:50 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 cb is not a function
+2023-07-04 17:39:57 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 cb is not a function
+2023-07-04 17:40:05 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 cb is not a function
+2023-07-04 17:40:21 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 serviceModule is not a function
+2023-07-04 17:40:36 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 serviceModule is not a function
+2023-07-04 17:40:38 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 serviceModule is not a function
+2023-07-04 17:44:00 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:44:16 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:44:25 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:45:08 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:45:20 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:45:22 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:45:33 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:46:20 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:46:32 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:46:41 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:46:43 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:46:57 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:47:29 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:48:34 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
+2023-07-04 17:49:19 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 Cannot read properties of undefined (reading 'userInfo')

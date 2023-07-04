@@ -108,7 +108,7 @@ module.exports.countByKey = async function (key, cb) {
  * @param  {Function} cb 回调函数
  */
 module.exports.show = function (id, cb) {
-  daoModule.show('ManagerModel', id, cb, 'mg_id')
+  daoModule.findByPk('ManagerModel', id, cb, 'mg_id')
 }
 
 /**
@@ -146,7 +146,7 @@ module.exports.destroy = function (id, cb) {
  * @param  {Function} cb  回调函数
  */
 module.exports.save = function (obj, cb) {
-  daoModule.show(
+  daoModule.findByPk(
     'ManagerModel',
     obj.mg_id,
     function (err, oldObj) {

@@ -1,7 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
+// 获取验证模块
+var authorization = require(path.join(process.cwd(), '/modules/authorization'))
+
 const ManagerService = require(path.join(process.cwd(), 'services/ManagerService'))
+// const ManagerService = authorization.getService('ManagerService')
 
 // 查询用户列表
 router.get(

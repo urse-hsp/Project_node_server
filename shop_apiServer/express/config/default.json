@@ -1,7 +1,7 @@
 {
   "jwt": {
     "secretKey": "itcast",
-    "expiresIn": 86400
+    "day": 1
   },
   "upload_config": {
     "baseURL": "http://127.0.0.1:3333",

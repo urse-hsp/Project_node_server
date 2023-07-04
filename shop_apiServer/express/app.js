@@ -14,13 +14,11 @@ const { initialize } = require('./modules/database')
 app.use(initialize)
 
 /**
- *	后台管理系统初始化
+ *	@系统初始化
  */
 
 // 获取管理员逻辑模块
 const managerService = require('./services/ManagerService')
-// 获取角色服务模块
-var roleService = require(path.join(process.cwd(), 'services/RoleService'))
 
 //  view engine setup
 // app.set('views', path.join(__dirname, 'views'))
@@ -58,27 +56,22 @@ app.use(resextra)
 const { setup, tokenAuth, login } = require('./modules/passport')
 setup(app, managerService.login)
 app.use('/api/private/v1/login', login) // 登录接口
-app.use('/api/private/v1/*', tokenAuth)
+app.use('/api/private/v1/*', tokenAuth) // 权限限制
 
+// 第三方服务
 const logistics = require('./modules/Logistics.js')
 app.get('/api/private/v1/kuaidi/:orderno', logistics.getLogisticsInfo)
 
 // 获取验证模块
-// const authorization = require(path.join(process.cwd(), '/modules/authorization'))
-// // 设置全局权限
-// authorization.setAuthFn(function (req, res, next, serviceName, actionName, passFn) {
-//   if (!req.userInfo || isNaN(parseInt(req.userInfo.rid))) return res.sendResult('无角色ID分配')
-//   // 验证权限
-//   roleService.authRight(req.userInfo.rid, serviceName, actionName, function (err, pass) {
-//     passFn(pass)
-//   })
-// })
+const authorization = require(path.join(process.cwd(), '/modules/authorization'))
+// 设置全局权限
+authorization.setAuthFn()
 
 /**
  * 初始化路由
  * 带路径的用法并且可以打印出路有表
  */
-mount(app, path.join(process.cwd(), '/routes'), true)
+mount(app, path.join(process.cwd(), '/routes'))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
