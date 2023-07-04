@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const logger = require('./config/logger')
 const mount = require('mount-routes') // 路由加载
+const upload_config = require(path.join(process.cwd(), 'config/default.json')).upload_config
 
 const app = express()
 
@@ -30,8 +31,10 @@ app.use(express.json()) // 解析参数
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser()) // 解析 方便操作客户端中的cookie值。
 
-app.use(express.static(path.join(__dirname, 'public'))) // 托管静态文件
-app.use('/', express.static(path.join(__dirname, 'public/vueAdmin'))) // 可以通过带有 /static 前缀地址来访问 public 目录中的文件了。
+// 托管静态文件
+// app.use(express.static(path.join(__dirname, 'public')))
+app.use('/', express.static('public/vueAdmin')) // 可以通过带有 /static 前缀地址来访问 public 目录中的文件了。
+app.use(upload_config.upload_path, express.static('tmp_uploads'))
 
 // 设置跨域和相应数据格式  /api/*
 app.all('*', function (req, res, next) {
@@ -55,11 +58,10 @@ app.use(resextra)
 const { setup, tokenAuth, login } = require('./modules/passport')
 setup(app, managerService.login)
 app.use('/api/private/v1/login', login) // 登录接口
-app.use('/*', tokenAuth) // token权限验证
+app.use('/api/private/v1/*', tokenAuth)
 
 const logistics = require('./modules/Logistics.js')
 app.get('/api/private/v1/kuaidi/:orderno', logistics.getLogisticsInfo)
-
 
 // 获取验证模块
 // const authorization = require(path.join(process.cwd(), '/modules/authorization'))

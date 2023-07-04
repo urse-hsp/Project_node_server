@@ -1,4 +1,3 @@
-const { log } = require('console')
 const _ = require('lodash')
 const path = require('path')
 const dao = require(path.join(process.cwd(), 'dao/DAO'))
@@ -218,10 +217,16 @@ function getGoodInfo(info) {
  * @return {[type]}     [description]
  */
 function removeGoodPic(pic) {
+  console.log(pic, '666')
   return new Promise(function (resolve, reject) {
-    if (!pic || !pic.remove) return reject('删除商品图片记录失败')
-    pic.remove(function (err) {
-      if (err) return reject('删除失败')
+    // if (!pic || !pic.remove) return reject('删除商品图片记录失败')
+    // pic.remove(function (err) {
+    //   if (err) return reject('删除失败')
+    //   resolve()
+    // })
+
+    dao.destroy('GoodPicModel', pic.pics_id, function (err) {
+      if (err) return reject('删除商品图片记录失败')
       resolve()
     })
   })
@@ -239,10 +244,9 @@ function removeGoodPicFile(path) {
 function createGoodPic(pic) {
   return new Promise(function (resolve, reject) {
     if (!pic) return reject('图片对象不能为空')
-    var GoodPicModel = dao.getModel('')
-    GoodPicModel.create(pic, function (err, newPic) {
+    dao.create('GoodPicModel', pic, function (err, newPic) {
       if (err) return reject('创建图片数据失败')
-      resolve()
+      resolve(newPic)
     })
   })
 }
@@ -253,7 +257,7 @@ function createGoodPic(pic) {
  * @param  {[type]} info    参数
  * @param  {[type]} newGood 商品基本信息
  */
-function doUpdateGoodPics(info) {
+function doUpdateGoodPics(info, isAdd = false) {
   return new Promise(function (resolve, reject) {
     var good = info.good
     if (!good.goods_id) return reject('更新商品图片失败')
@@ -263,10 +267,8 @@ function doUpdateGoodPics(info) {
       if (err) return reject('获取商品图片列表失败')
 
       var batchFns = []
-
       var newpics = info.pics ? info.pics : []
       var newpicsKV = _.keyBy(newpics, 'pics_id')
-      // var oldpicsKV = _.keyBy(oldpics, 'pics_id')
 
       /**
        * 保存图片集合
@@ -313,9 +315,9 @@ function doUpdateGoodPics(info) {
           var src = path.join(process.cwd(), pic.pic)
           var tmp = src.split(path.sep)
           var filename = tmp[tmp.length - 1]
-          pic.pics_big = '/uploads/goodspics/big_' + filename
-          pic.pics_mid = '/uploads/goodspics/mid_' + filename
-          pic.pics_sma = '/uploads/goodspics/sma_' + filename
+          pic.pics_big = upload_config.upload_path + '/big_' + filename // big_
+          pic.pics_mid = upload_config.upload_path + '/mid_' + filename
+          pic.pics_sma = upload_config.upload_path + '/sma_' + filename
           batchFns.push(clipImage(src, path.join(process.cwd(), pic.pics_big), 800, 800))
           batchFns.push(clipImage(src, path.join(process.cwd(), pic.pics_mid), 400, 400))
           batchFns.push(clipImage(src, path.join(process.cwd(), pic.pics_sma), 200, 200))
@@ -340,6 +342,10 @@ function doUpdateGoodPics(info) {
         })
     })
   })
+}
+
+function addDoUpdateGoodPics(info) {
+  return doUpdateGoodPics(info, true)
 }
 
 /**
@@ -414,7 +420,8 @@ function doGetAllPics(info) {
     // 3. 组装最新的数据挂载在“info”中“good”对象下
     dao.list('GoodPicModel', { where: { goods_id: good.goods_id } }, function (err, goodPics) {
       if (err) return reject('获取所有商品图片列表失败')
-      _(goodPics).forEach(function (pic) {
+      const data = goodPics.map(function (pic) {
+        // == 0  开通是http
         if (pic.pics_big.indexOf('http') == 0) {
           pic.pics_big_url = pic.pics_big
         } else {
@@ -434,8 +441,15 @@ function doGetAllPics(info) {
 
         // pic.pics_mid_url = upload_config.get("baseURL") + pic.pics_mid;
         // pic.pics_sma_url = upload_config.get("baseURL") + pic.pics_sma;
+        return (pic = {
+          goods_id: pic.goods_id,
+          pics_id: pic.pics_id,
+          pics_big_url: pic.pics_big_url,
+          pics_mid_url: pic.pics_mid_url,
+          pics_sma_url: pic.pics_sma_url,
+        })
       })
-      info.good.pics = goodPics
+      info.good.pics = data
       resolve(info)
     })
   })
@@ -472,7 +486,7 @@ module.exports.createGood = function (params, cb) {
     // 创建商品
     .then(createGoodInfo)
     // 更新商品图片
-    // .then(doUpdateGoodPics)
+    .then(addDoUpdateGoodPics)
     // 更新商品参数
     .then(doUpdateGoodAttributes)
     // 挂载图片
@@ -571,10 +585,12 @@ module.exports.updateGood = function (id, params, cb) {
     // 创建商品
     .then(updateGoodInfo)
     // // 更新商品图片
-    .then(doUpdateGoodPics)
+    .then(addDoUpdateGoodPics) // doUpdateGoodPics
     // // 更新商品参数
     .then(doUpdateGoodAttributes)
+    // 挂载图片
     .then(doGetAllPics)
+    // 挂载属性
     .then(doGetAllAttrs)
     // 创建成功
     .then(function (info) {
@@ -645,7 +661,7 @@ module.exports.getGoodById = function (id, cb) {
     // 挂载图片
     .then(doGetAllPics)
     // 挂载属性
-    .then(doGetAllAttrs)
+    // .then(doGetAllAttrs)
     .then(function (info) {
       cb(null, info.good)
     })

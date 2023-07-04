@@ -12,12 +12,14 @@ const upload_config = require(path.join(process.cwd(), 'config/default.json')).u
 router.post('/', upload, function (req, res, next) {
   const fileExtArray = req.file.originalname.split('.')
   const ext = fileExtArray[fileExtArray.length - 1]
+
   const targetPath = req.file.path + '.' + ext
+  const tmp_path = upload_config.upload_path + `/${req.file.filename}` + '.' + ext
   fs.rename(path.join(process.cwd(), '/' + req.file.path), path.join(process.cwd(), targetPath), function (err) {
     if (err) {
       return res.sendResult(null, 400, '上传文件失败')
     }
-    res.sendResult({ tmp_path: targetPath, url: upload_config.baseURL + '/' + targetPath }, 200, '上传成功')
+    res.sendResult({ tmp_path: targetPath, url: upload_config.baseURL + tmp_path }, 200, '上传成功')
   })
 })
 

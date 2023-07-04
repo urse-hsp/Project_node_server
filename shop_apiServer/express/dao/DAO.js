@@ -22,6 +22,7 @@ const getModel = async function (modelName, type, conditions, cb, errMeg = '查�
     cb(errMeg)
   }
 }
+module.exports.getModel = getModel
 
 /**
  * 创建对象数据

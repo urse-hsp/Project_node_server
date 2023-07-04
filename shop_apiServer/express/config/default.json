@@ -5,7 +5,7 @@
   },
   "upload_config": {
     "baseURL": "http://127.0.0.1:3333",
-    "upload_ueditor": "uploads/ueditor",
+    "upload_path": "/tmp_uploads",
     "simple_upload_redirect": "http://127.0.0.1/reload"
   },
   "mysql": {
