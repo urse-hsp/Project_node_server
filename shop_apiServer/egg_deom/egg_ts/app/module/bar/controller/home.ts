@@ -1,6 +1,7 @@
 import { EggLogger } from 'egg';
 import { Inject, HTTPController, HTTPMethod, HTTPMethodEnum } from '@eggjs/tegg';
 
+// 主体路由
 @HTTPController({
   path: '/',
 })
@@ -10,7 +11,7 @@ export class HomeController {
 
   @HTTPMethod({
     method: HTTPMethodEnum.GET,
-    path: '/',
+    path: 'a',
   })
   async index() {
     this.logger.info('hello egg logger');

@@ -133,6 +133,8 @@ const findByPk = async function (modelName, id, cb) {
   getModel(modelName, 'findByPk', id, cb)
 }
 module.exports.findByPk = findByPk
+module.exports.show = findByPk
+
 
 /**
  * 通过主键ID删除对象

@@ -1,33 +1,12 @@
 # hackernews-tegg
 
-[Hacker News](https://news.ycombinator.com/) showcase using [tegg](https://github.com/eggjs/tegg)
+# RESTful 表现层状态转移
 
-## QuickStart
+1. 在 RESTful 风格的设计，通过响应状态码来标识响应的状态，保持响应的 body 简洁，只返回接口数据。
+1. 设计响应格式
+1. 约束前后端的通信 响应格式
 
-### Development
+# 插件
 
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
-
-Don't tsc compile at development mode, if you had run `tsc` then you need to `npm run clean` before `npm run dev`.
-
-### Deploy
-
-```bash
-$ npm run tsc
-$ npm start
-```
-
-### Npm Scripts
-
-- Use `npm run lint` to check code style
-- Use `npm test` to run unit test
-- se `npm run clean` to clean compiled js at development mode once
-
-### Requirement
-
-- Node.js >= 16.x
-- Typescript >= 4.x
+1. egg-validate 参数校验模块 参数进行检验。比如检验一个用户名是不是字符串，可以这么写，
+   ctx.validate({ userName: 'string' });

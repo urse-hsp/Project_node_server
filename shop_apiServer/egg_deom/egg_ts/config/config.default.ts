@@ -8,7 +8,8 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1688522818608_2198';
 
   // add your egg config in here
-  config.middleware = [];
+  // 加载 errorHandler 中间件
+  config.middleware = [ 'errorHandler' ];
 
   // add your special config in here
   const bizConfig = {
@@ -19,5 +20,10 @@ export default (appInfo: EggAppInfo) => {
   return {
     ...config,
     ...bizConfig,
+
+    // 只对 /api 前缀的 url 路径生效
+    errorHandler: {
+      match: '/api',
+    },
   };
 };

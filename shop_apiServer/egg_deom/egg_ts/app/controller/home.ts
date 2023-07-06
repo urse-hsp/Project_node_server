@@ -1,10 +1,10 @@
 'use strict';
-
-const Controller = require('egg').Controller;
+import { Controller } from 'egg';
 
 class HomeController extends Controller {
   async index() {
-    this.ctx.body = 'hi, ' + this.app.plugins.eggPlugin.name;
+    const { ctx } = this;
+    ctx.body = 'hi, egg';
   }
 }
 
