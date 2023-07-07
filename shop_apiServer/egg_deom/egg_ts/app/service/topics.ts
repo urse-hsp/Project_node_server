@@ -40,11 +40,7 @@ class TopicService extends Service {
     });
 
     this.checkSuccess(result);
-    return {
-      result,
-      code: 200,
-      // data: result.data.data,
-    };
+    return result.data.data;
   }
 
   async create(params) {

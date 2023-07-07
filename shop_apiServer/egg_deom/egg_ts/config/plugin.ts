@@ -1,6 +1,9 @@
 import { EggPlugin } from 'egg';
 
 const plugin: EggPlugin = {
+  // xframe: {
+  //   enable: false,
+  // },
   tegg: {
     enable: true,
     package: '@eggjs/tegg-plugin',

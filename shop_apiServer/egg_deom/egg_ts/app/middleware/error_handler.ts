@@ -1,4 +1,4 @@
-// app/middleware/error_handler.js
+// 统一错误处理
 module.exports = () => {
   return async function errorHandler(ctx, next) {
     try {

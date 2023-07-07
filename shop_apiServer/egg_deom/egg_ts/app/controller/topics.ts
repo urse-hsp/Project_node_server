@@ -1,11 +1,16 @@
-'use strict';
-
-const Controller = require('egg').Controller;
+import { Controller } from 'egg';
 
 class TopicsController extends Controller {
+  createRule: {
+    accesstoken: string
+    title: string
+    tab: { type: string; values: string[]; required: boolean }
+    content: string
+  };
   constructor(ctx) {
     super(ctx);
 
+    // 定义创建接口的请求参数规则
     this.createRule = {
       accesstoken: 'string',
       title: 'string',
@@ -42,6 +47,7 @@ class TopicsController extends Controller {
       limit: ctx.query.limit,
       mdrender: ctx.query.mdrender !== 'false',
     });
+    ctx.status = 201;
   }
 
   async create() {
