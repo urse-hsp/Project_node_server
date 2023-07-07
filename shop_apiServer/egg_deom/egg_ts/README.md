@@ -21,7 +21,7 @@
 
 # 请求参数
 
-get ? 路径后面 query 
+get ? 路径后面 query
 post /is/ params url 中的
 post body
 
@@ -51,3 +51,13 @@ config/config.{env}.js 用于编写配置文件，具体参见配置。
 config/plugin.js 用于配置需要加载的插件，具体参见插件。
 test/** 用于单元测试，具体参见单元测试。
 app.js 和 agent.js 用于自定义启动时的初始化工作，可选，具体参见启动自定义。关于 agent.js 的作用参见 Agent 机制。
+
+# RESTful API
+
+## 设计响应格式 约定接口
+
+获取主题列表 200
+获取单个主题 200
+创建主题 201
+更新/删除主题 204 操作执行
+错误处理 422
