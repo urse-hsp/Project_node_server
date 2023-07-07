@@ -4,6 +4,10 @@ const plugin: EggPlugin = {
   // xframe: {
   //   enable: false,
   // },
+  sequelize: {
+    enable: true,
+    package: 'egg-sequelize',
+  },
   tegg: {
     enable: true,
     package: '@eggjs/tegg-plugin',

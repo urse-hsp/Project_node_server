@@ -25,6 +25,8 @@ export default (appInfo: EggAppInfo) => {
     domainWhiteList: [ '*' ], // 配置白名单
   };
 
+  // config.sequelize = {};
+
   // the return config will combines to EggAppConfig
   return {
     ...config,
