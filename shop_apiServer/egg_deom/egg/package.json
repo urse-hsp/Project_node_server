@@ -21,9 +21,11 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-egg",
+    "start": "egg-scripts start  --port=8080  --sticky --title=egg-server-cloud-alarm.js",
+    "start2": "egg-scripts start --daemon --title=egg-server-egg",
     "stop": "egg-scripts stop --title=egg-server-egg",
     "dev": "egg-bin dev",
+    "dev:sit": "egg-scripts start  --port=8080 --sticky --title=egg-server-cloud-alarm.js --env=sit ",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
