@@ -1,8 +1,9 @@
 'use strict';
 
-const Service = require('egg').Service;
+import { Service } from 'egg';
 
 class TopicService extends Service {
+  root: string;
   constructor(ctx) {
     super(ctx);
     this.root = 'https://cnodejs.org/api/v1';

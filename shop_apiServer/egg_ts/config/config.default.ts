@@ -28,6 +28,7 @@ export default (appInfo: EggAppInfo) => {
   // config.sequelize = {};
 
   // the return config will combines to EggAppConfig
+
   return {
     ...config,
     ...bizConfig,
