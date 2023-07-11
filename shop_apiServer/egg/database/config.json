@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "12345",
-    "database": "egg-sequelize-doc-default",
+    "database": "farms",
     "host": "localhost",
     "dialect": "mysql",
     "port": 3306
@@ -10,7 +10,7 @@
   "test": {
     "username": "root",
     "password": "12345",
-    "database": "egg-sequelize-doc-unittest",
+    "database": "farms",
     "host": "localhost",
     "dialect": "mysql",
     "port": 3306

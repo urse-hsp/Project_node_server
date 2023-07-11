@@ -27,6 +27,13 @@ export default (appInfo: EggAppInfo) => {
     domainWhiteList: [ '*' ], // 配置白名单
   };
 
+  // config/default.js 标准化了配置字段，统一为 key 和 secret 。
+  config.passportGithub = {
+    key: 'your_clientID',
+    secret: 'your_clientSecret',
+    // callbackURL: '/passport/github/callback',
+    // proxy: false,
+  };
 
   // the return config will combines to EggAppConfig
   return {

@@ -628,3 +628,6 @@
 2023-07-04 17:47:29 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
 2023-07-04 17:48:34 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 res.sendResult is not a function
 2023-07-04 17:49:19 error [www]: GET /api/private/v1/users?query=&current=1&pageSize=5 Cannot read properties of undefined (reading 'userInfo')
+2023-07-11 15:32:15 debug [www]: login => username:%s,password:%s
+2023-07-11 15:32:15 debug [www]: admin
+2023-07-11 15:32:15 debug [www]: null

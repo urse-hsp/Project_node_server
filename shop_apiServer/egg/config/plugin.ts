@@ -1,6 +1,14 @@
 import { EggPlugin } from 'egg';
 
 const plugin: EggPlugin = {
+  passport: {
+    enable: true,
+    package: 'egg-passport',
+  },
+  passportGithub: {
+    enable: true,
+    package: 'egg-passport-github',
+  },
   validate: {
     enable: true,
     package: 'egg-validate',

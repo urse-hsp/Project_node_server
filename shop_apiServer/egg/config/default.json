@@ -1,0 +1,20 @@
+{
+  "jwt": {
+    "secretKey": "itcast",
+    "day": 1
+  },
+  "upload_config": {
+    "baseURL": "http://127.0.0.1:3333",
+    "upload_path": "/tmp_uploads",
+    "simple_upload_redirect": "http://127.0.0.1/reload"
+  },
+  "mysql": {
+    "host": "localhost",
+    "user": "root",
+    "password": "12345",
+    "port": "3306",
+    "database": "farms",
+    "connectTimeout": 5000,
+    "multipleStatements": false
+  }
+}

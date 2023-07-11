@@ -54,7 +54,7 @@ app.use(resextra)
 
 // 初始化 passport 框架
 const { setup, tokenAuth, login } = require('./modules/passport')
-setup(app, managerService.login)
+setup(app)
 app.use('/api/private/v1/login', login) // 登录接口
 app.use('/api/private/v1/*', tokenAuth) // 权限限制
 

@@ -2,6 +2,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const Strategy = require('passport-http-bearer').Strategy
+const managerService = require('../services/ManagerService')
 
 const config = require('../config/default.json')
 const jwt = require('jsonwebtoken')
@@ -15,13 +16,11 @@ const jwt_config = config.jwt
  * @param  {[type]}   loginFunc 登录函数
  * @param  {Function} callback  回调函数
  */
-module.exports.setup = function (app, loginFunc, callback) {
+module.exports.setup = function (app, callback) {
   // 用户名密码 登录策略
   passport.use(
     new LocalStrategy(function (username, password, done) {
-      if (!loginFunc) return done('登录验证函数未设置')
-
-      loginFunc(username, password, function (err, user) {
+      managerService.login(username, password, function (err, user) {
         if (err) return done(err)
         return done(null, user)
       })
