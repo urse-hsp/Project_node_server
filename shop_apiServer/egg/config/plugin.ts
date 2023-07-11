@@ -1,9 +1,10 @@
 import { EggPlugin } from 'egg';
 
 const plugin: EggPlugin = {
-  // xframe: {
-  //   enable: false,
-  // },
+  validate: {
+    enable: true,
+    package: 'egg-validate',
+  },
   sequelize: {
     enable: true,
     package: 'egg-sequelize',
@@ -35,10 +36,6 @@ const plugin: EggPlugin = {
   tracer: {
     enable: true,
     package: 'egg-tracer',
-  },
-  validate: {
-    enable: true,
-    package: 'egg-validate',
   },
 };
 
