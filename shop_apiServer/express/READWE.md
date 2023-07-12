@@ -48,7 +48,12 @@
 
 1. /api/private/v1/login 登录
 
-
-
 # sql
-1. 
+
+1.
+
+# passport
+
+初始化服务，
+登录： passport-local，local 触发验证接收回调，
+权限校验： passport-http-bearer，bearer 触发验证接收回调，

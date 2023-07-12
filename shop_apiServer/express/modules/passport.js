@@ -1,7 +1,7 @@
 // 验证模块
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const Strategy = require('passport-http-bearer').Strategy
+const BearerStrategy = require('passport-http-bearer').Strategy
 const managerService = require('../services/ManagerService')
 
 const config = require('../config/default.json')
@@ -20,6 +20,7 @@ module.exports.setup = function (app, callback) {
   // 用户名密码 登录策略
   passport.use(
     new LocalStrategy(function (username, password, done) {
+      console.log('111')
       managerService.login(username, password, function (err, user) {
         if (err) return done(err)
         return done(null, user)
@@ -29,7 +30,8 @@ module.exports.setup = function (app, callback) {
 
   // token 验证策略 verify校验token
   passport.use(
-    new Strategy(function (token, done) {
+    new BearerStrategy(function (token, done) {
+      console.log('222')
       jwt.verify(token, jwt_config.secretKey, function (err, decode) {
         if (err) {
           return done('验证错误')
@@ -53,6 +55,7 @@ module.exports.setup = function (app, callback) {
  * @param  {Function} next [description]
  */
 module.exports.login = function (req, res, next) {
+  console.log('3333')
   passport.authenticate('local', function (err, user, info) {
     if (err) return res.sendResult(null, 401, err)
     if (!user) return res.sendResult(null, 401, '参数错误')
@@ -73,6 +76,7 @@ module.exports.login = function (req, res, next) {
  * @param  {Function} next 传递事件函数
  */
 module.exports.tokenAuth = function (req, res, next) {
+  console.log('4444')
   // 这里通过初始化的 Strategy 解析校验后 进行回调处理
   passport.authenticate('bearer', { session: false }, function (err, tokenData) {
     if (err) return res.sendResult(null, 400, '无效token')

@@ -11,6 +11,9 @@ export default (appInfo: EggAppInfo) => {
   // add your egg config in here
   config.middleware = [ 'errorHandler' ];
 
+  // 配置 resextra 中间件的配置
+  config.errorHandler = { match: '/' };
+
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
@@ -34,6 +37,14 @@ export default (appInfo: EggAppInfo) => {
     // callbackURL: '/passport/github/callback',
     // proxy: false,
   };
+
+  // 3.配置插件的功能，配置插件的功能必须写在声明的config对象下方，是const声明的在声明前操作会报错
+  // config/config.default.js文件
+  // config.cors = {
+  //   // 允许跨域的网址，*表示所有网址都可以跨域请求文件资源，也可以指定域名
+  //   origin: '*',
+  //   allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  // };
 
   // the return config will combines to EggAppConfig
   return {
