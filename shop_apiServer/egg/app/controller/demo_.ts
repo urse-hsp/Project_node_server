@@ -19,8 +19,6 @@ class UserController extends Controller {
 
   async show() {
     const ctx = this.ctx;
-    console.log(ctx.params, ctx.params.id, 6666);
-
     ctx.body = await ctx.model.User.findByPk(toInt(ctx.params.id));
   }
 

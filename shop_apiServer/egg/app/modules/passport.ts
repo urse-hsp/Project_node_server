@@ -1,12 +1,8 @@
 // 验证模块
-// import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-// import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import jwt from 'jsonwebtoken';
 import config from '../../config/default.json';
 // import assert from 'assert';
-
-// const managerService = require('../services/ManagerService');
 
 const jwt_config = config.jwt;
 
@@ -17,7 +13,7 @@ const jwt_config = config.jwt;
  * @param  {[type]}   res  响应
  * @param  {Function} next [description]
  */
-export const login = function(user) {
+const login = function(user) {
   // if (err) return res.sendResult(null, 401, err);
   if (!user.id) return user;
   const created = Math.floor(Date.now() / 1000) + 1000 * 60 * 60 * 24 * jwt_config.day; // 最后面一位设置过期天数
@@ -45,7 +41,7 @@ export const setup = function(app) {
       {
         passReqToCallback: true,
       },
-      (req, username, password, done) => {
+      async (req: any, username, password, done) => {
         console.log('本地验证策略');
         // format user
         const user = {
@@ -55,10 +51,6 @@ export const setup = function(app) {
         };
         app.logger.debug('%s %s get user: %j', req.method, req.url, user);
         app.passport.doVerify(req, user, done); // 触发我们添加的验证规则
-
-        // const User = await ctx.service.managerService.login(user.username, user.password);
-        // User.c = 1;
-        // // done(1, 2);
       },
     ),
   );
@@ -78,9 +70,11 @@ export const setup = function(app) {
   // );
   // 检查用户
   app.passport.verify(async (ctx, user) => {
-    const User = await ctx.service.managerService.login(user.username, user.password);
-    User.c = 1;
-    return login(User);
+    const existsUser = await ctx.service.managerService.login(
+      user.username,
+      user.password,
+    );
+    return login(existsUser);
   });
 
   // 存储：将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段

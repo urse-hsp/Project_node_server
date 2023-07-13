@@ -10,7 +10,6 @@ class UserController extends Controller {
     // } else {
     //   ctx.status = 401;
     // }
-    console.log(ctx.session, 6666, ctx.user);
 
     ctx.body = {
       a: 1,
@@ -21,9 +20,9 @@ class UserController extends Controller {
   async authCallback() {
     const ctx = this.ctx;
     // ctx.body = ctx.user;
-    ctx.body = 123;
+    ctx.body = ctx.user;
+    console.log(2222, ctx.user);
     ctx.status = 201;
-    console.log(ctx.request.header.cookie, 6666, ctx.user);
   }
 
   async tokenAuth() {
