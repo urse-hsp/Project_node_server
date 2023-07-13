@@ -1,5 +1,6 @@
 // 验证模块
 import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import jwt from 'jsonwebtoken';
 import config from '../../config/default.json';
 // import assert from 'assert';
@@ -56,18 +57,18 @@ export const setup = function(app) {
   );
 
   // token 验证策略 verify校验token
-  // passport.use(
-  //   new BearerStrategy(function(token, done) {
-  //     console.log(44444);
-  //     jwt.verify(token, jwt_config.secretKey, function(err, decode) {
-  //       if (err) {
-  //         return done('验证错误');
-  //       }
-  //       // 通过
-  //       return done(null, decode);
-  //     });
-  //   }),
-  // );
+  app.passport.use(
+    new BearerStrategy(function(token, done) {
+      console.log(44444);
+      jwt.verify(token, jwt_config.secretKey, function(err, decode) {
+        if (err) {
+          return done('验证错误');
+        }
+        // 通过
+        return done(null, decode);
+      });
+    }),
+  );
   // 检查用户
   app.passport.verify(async (ctx, user) => {
     const existsUser = await ctx.service.managerService.login(
