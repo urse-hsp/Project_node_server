@@ -1,6 +1,10 @@
 import { EggPlugin } from 'egg';
 
 const plugin: EggPlugin = {
+  session: {
+    enable: true,
+    package: 'egg-session',
+  },
   cors: {
     enable: true,
     package: 'egg-cors',
@@ -9,10 +13,10 @@ const plugin: EggPlugin = {
     enable: true,
     package: 'egg-passport',
   },
-  passportGithub: {
-    enable: true,
-    package: 'egg-passport-github',
-  },
+  // passportGithub: {
+  //   enable: true,
+  //   package: 'egg-passport-github',
+  // },
   validate: {
     enable: true,
     package: 'egg-validate',

@@ -10,11 +10,11 @@ class UserController extends Controller {
     // } else {
     //   ctx.status = 401;
     // }
-    console.log(ctx.user, 6666);
+    console.log(ctx.session, 6666, ctx.user);
 
     ctx.body = {
       a: 1,
-      b: ctx.user ?? {},
+      b: {},
     };
   }
 
@@ -23,6 +23,7 @@ class UserController extends Controller {
     // ctx.body = ctx.user;
     ctx.body = 123;
     ctx.status = 201;
+    console.log(ctx.session, 6666, ctx.user);
   }
 
   async tokenAuth() {

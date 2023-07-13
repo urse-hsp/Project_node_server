@@ -27,23 +27,29 @@ export default (appInfo: EggAppInfo) => {
     csrf: {
       enable: false,
     },
-    domainWhiteList: [ '*' ], // 配置白名单
+    domainWhiteList: [ 'http://localhost:8000' ], // 配置白名单
   };
-
-  // config/default.js 标准化了配置字段，统一为 key 和 secret 。
-  config.passportGithub = {
-    key: 'your_clientID',
-    secret: 'your_clientSecret',
-    // callbackURL: '/passport/github/callback',
-    // proxy: false,
-  };
-
   // 3.配置插件的功能，配置插件的功能必须写在声明的config对象下方，是const声明的在声明前操作会报错
   // config/config.default.js文件
-  // config.cors = {
-  //   // 允许跨域的网址，*表示所有网址都可以跨域请求文件资源，也可以指定域名
-  //   origin: '*',
-  //   allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  config.cors = {
+    origin: '*', // 允许所有的请求源
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    credentials: true, // 允许携带跨域请求的 cookie
+  };
+
+  // config.proxy = true;
+
+  config.session = {
+    key: 'SESSION_ID', // 修改为你自己的会话键名
+    maxAge: 24 * 3600 * 1000, // 会话过期时间，这里设置为 1 天
+    httpOnly: true,
+    encrypt: true,
+    renew: true, // 每次访问都会刷新会话过期时间
+  };
+
+  // config.passportLocal = {
+  //   usernameField: 'email', // 设置用于身份验证的用户名字段
+  //   passwordField: 'password', // 设置用于身份验证的密码字段
   // };
 
   // the return config will combines to EggAppConfig
