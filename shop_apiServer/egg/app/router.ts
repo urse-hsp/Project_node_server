@@ -16,7 +16,7 @@ module.exports = app => {
   router.post(
     '/api/private/v1/login',
     app.passport.authenticate('local', {
-      successRedirect: '/',
+      successRedirect: '/api/private/v1/login',
       failureRedirect: '/api/private/v1/login',
     }),
   );

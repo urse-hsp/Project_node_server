@@ -4,7 +4,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 // import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import jwt from 'jsonwebtoken';
 import config from '../../config/default.json';
-import assert from 'assert';
+// import assert from 'assert';
 
 // const managerService = require('../services/ManagerService');
 
@@ -54,8 +54,11 @@ export const setup = function(app) {
           password,
         };
         app.logger.debug('%s %s get user: %j', req.method, req.url, user);
-        // app.passport.doVerify(req, user, done); // 触发我们添加的验证规则
-        done(1, 2);
+        app.passport.doVerify(req, user, done); // 触发我们添加的验证规则
+
+        // const User = await ctx.service.managerService.login(user.username, user.password);
+        // User.c = 1;
+        // // done(1, 2);
       },
     ),
   );
@@ -75,25 +78,20 @@ export const setup = function(app) {
   // );
   // 检查用户
   app.passport.verify(async (ctx, user) => {
-    assert(user.provider, 'user.provider should exists');
-
     const User = await ctx.service.managerService.login(user.username, user.password);
     User.c = 1;
-    ctx.session.qwe = 123;
     return login(User);
   });
 
   // 存储：将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段
   app.passport.serializeUser(async (ctx, user) => {
     console.log('序列化', ctx.originalUrl);
-    user.a = 1;
     return user;
   });
 
   // 取出：反序列化后把用户信息从 session 中取出来，反查数据库拿到完整信息
   app.passport.deserializeUser(async (ctx, user) => {
     console.log('反序列化', ctx.originalUrl);
-    user.b = 1;
     return user;
   });
 };
