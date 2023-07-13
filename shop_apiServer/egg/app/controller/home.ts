@@ -23,7 +23,7 @@ class UserController extends Controller {
     // ctx.body = ctx.user;
     ctx.body = 123;
     ctx.status = 201;
-    console.log(ctx.session, 6666, ctx.user);
+    console.log(ctx.request.header.cookie, 6666, ctx.user);
   }
 
   async tokenAuth() {

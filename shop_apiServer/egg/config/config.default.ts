@@ -27,14 +27,16 @@ export default (appInfo: EggAppInfo) => {
     csrf: {
       enable: false,
     },
-    domainWhiteList: [ 'http://localhost:8000' ], // 配置白名单
+    domainWhiteList: [ '*' ], // 配置白名单
+    // xframe: {
+    //   enable: false,
+    // },
   };
-  // 3.配置插件的功能，配置插件的功能必须写在声明的config对象下方，是const声明的在声明前操作会报错
-  // config/config.default.js文件
   config.cors = {
     origin: '*', // 允许所有的请求源
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
     credentials: true, // 允许携带跨域请求的 cookie
+    // path: '/',
   };
 
   // config.proxy = true;
