@@ -2,14 +2,18 @@
 module.exports = () => {
   return async function errorHandler(ctx, next) {
     try {
-      // ctx.set('Access-Control-Allow-Origin', '*'); // 请求的域名
-      // ctx.set('Access-Control-Allow-Credentials', 'true');
-
       await next();
+      // 自定义 404 响应
+      if (ctx.status === 404 && !ctx.body) {
+        if (ctx.acceptJSON) {
+          ctx.body = { error: 'Not Found~' };
+        } else {
+          ctx.body = '<h1>Page Not Found</h1>';
+        }
+      }
     } catch (err: any) {
       // 所有的异常都在 app 上触发一个 error 事件，框架会记录一条错误日志
       ctx.app.emit('error', err, ctx);
-
       const status = err.status || 500;
       // 生产环境时 500 错误的详细错误内容不返回给客户端，因为可能包含敏感信息
       const error =

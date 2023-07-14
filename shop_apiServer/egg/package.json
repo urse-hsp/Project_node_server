@@ -36,14 +36,12 @@
     "jsonwebtoken": "^9.0.1",
     "mysql2": "^2.3.3",
     "node-php-password": "^0.1.2",
-    "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "@eggjs/tsconfig": "1",
     "@types/mocha": "10",
     "@types/node": "18",
-    "@types/passport-http-bearer": "^1.0.37",
     "@types/passport-local": "^1.0.35",
     "egg-bin": "6",
     "egg-mock": "5",

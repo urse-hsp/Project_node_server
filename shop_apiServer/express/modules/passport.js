@@ -31,7 +31,7 @@ module.exports.setup = function (app, callback) {
   // token 验证策略 verify校验token
   passport.use(
     new BearerStrategy(function (token, done) {
-      console.log('222')
+      console.log('222', token)
       jwt.verify(token, jwt_config.secretKey, function (err, decode) {
         if (err) {
           return done('验证错误')

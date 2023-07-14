@@ -8,11 +8,14 @@ export default (appInfo: EggAppInfo) => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1688979477290_8216';
 
-  // add your egg config in here
-  config.middleware = [ 'errorHandler' ];
+  // add your egg config in here // 执行顺序 --->
+  config.middleware = [ 'auth', 'errorHandler' ];
 
   // 配置 resextra 中间件的配置
   config.errorHandler = { match: '/' };
+
+  // 不需要验证token的路由
+  config.routerAuth = [ '/api/private/v1/login' ];
 
   // add your special config in here
   const bizConfig = {
@@ -43,7 +46,7 @@ export default (appInfo: EggAppInfo) => {
 
   config.session = {
     key: 'SESSION_ID', // 修改为你自己的会话键名
-    maxAge: 24 * 3600 * 1000, // 会话过期时间，这里设置为 1 天
+    maxAge: 1 * 24 * 3600 * 1000, // 会话过期时间，这里设置为 1 天
     httpOnly: true,
     encrypt: true,
     renew: true, // 每次访问都会刷新会话过期时间

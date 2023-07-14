@@ -1,11 +1,10 @@
 // 验证模块
 import { Strategy as LocalStrategy } from 'passport-local';
-import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import jwt from 'jsonwebtoken';
 import config from '../../config/default.json';
-// import assert from 'assert';
-
 const jwt_config = config.jwt;
+
+// import assert from 'assert';
 
 /**
  * 登录验证逻辑 登录接口
@@ -16,13 +15,14 @@ const jwt_config = config.jwt;
  */
 const login = function(user) {
   // if (err) return res.sendResult(null, 401, err);
-  if (!user.id) return user;
-  const created = Math.floor(Date.now() / 1000) + 1000 * 60 * 60 * 24 * jwt_config.day; // 最后面一位设置过期天数
-  // 生成token: sign(生成token信息, 加密的key密钥, 时效)
-  const token = jwt.sign({ uid: user.id, rid: user.rid }, jwt_config.secretKey, {
-    expiresIn: created,
-  });
-  user.token = 'Bearer ' + token;
+  if (user.id) {
+    const created = Math.floor(Date.now() / 1000) + 1000 * 60 * 60 * 24 * jwt_config.day; // 最后面一位设置过期天数
+    // 生成token: sign(生成token信息, 加密的key密钥, 时效)
+    const token = jwt.sign({ uid: user.id, rid: user.rid }, jwt_config.secretKey, {
+      expiresIn: created,
+    });
+    user.token = 'Bearer ' + token;
+  }
   return user;
 };
 
@@ -40,35 +40,27 @@ export const setup = function(app) {
   app.passport.use(
     new LocalStrategy(
       {
+        // 将请求信息传递到callback界面
         passReqToCallback: true,
+        // 中间件会自动从username和passport字段读取用户名和密码，如果需要更改：
+        // usernameField: 'email',
+        // passwordField: 'passwd'
       },
       async (req: any, username, password, done) => {
-        console.log('本地验证策略');
         // format user
         const user = {
           provider: 'local',
           username,
           password,
         };
+        console.log('本地验证策略', user);
+
         app.logger.debug('%s %s get user: %j', req.method, req.url, user);
         app.passport.doVerify(req, user, done); // 触发我们添加的验证规则
       },
     ),
   );
 
-  // token 验证策略 verify校验token
-  app.passport.use(
-    new BearerStrategy(function(token, done) {
-      console.log(44444);
-      jwt.verify(token, jwt_config.secretKey, function(err, decode) {
-        if (err) {
-          return done('验证错误');
-        }
-        // 通过
-        return done(null, decode);
-      });
-    }),
-  );
   // 检查用户
   app.passport.verify(async (ctx, user) => {
     const existsUser = await ctx.service.managerService.login(
@@ -76,6 +68,11 @@ export const setup = function(app) {
       user.password,
     );
     return login(existsUser);
+    //   if(鉴权成功){
+    //     return 用户信息
+    // }else{
+    //     return false
+    // }
   });
 
   // 存储：将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段
@@ -86,7 +83,7 @@ export const setup = function(app) {
 
   // 取出：反序列化后把用户信息从 session 中取出来，反查数据库拿到完整信息
   app.passport.deserializeUser(async (ctx, user) => {
-    console.log('反序列化', ctx.originalUrl);
+    console.log('反序列化', ctx.originalUrl, user);
     return user;
   });
 };

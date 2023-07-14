@@ -17,9 +17,6 @@ app.use(initialize)
  *	@系统初始化
  */
 
-// 获取管理员逻辑模块
-const managerService = require('./services/ManagerService')
-
 //  view engine setup
 // app.set('views', path.join(__dirname, 'views'))
 // app.set('view engine', 'jade')
@@ -57,6 +54,7 @@ const { setup, tokenAuth, login } = require('./modules/passport')
 setup(app)
 app.use('/api/private/v1/login', login) // 登录接口
 app.use('/api/private/v1/*', tokenAuth) // 权限限制
+console.log(111);
 
 // 第三方服务
 const logistics = require('./modules/Logistics.js')
@@ -71,7 +69,8 @@ authorization.setAuthFn()
  * 初始化路由
  * 带路径的用法并且可以打印出路有表
  */
-mount(app, path.join(process.cwd(), '/routes'))
+mount(app, path.join(process.cwd(), '/routes'),true)
+console.log(222);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

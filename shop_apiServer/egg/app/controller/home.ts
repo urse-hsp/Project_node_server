@@ -5,10 +5,7 @@ import { Controller } from 'egg';
 class UserController extends Controller {
   async login() {
     const ctx = this.ctx;
-    ctx.body = {
-      a: 1,
-      b: {},
-    };
+    ctx.body = 123;
   }
 
   async authCallback() {

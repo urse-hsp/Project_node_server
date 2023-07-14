@@ -22,9 +22,6 @@ module.exports = app => {
   );
 
   // 渲染登录页面，用户输入账号密码
-  router.get('/api/private/v1/*', app.passport.authenticate('bearer'));
-
-  // 渲染登录页面，用户输入账号密码
   router.get('/api/private/v1/logins', controller.home.authCallback);
 
   // router.get('/', controller.home.index);
