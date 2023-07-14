@@ -6,9 +6,9 @@ module.exports = () => {
       // 自定义 404 响应
       if (ctx.status === 404 && !ctx.body) {
         if (ctx.acceptJSON) {
-          ctx.body = { error: 'Not Found~' };
+          ctx.body = 'Not Found~';
         } else {
-          ctx.body = 'Api Not Found~~';
+          ctx.body = 'path Not Found~';
         }
       }
     } catch (err: any) {

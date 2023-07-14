@@ -21,13 +21,11 @@ class ManagerService extends Service {
   async resextra(type: resextraType = 'GET', data: any) {
     const ctx = this.ctx;
     if (typeof data === 'string') {
-      ctx.body = data;
       ctx.status = 422;
-      return;
+    } else {
+      ctx.status = resextraType_Status[type];
     }
-
-    ctx.status = resextraType_Status[type];
-    ctx.body = ctx.user;
+    ctx.body = data;
   }
 }
 

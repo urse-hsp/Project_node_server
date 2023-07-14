@@ -43,8 +43,8 @@ export default (appInfo: EggAppInfo) => {
 
   config.session = {
     key: 'SESSION_ID', // 修改为你自己的会话键名
-    // maxAge: 1 * 24 * 3600 * 1000, // 会话过期时间，这里设置为 1 天
-    maxAge: 1000 * 60, // 1分钟
+    maxAge: 1 * 24 * 3600 * 1000, // 会话过期时间，这里设置为 1 天
+    // maxAge: 1000 * 60, // 1分钟
     httpOnly: true,
     encrypt: true,
     renew: true, // 每次访问都会刷新会话过期时间
