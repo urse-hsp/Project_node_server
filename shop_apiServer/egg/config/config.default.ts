@@ -13,6 +13,7 @@ export default (appInfo: EggAppInfo) => {
 
   // 配置 resextra 中间件的配置
   config.errorHandler = { match: '/' };
+  config.auth = { match: '/api' }; // /api接口 生效验证
 
   // 不需要验证token的路由
   config.routerAuth = [ '/api/private/v1/login' ];
@@ -31,31 +32,23 @@ export default (appInfo: EggAppInfo) => {
       enable: false,
     },
     domainWhiteList: [ '*' ], // 配置白名单
-    // xframe: {
-    //   enable: false,
-    // },
   };
   config.cors = {
     origin: '*', // 允许所有的请求源
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
     credentials: true, // 允许携带跨域请求的 cookie
-    // path: '/',
   };
 
   // config.proxy = true;
 
   config.session = {
     key: 'SESSION_ID', // 修改为你自己的会话键名
-    maxAge: 1 * 24 * 3600 * 1000, // 会话过期时间，这里设置为 1 天
+    // maxAge: 1 * 24 * 3600 * 1000, // 会话过期时间，这里设置为 1 天
+    maxAge: 1000 * 60, // 1分钟
     httpOnly: true,
     encrypt: true,
     renew: true, // 每次访问都会刷新会话过期时间
   };
-
-  // config.passportLocal = {
-  //   usernameField: 'email', // 设置用于身份验证的用户名字段
-  //   passwordField: 'password', // 设置用于身份验证的密码字段
-  // };
 
   // the return config will combines to EggAppConfig
   return {

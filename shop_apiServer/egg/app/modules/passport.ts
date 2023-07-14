@@ -13,7 +13,7 @@ const jwt_config = config.jwt;
  * @param  {[type]}   res  响应
  * @param  {Function} next [description]
  */
-const login = function(user) {
+export const login = function(user) {
   // if (err) return res.sendResult(null, 401, err);
   if (user.id) {
     const created = Math.floor(Date.now() / 1000) + 1000 * 60 * 60 * 24 * jwt_config.day; // 最后面一位设置过期天数
@@ -67,17 +67,17 @@ export const setup = function(app) {
       user.username,
       user.password,
     );
-    return login(existsUser);
-    //   if(鉴权成功){
-    //     return 用户信息
-    // }else{
-    //     return false
-    // }
+    // assert(existsUser.uid, existsUser);
+    return existsUser;
   });
 
   // 存储：将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段
   app.passport.serializeUser(async (ctx, user) => {
     console.log('序列化', ctx.originalUrl);
+    // const userInfo = {
+    //   uid: user.uid,
+    //   rid: user.rid,
+    // };
     return user;
   });
 
