@@ -56,6 +56,11 @@ class UserController extends Controller {
     await user.destroy();
     ctx.status = 200;
   }
+
+  // create
+  new() {}
+  // update
+  edit() {}
 }
 
 module.exports = UserController;

@@ -54,5 +54,17 @@ export default (appInfo: EggAppInfo) => {
   return {
     ...config,
     ...bizConfig,
+    // customLoader: {
+    //   // 定义在 app 上的属性名 app.adapter
+    //   dao: {
+    //     // 相对于 app.config.baseDir
+    //     directory: 'app/dao',
+    //     // 如果是 ctx 则使用 loadToContext
+    //     // inject: 'app',
+    //     // // 是否加载框架和插件的目录
+    //     // loadunit: false,
+    //     // // 还可以定义其他 LoaderOptions
+    //   },
+    // },
   };
 };

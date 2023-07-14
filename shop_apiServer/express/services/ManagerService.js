@@ -26,7 +26,7 @@ module.exports.getAllManagers = function (conditions, cb) {
     current = parseInt(conditions['current'])
     pageSize = parseInt(conditions['pageSize'])
 
-    pageCount = Math.ceil(count / pageSize)
+    // pageCount = Math.ceil(count / pageSize)
     offset = (current - 1) * pageSize // 当前页
     if (offset >= count) {
       offset = count

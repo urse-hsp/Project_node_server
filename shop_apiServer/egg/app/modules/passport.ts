@@ -83,7 +83,7 @@ export const setup = function(app) {
 
   // 取出：反序列化后把用户信息从 session 中取出来，反查数据库拿到完整信息
   app.passport.deserializeUser(async (ctx, user) => {
-    console.log('反序列化', ctx.originalUrl, user);
+    console.log('反序列化', ctx.originalUrl);
     return user;
   });
 };

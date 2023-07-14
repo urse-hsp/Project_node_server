@@ -18,7 +18,6 @@ module.exports = (options, app) => {
       ctx.status = 401;
       ctx.body = 'token失效或解析错误';
     };
-    console.log(isFlag, 6, url, routerAuth);
 
     // TOP2
     if (isFlag) {

@@ -51,7 +51,7 @@ module.exports.create = function (obj, cb) {
 
 // 用户表，角色表
 module.exports.findByKey = async function (key, current, pageSize, cb) {
-  let = sql = 'SELECT * FROM sp_manager as mgr LEFT JOIN sp_role as role ON mgr.role_id = role.role_id'
+  let sql = 'SELECT * FROM sp_manager as mgr LEFT JOIN sp_role as role ON mgr.role_id = role.role_id'
 
   if (key) {
     sql += ` WHERE mg_name LIKE '%${key}%'`

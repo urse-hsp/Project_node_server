@@ -14,9 +14,9 @@ module.exports = app => {
     '/api/private/v1/login',
     app.passport.authenticate('local', {
       successRedirect: '/api/private/v1/login',
-      failureRedirect: '/api/private/v1/login',
     }),
   );
+  router.resources('users', '/api/private/v1/users', controller.users);
 
   // router.get('/', controller.home.index);
   // router.resources('topics', '/api/v2/topics', controller.topics);
