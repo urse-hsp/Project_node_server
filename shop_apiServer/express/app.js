@@ -54,7 +54,6 @@ const { setup, tokenAuth, login } = require('./modules/passport')
 setup(app)
 app.use('/api/private/v1/login', login) // 登录接口
 app.use('/api/private/v1/*', tokenAuth) // 权限限制
-console.log(111);
 
 // 第三方服务
 const logistics = require('./modules/Logistics.js')
@@ -69,8 +68,7 @@ authorization.setAuthFn()
  * 初始化路由
  * 带路径的用法并且可以打印出路有表
  */
-mount(app, path.join(process.cwd(), '/routes'),true)
-console.log(222);
+mount(app, path.join(process.cwd(), '/routes'), true)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

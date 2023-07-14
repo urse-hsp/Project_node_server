@@ -12,21 +12,28 @@ module.exports = (options, app) => {
     // 获取当前路由
     const url = ctx.url;
     // 判断当前路由是否需要验证token
-    const flag = routerAuth.includes(url);
+    const isFlag = routerAuth.includes(url);
+
+    const setReturn = () => {
+      ctx.status = 401;
+      ctx.body = 'token失效或解析错误';
+    };
+    console.log(isFlag, 6, url, routerAuth);
 
     // TOP2
-    if (flag) {
+    if (isFlag) {
       // 不需要验证
       await next();
     } else {
+      console.log(22222222);
+
       // 通过cookie验证
       if (istoken_session) {
         // TPO1 session cookie
         if (ctx?.user && ctx.user.id) {
           await next();
         } else {
-          ctx.status = 401;
-          ctx.body = 'token失效或解析错误';
+          setReturn();
         }
         return;
       }
@@ -37,8 +44,7 @@ module.exports = (options, app) => {
       // 解析token
       jwt.verify(token, jwt_config.secretKey, function(err) {
         if (err) {
-          ctx.status = 401;
-          ctx.body = 'token失效或解析错误';
+          setReturn();
           return;
         }
         // 通过
