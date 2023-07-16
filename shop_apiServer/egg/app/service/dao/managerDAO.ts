@@ -11,7 +11,8 @@ class managersDAO extends Service {
   // 用户表，角色表
   async findByKey(key, current, pageSize) {
     const ctx = this.ctx;
-    let sql = '';
+    let sql =
+      'SELECT * FROM sp_manager as mgr LEFT JOIN sp_role as role ON mgr.role_id = role.role_id';
     if (key) {
       sql += ` WHERE mg_name LIKE '%${key}%'`;
     }
@@ -23,7 +24,7 @@ class managersDAO extends Service {
       const data = await ctx.model.query(sql, { type: QueryTypes.SELECT });
       return data;
     } catch (error) {
-      return '查询执行出错';
+      return false;
     }
   }
 

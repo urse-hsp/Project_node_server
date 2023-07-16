@@ -1,6 +1,8 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 import databaseres from '../database/config.json';
 
+const databasereslist: any = databaseres;
+
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>;
 
@@ -23,7 +25,7 @@ export default (appInfo: EggAppInfo) => {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
 
-  config.sequelize = databaseres.development;
+  config.sequelize = databasereslist.development;
 
   // https://github.com/eggjs/egg-security
   // 报错的原因 Egg 启动的是本地地址 http://127.0.0.1:7001 ，但是你请求的 POST 或 GET 接口是非本地计算机（别人的电脑），或者使用 Postman 发起请求，都会触发安防策略。

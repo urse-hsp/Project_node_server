@@ -22,9 +22,13 @@ class ManagerService extends Service {
     const ctx = this.ctx;
     if (typeof data === 'string') {
       ctx.status = 422;
-    } else {
-      ctx.status = resextraType_Status[type];
+      ctx.body = {
+        error: data,
+      };
+
+      return;
     }
+    ctx.status = resextraType_Status[type];
     ctx.body = data;
   }
 }

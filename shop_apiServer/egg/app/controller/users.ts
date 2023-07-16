@@ -10,15 +10,39 @@ class UserController extends Controller {
   async index() {
     const ctx = this.ctx;
     // 参数验证
-    // if (!ctx.query.current || ctx.query.current <= 0) return res.sendResult(null, 400, 'current 参数错误');
-    // if (!ctx.query.pageSize || ctx.query.pageSize <= 0) return res.sendResult(null, 400, 'pageSize 参数错误');
-    // const query = {
-    //   current: toInt(ctx.query.current),
-    //   pageSize: toInt(ctx.query.pageSize),
-    // };
+    ctx.validate(
+      {
+        current: { type: 'string', message: 'current 参数错误' },
+        pageSize: { type: 'string', message: 'pageSize 参数错误' },
+        query: 'string?',
+      },
+      ctx.query,
+    );
 
     const res = await ctx.service.managerService.getAllManagers(ctx.query);
-    console.log(res, 777);
+    ctx.service.utils.resextra('GET', res);
+  }
+
+  async create() {
+    const ctx = this.ctx;
+    // 参数验证
+    ctx.validate(
+      {
+        username: { type: 'string', message: '用户名不能为空' },
+        password: { type: 'string', message: '密码不能为空' },
+        email: { type: 'string', message: 'email不能为空' },
+        mobile: { type: 'string', message: '手机号不能为空' },
+      },
+      ctx.request.body,
+    );
+    const params = ctx.request.body;
+    if (!params?.rid) {
+      params.rid = -1;
+    }
+    if (isNaN(parseInt(params?.rid))) {
+      params.rid = -1; // return res.sendResult(null,200,"角色ID必须是数字");
+    }
+    const res = await ctx.service.managerService.createManager(params);
     ctx.service.utils.resextra('GET', res);
   }
 }

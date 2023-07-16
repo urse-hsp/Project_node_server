@@ -2,6 +2,12 @@
 
 import { Service } from 'egg';
 
+// function toInt(str) {
+//   if (typeof str === 'number') return str;
+//   if (!str) return str;
+//   return parseInt(str, 10) || 0;
+// }
+
 class DAOService extends Service {
   root: string;
   constructor(ctx) {
@@ -20,21 +26,18 @@ class DAOService extends Service {
    * @param  {Function} cb        回调函数
    * @param  {[type]}   errMeg        错误信息
    */
-  async getModel(
-    modelName: string,
-    type: string,
-    conditions: any,
-    cb,
-    errMeg = '查询失败',
-  ) {
+  async getModel(modelName: string, type: string, conditions: any) {
     const ctx = this.ctx;
     const model = ctx.model[modelName];
-    if (!model) return cb('模型不存在', null);
+    if (!model) {
+      console.warn('模型不存在');
+      return null;
+    }
     try {
       const res = await model[type](conditions ?? {});
-      cb?.(null, res);
+      return res;
     } catch (error) {
-      cb?.(errMeg);
+      return false;
     }
   }
 
@@ -45,8 +48,8 @@ class DAOService extends Service {
    * @param  {[type]}   conditions 查询条件
    * @param  {Function} cb        回调函数
    */
-  create(modelName: string, conditions: any, cb: () => any) {
-    this.getModel(modelName, 'create', conditions, cb);
+  create(modelName: string, conditions: any) {
+    return this.getModel(modelName, 'create', conditions);
   }
 
   /**
@@ -58,8 +61,8 @@ class DAOService extends Service {
    * conditions
    * @param  {Function} cb         回调函数
    */
-  list(modelName: string, conditions: any, cb: () => any) {
-    this.getModel(modelName, 'findAll', conditions, cb);
+  list(modelName: string, conditions: any) {
+    return this.getModel(modelName, 'findAll', conditions);
   }
 
   /**
@@ -71,9 +74,9 @@ class DAOService extends Service {
    * @param  {[type]}   Size 获取几条数据
    * @param  {Function} cb         回调函数
    */
-  findAndCountAll(modelName: string, conditions: any, current, Size, cb) {
-    if (!current) return cb('current 参数不合法');
-    if (!Size) return cb('pageSize 参数不合法');
+  findAndCountAll(modelName: string, conditions: any, current, Size) {
+    // if (!current) return cb('current 参数不合法');
+    // if (!Size) return cb('pageSize 参数不合法');
 
     // sql 默认从0页开始
     const currentPage = Number(current) - 1,
@@ -85,15 +88,16 @@ class DAOService extends Service {
       offset: currentPage * pageSize, // offset 跳过n个实例/行
       limit: pageSize, // 提取10个实例/行
     };
-    this.getModel(modelName, 'findAndCountAll', params, async (err, { count, rows }) => {
-      if (err) return cb(err);
-      cb(null, {
-        total: count,
-        current: Number(current),
-        pageSize: params.limit,
-        data: rows,
-      });
-    });
+    // , async (err, { count, rows }) => {
+    //   if (err) return cb(err);
+    //   cb(null, {
+    //     total: count,
+    //     current: Number(current),
+    //     pageSize: params.limit,
+    //     data: rows,
+    //   });
+    // }
+    return this.getModel(modelName, 'findAndCountAll', params);
   }
 
   /**
@@ -102,8 +106,8 @@ class DAOService extends Service {
    * @param  {[数组]}   conditions  条件集合
    * @param  {Function} cb         回调函数
    */
-  findOne(modelName: string, conditions: any, cb: () => any) {
-    this.getModel(modelName, 'findOne', { where: conditions }, cb);
+  findOne(modelName: string, conditions: any) {
+    return this.getModel(modelName, 'findOne', { where: conditions });
   }
 
   /**
@@ -115,30 +119,31 @@ class DAOService extends Service {
    * @param  {Function} cb        回调函数
    * @param  {Function} key       删除键值
    */
-  async update(modelName, id, updateObj, cb, key) {
-    if (key) {
-      //  *TOP2* 直接修改，执行一遍sql
-      const ctx = this.ctx;
-      const model = ctx.model[modelName];
-      if (!model) return cb('模型不存在', null);
-      try {
-        const res = await model.update(updateObj, { where: { [key]: id } });
-        cb(null, res);
-      } catch (error) {
-        cb('修改失败', null);
-      }
-    } else {
-      // *TOP1* 先查后改，执行两遍sql
-      this.findByPk(modelName, id, async (_err, res) => {
-        try {
-          res.set(updateObj);
-          await res.save();
-          cb(null, res);
-        } catch (error) {
-          cb('删除失败');
-        }
-      });
-    }
+  async update() {
+    // modelName, id, updateObj, key
+    // if (key) {
+    //   //  *TOP2* 直接修改，执行一遍sql
+    //   const ctx = this.ctx;
+    //   const model = ctx.model[modelName];
+    //   if (!model) return cb('模型不存在', null);
+    //   try {
+    //     const res = await model.update(updateObj, { where: { [key]: id } });
+    //     cb(null, res);
+    //   } catch (error) {
+    //     cb('修改失败', null);
+    //   }
+    // } else {
+    //   // *TOP1* 先查后改，执行两遍sql
+    //   this.findByPk(modelName, id, async (_err, res) => {
+    //     try {
+    //       res.set(updateObj);
+    //       await res.save();
+    //       cb(null, res);
+    //     } catch (error) {
+    //       cb('删除失败');
+    //     }
+    //   });
+    // }
   }
 
   /**
@@ -147,8 +152,8 @@ class DAOService extends Service {
    * @param  {[type]}   id        主键ID
    * @param  {Function} cb        回调函数
    */
-  findByPk(modelName, id, cb) {
-    this.getModel(modelName, 'findByPk', id, cb);
+  findByPk(modelName, id) {
+    this.getModel(modelName, 'findByPk', id);
   }
   show = this.findByPk;
 
@@ -160,21 +165,22 @@ class DAOService extends Service {
    * @param  {Function} cb        回调函数
    * @param  {Function} key       删除键值
    */
-  destroy(modelName, id, cb, key) {
-    if (key) {
-      // *TOP2* 直接删除，执行一遍sql
-      this.getModel(modelName, 'destroy', { where: { [key]: id } }, cb, '删除失败');
-    } else {
-      // *TOP1* 先查后改，执行两遍sql
-      this.findByPk(modelName, id, async (_err, res) => {
-        try {
-          await res.destroy();
-          cb(null);
-        } catch (error) {
-          cb('删除失败');
-        }
-      });
-    }
+  destroy() {
+    // modelName, id, key
+    // if (key) {
+    //   // *TOP2* 直接删除，执行一遍sql
+    //   this.getModel(modelName, 'destroy', { where: { [key]: id } }, '删除失败');
+    // } else {
+    //   // *TOP1* 先查后改，执行两遍sql
+    //   this.findByPk(modelName, id, async (_err, res) => {
+    //     try {
+    //       await res.destroy();
+    //       cb(null);
+    //     } catch (error) {
+    //       cb('删除失败');
+    //     }
+    //   });
+    // }
   }
 
   /**
@@ -183,8 +189,8 @@ class DAOService extends Service {
    * @param  {[type]}   modelName 模型名称
    * @param  {Function} cb        回调函数
    */
-  count(modelName, cb) {
-    this.getModel(modelName, 'count', null, cb);
+  count(modelName) {
+    this.getModel(modelName, 'count', null);
   }
 
   /**
@@ -194,8 +200,9 @@ class DAOService extends Service {
    * @param  {[type]}   conditions 条件
    * @param  {Function} cb         回调函数
    */
-  exists(modelName: string, conditions: any, cb: () => any) {
-    this.findOne(modelName, conditions, cb);
+  exists(modelName: string, conditions: any) {
+    console.log(22222);
+    return this.findOne(modelName, conditions);
   }
 
   /**
@@ -207,7 +214,7 @@ class DAOService extends Service {
    * @param  {[type]}   defaults 定义必须创建的内容
    * @param  {Function} cb         回调函数
    */
-  // async findOrCreate(modelName, where, defaults, cb) {}
+  // async findOrCreate(modelName, where, defaults) {}
 }
 
 module.exports = DAOService;

@@ -23,11 +23,8 @@ class ManagerService extends Service {
 	}
  * @param  {Function} cb         回调函数
  */
-  async getAllManagers(conditions, cb) {
+  async getAllManagers(conditions) {
     const ctx = this.ctx;
-    if (!conditions.current) return cb('current 参数不合法');
-    if (!conditions.pageSize) return cb('pageSize 参数不合法');
-
     // 通过关键词获取管理员数量
     const count = await ctx.service.dao.managerDAO.countByKey(conditions.query);
     const key = conditions.query;
@@ -41,7 +38,9 @@ class ManagerService extends Service {
     }
     const limit = pageSize; // 当前页数量
     const managers = await ctx.service.dao.managerDAO.findByKey(key, offset, limit);
-    console.log(333333, managers);
+    console.log(managers, 'managers');
+
+    if (!managers) return '查询执行出错';
 
     const retManagers: any[] = [];
     for (const idx in managers) {
@@ -67,7 +66,69 @@ class ManagerService extends Service {
       data: retManagers,
     };
     return resultDta;
+  }
 
+  /**
+   * 创建管理员
+   *
+   * @param  {[type]}   user 用户数据集
+   * @param  {Function} cb   回调函数
+   */
+  async createManager(params) {
+    const ctx = this.ctx;
+    const res = await ctx.service.dao.index.exists('ManagerModel', {
+      mg_name: params.username,
+    });
+    log
+    if (res === false) {
+      return '用户名已存在';
+    }
+    if (!res) {
+      return '查询失败';
+    }
+    l
+
+    const nweParams: any = {
+      mg_name: params.username,
+      mg_pwd: Password.hash(params.password),
+      mg_mobile: params.mobile,
+      mg_email: params.email,
+      // mg_time: Date.parse(new Date()) / 1000,
+      role_id: params.rid,
+    };
+    const newUser = await ctx.service.dao.index.create(nweParams);
+    if (!newUser) return '创建失败';
+    const result = {
+      id: newUser.mg_id,
+      username: newUser.mg_name,
+      mobile: newUser.mg_mobile,
+      email: newUser.mg_email,
+      role_id: newUser.role_id,
+      create_time: newUser.mg_time,
+    };
+    return result;
+    // managersDAO.create(
+    //   {
+    //     mg_name: params.username,
+    //     mg_pwd: Password.hash(params.password),
+    //     mg_mobile: params.mobile,
+    //     mg_email: params.email,
+    //     mg_time: Date.parse(new Date()) / 1000,
+    //     role_id: params.rid,
+    //   },
+    //   function(err, manager) {
+    //     if (err) return cb('创建失败');
+    //     result = {
+    //       id: manager.mg_id,
+    //       username: manager.mg_name,
+    //       mobile: manager.mg_mobile,
+    //       email: manager.mg_email,
+    //       role_id: manager.role_id,
+    //       create_time: manager.mg_time,
+    //     };
+    //     cb(null, result);
+    //   },
+    // );
   }
 
   /**
