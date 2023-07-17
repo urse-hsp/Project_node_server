@@ -1,6 +1,6 @@
 const models = require('../models')
-const Sequelize = require('sequelize')
-const Op = Sequelize.Op
+// const Sequelize = require('sequelize')
+// const Op = Sequelize.Op
 
 /**
  * 获取模型
@@ -19,7 +19,7 @@ const getModel = async function (modelName, type, conditions, cb, errMeg = '查�
     const res = await model[type](conditions ?? {})
     cb(null, res)
   } catch (error) {
-    cb(errMeg)
+    cb(error ?? errMeg)
   }
 }
 module.exports.getModel = getModel
@@ -107,7 +107,7 @@ module.exports.update = async function (modelName, id, updateObj, cb, key) {
       const res = await model.update(updateObj, { where: { [key]: id } })
       cb(null, res)
     } catch (error) {
-      cb('修改失败', null)
+      cb(error ?? '修改失败', null)
     }
   } else {
     // *TOP1* 先查后改，执行两遍sql
@@ -118,7 +118,7 @@ module.exports.update = async function (modelName, id, updateObj, cb, key) {
         res.update(updateObj)
         cb(null, res)
       } catch (error) {
-        cb('删除失败')
+        cb(error ?? '删除失败')
       }
     })
   }
@@ -155,7 +155,7 @@ module.exports.destroy = function (modelName, id, cb, key) {
         await res.destroy()
         cb(null)
       } catch (error) {
-        cb('删除失败')
+        cb(error ?? '删除失败')
       }
     })
   }
@@ -191,20 +191,20 @@ module.exports.exists = async function (modelName, conditions, cb) {
  * @param  {[type]}   defaults 定义必须创建的内容
  * @param  {Function} cb         回调函数
  */
-module.exports.findOrCreate = async function (modelName, where, defaults, cb) {
-  const model = models[modelName]
-  if (!model) return cb('模型不存在', null)
+// module.exports.findOrCreate = async function (modelName, where, defaults, cb) {
+//   const model = models[modelName]
+//   if (!model) return cb('模型不存在', null)
 
-  try {
-    const [user, created] = await model.findOrCreate({
-      where,
-      defaults,
-    })
-    cb(null, user)
-  } catch (error) {
-    cb('查询失败')
-  }
-}
+//   try {
+//     const [user, created] = await model.findOrCreate({
+//       where,
+//       defaults,
+//     })
+//     cb(null, user)
+//   } catch (error) {
+//     cb(error ?? '查询失败')
+//   }
+// }
 
 /**
  * 批量创建
