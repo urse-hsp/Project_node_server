@@ -16,7 +16,9 @@ module.exports = (options, app) => {
 
     const setReturn = () => {
       ctx.status = 401;
-      ctx.body = 'token失效或解析错误';
+      ctx.body = {
+        error: 'token失效或解析错误',
+      };
     };
 
     // TOP2
@@ -24,8 +26,6 @@ module.exports = (options, app) => {
       // 不需要验证
       await next();
     } else {
-      console.log(22222222);
-
       // 通过cookie验证
       if (istoken_session) {
         // TPO1 session cookie

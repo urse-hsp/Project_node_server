@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken';
 import config from '../../config/default.json';
 const jwt_config = config.jwt;
 
-// import assert from 'assert';
-
 /**
  * 登录验证逻辑 登录接口
  *
@@ -67,17 +65,12 @@ export const setup = function(app) {
       user.username,
       user.password,
     );
-    // assert(existsUser.uid, existsUser);
     return existsUser;
   });
 
   // 存储：将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段
   app.passport.serializeUser(async (ctx, user) => {
     console.log('序列化', ctx.originalUrl);
-    // const userInfo = {
-    //   uid: user.uid,
-    //   rid: user.rid,
-    // };
     return user;
   });
 

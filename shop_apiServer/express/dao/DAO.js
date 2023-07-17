@@ -113,8 +113,9 @@ module.exports.update = async function (modelName, id, updateObj, cb, key) {
     // *TOP1* 先查后改，执行两遍sql
     findByPk(modelName, id, async (err, res) => {
       try {
-        res.set(updateObj)
-        await res.save()
+        // res.set(updateObj); // 设置对象
+        // await res.save(); // 保存
+        res.update(updateObj)
         cb(null, res)
       } catch (error) {
         cb('删除失败')
@@ -134,7 +135,6 @@ const findByPk = async function (modelName, id, cb) {
 }
 module.exports.findByPk = findByPk
 module.exports.show = findByPk
-
 
 /**
  * 通过主键ID删除对象

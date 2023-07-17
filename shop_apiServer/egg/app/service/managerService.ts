@@ -11,92 +11,96 @@ class ManagerService extends Service {
     this.root = 'https://cnodejs.org/api/v1';
   }
 
+  ManagerModelDom(type: string, nweParams: any) {
+    const ctx = this.ctx;
+    return ctx.service.dao.index[type]('ManagerModel', nweParams);
+  }
+
   /**
- * 获取所有管理员
- * @param  {[type]}   conditions 查询条件
- * 查询条件统一规范
- * conditions
-	{
-		"query" : 关键词查询,
-		"current" : 页数,
-		"pageSize" : 每页长度
-	}
- * @param  {Function} cb         回调函数
- */
+   * 获取所有管理员
+   * @param  {[type]}   conditions 查询条件
+   */
   async getAllManagers(conditions) {
     const ctx = this.ctx;
     // 通过关键词获取管理员数量
-    const count = await ctx.service.dao.managerDAO.countByKey(conditions.query);
-    const key = conditions.query;
-    const current = parseInt(conditions.current);
-    const pageSize = parseInt(conditions.pageSize);
 
-    // const pageCount = Math.ceil(count / pageSize);
-    let offset = (current - 1) * pageSize; // 当前页
-    if (offset >= count) {
-      offset = count;
-    }
-    const limit = pageSize; // 当前页数量
-    const managers = await ctx.service.dao.managerDAO.findByKey(key, offset, limit);
-    console.log(managers, 'managers');
+    try {
+      const users = await ctx.service.dao.managerDAO.countByKey(conditions.query);
+      const count = users[0].count;
+      const key = conditions.query;
+      const current = parseInt(conditions.current);
+      const pageSize = parseInt(conditions.pageSize);
 
-    if (!managers) return '查询执行出错';
-
-    const retManagers: any[] = [];
-    for (const idx in managers) {
-      const manager = managers[idx];
-      let role_name = manager.role_name;
-      if (!manager.role_id) {
-        role_name = '超级管理员';
+      // const pageCount = Math.ceil(count / pageSize);
+      let offset = (current - 1) * pageSize; // 当前页
+      if (offset >= count) {
+        offset = count;
       }
-      const data = {
-        id: manager.mg_id,
-        role_name,
-        username: manager.mg_name,
-        create_time: manager.mg_time,
-        mobile: manager.mg_mobile,
-        email: manager.mg_email,
-        mg_state: manager.mg_state === 1,
-      };
-      retManagers.push(data);
+      const limit = pageSize; // 当前页数量
+      try {
+        const managers = await ctx.service.dao.managerDAO.findByKey(key, offset, limit);
+        const retManagers: any[] = [];
+        for (const idx in managers) {
+          const manager = managers[idx];
+          let role_name = manager.role_name;
+          if (!manager.role_id) {
+            role_name = '超级管理员';
+          }
+          const data = {
+            id: manager.mg_id,
+            role_name,
+            username: manager.mg_name,
+            create_time: manager.mg_time,
+            mobile: manager.mg_mobile,
+            email: manager.mg_email,
+            mg_state: manager.mg_state === 1,
+          };
+          retManagers.push(data);
+        }
+        const resultDta = {
+          total: count,
+          current,
+          data: retManagers,
+        };
+        return resultDta;
+      } catch (error) {
+        return '查询失败';
+      }
+    } catch (error) {
+      return error;
     }
-    const resultDta = {
-      total: count,
-      current,
-      data: retManagers,
-    };
-    return resultDta;
   }
 
   /**
    * 创建管理员
    *
    * @param  {[type]}   user 用户数据集
-   * @param  {Function} cb   回调函数
    */
   async createManager(params) {
     const ctx = this.ctx;
     const res = await ctx.service.dao.index.exists('ManagerModel', {
-      mg_name: params.username,
+      where: { mg_name: params.username },
     });
-    log
+
     if (res === false) {
-      return '用户名已存在';
-    }
-    if (!res) {
       return '查询失败';
     }
-    l
+    if (res) {
+      return '用户名已存在';
+    }
 
     const nweParams: any = {
       mg_name: params.username,
       mg_pwd: Password.hash(params.password),
       mg_mobile: params.mobile,
       mg_email: params.email,
-      // mg_time: Date.parse(new Date()) / 1000,
+      mg_time: Date.parse(new Date().toString()) / 1000,
       role_id: params.rid,
     };
-    const newUser = await ctx.service.dao.index.create(nweParams);
+    // const newUser = await ctx.service.dao.index.create('ManagerModel', nweParams);
+    // const newUser = await ctx.model.ManagerModel.create(nweParams);
+    const newUser = await this.ManagerModelDom('create', nweParams);
+
     if (!newUser) return '创建失败';
     const result = {
       id: newUser.mg_id,
@@ -107,29 +111,38 @@ class ManagerService extends Service {
       create_time: newUser.mg_time,
     };
     return result;
-    // managersDAO.create(
-    //   {
-    //     mg_name: params.username,
-    //     mg_pwd: Password.hash(params.password),
-    //     mg_mobile: params.mobile,
-    //     mg_email: params.email,
-    //     mg_time: Date.parse(new Date()) / 1000,
-    //     role_id: params.rid,
-    //   },
-    //   function(err, manager) {
-    //     if (err) return cb('创建失败');
-    //     result = {
-    //       id: manager.mg_id,
-    //       username: manager.mg_name,
-    //       mobile: manager.mg_mobile,
-    //       email: manager.mg_email,
-    //       role_id: manager.role_id,
-    //       create_time: manager.mg_time,
-    //     };
-    //     cb(null, result);
-    //   },
-    // );
   }
+
+  /**
+   * 更新管理员信息
+   *
+   * @param  {[type]}   params 管理员信息
+   */
+  updateManager(params) {
+    const mg_params = {
+      mg_id: params.id,
+      mg_mobile: params.mobile,
+      mg_email: params.email,
+    };
+    const res = this.ctx.service.dao.index.update(
+      'ManagerModel',
+      mg_params.mg_id,
+      mg_params,
+      'mg_id',
+    );
+    return res;
+  }
+
+  // checkSuccess(result) {
+  //   if (result.status !== 200) {
+  //     const errorMsg =
+  //       result.data && result.data.error_msg ? result.data.error_msg : 'unknown error';
+  //     this.ctx.throw(result.status, errorMsg);
+  //   }
+  //   if (!result.data.success) {
+  //     this.ctx.throw(500, 'remote response error', { data: result.data });
+  //   }
+  // }
 
   /**
    * 管理员登录
@@ -138,11 +151,12 @@ class ManagerService extends Service {
    * @param  {Function} cb       回调
    */
   async login(username, password) {
-    const app_: any = this.app;
+    // const ctx = this.ctx;
     this.app.logger.debug('login => username:%s,password:%s', username, password);
-
     try {
-      const manager = await app_.model.ManagerModel.findOne({
+      const manager = await this.ManagerModelDom('findOne', {
+        // const manager = await ctx.model.ManagerModel.findOne({
+        // const manager = await ctx.service.dao.index.findOne('ManagerModel', {
         where: {
           mg_name: username,
         },
@@ -169,7 +183,7 @@ class ManagerService extends Service {
       }
       return '密码错误';
     } catch (error) {
-      this.app.logger.debug(error);
+      return error;
     }
   }
 }

@@ -1,12 +1,7 @@
 import { Controller } from 'egg';
 
-// function toInt(str) {
-//   if (typeof str === 'number') return str;
-//   if (!str) return str;
-//   return parseInt(str, 10) || 0;
-// }
-
 class UserController extends Controller {
+  // 查询用户列表
   async index() {
     const ctx = this.ctx;
     // 参数验证
@@ -23,6 +18,7 @@ class UserController extends Controller {
     ctx.service.utils.resextra('GET', res);
   }
 
+  // 创建用户
   async create() {
     const ctx = this.ctx;
     // 参数验证
@@ -40,9 +36,37 @@ class UserController extends Controller {
       params.rid = -1;
     }
     if (isNaN(parseInt(params?.rid))) {
-      params.rid = -1; // return res.sendResult(null,200,"角色ID必须是数字");
+      params.rid = -1; // 角色ID必须是数字
     }
     const res = await ctx.service.managerService.createManager(params);
+    ctx.service.utils.resextra('GET', res);
+  }
+
+  async update() {
+    const ctx = this.ctx;
+    // 参数验证
+    ctx.validate(
+      {
+        id: { type: 'string', message: '用户ID不能为空' },
+      },
+      ctx.params,
+    );
+
+    // 参数验证
+    ctx.validate(
+      {
+        mobile: { type: 'string', message: 'mobile不能为空' },
+        email: { type: 'string', message: 'email不能为空' },
+      },
+      ctx.request.body,
+    );
+    const params = {
+      id: Number(ctx.params.id),
+      mobile: ctx.request.body.mobile,
+      email: ctx.request.body.email,
+    };
+    const res = await ctx.service.managerService.updateManager(params);
+
     ctx.service.utils.resextra('GET', res);
   }
 }
