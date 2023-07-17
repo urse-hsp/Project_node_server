@@ -99,18 +99,20 @@ class ManagerService extends Service {
     };
     // const newUser = await ctx.service.dao.index.create('ManagerModel', nweParams);
     // const newUser = await ctx.model.ManagerModel.create(nweParams);
-    const newUser = await this.ManagerModelDom('create', nweParams);
-
-    if (!newUser) return '创建失败';
-    const result = {
-      id: newUser.mg_id,
-      username: newUser.mg_name,
-      mobile: newUser.mg_mobile,
-      email: newUser.mg_email,
-      role_id: newUser.role_id,
-      create_time: newUser.mg_time,
-    };
-    return result;
+    try {
+      const newUser = await this.ManagerModelDom('create', nweParams);
+      const result = {
+        id: newUser.mg_id,
+        username: newUser.mg_name,
+        mobile: newUser.mg_mobile,
+        email: newUser.mg_email,
+        role_id: newUser.role_id,
+        create_time: newUser.mg_time,
+      };
+      return result;
+    } catch (_error) {
+      return '创建失败';
+    }
   }
 
   /**
@@ -118,19 +120,108 @@ class ManagerService extends Service {
    *
    * @param  {[type]}   params 管理员信息
    */
-  updateManager(params) {
+  async updateManager(params) {
     const mg_params = {
       mg_id: params.id,
       mg_mobile: params.mobile,
       mg_email: params.email,
     };
-    const res = this.ctx.service.dao.index.update(
-      'ManagerModel',
-      mg_params.mg_id,
-      mg_params,
-      'mg_id',
-    );
-    return res;
+
+    try {
+      return this.ctx.service.dao.index.update(
+        'ManagerModel',
+        mg_params.mg_id,
+        mg_params,
+        'mg_id',
+      );
+    } catch (error) {
+      return '更新失败';
+    }
+  }
+
+  // /**
+  //  * 通过管理员 ID 获取管理员信息
+  //  *
+  //  * @param  {[type]}   id 管理员 ID
+  //  * @param  {Function} cb 回调函数
+  //  */
+  // module.exports.getManager = function (id, cb) {
+  //   managersDAO.show(id, function (err, manager) {
+  //     if (err) return cb(err)
+  //     if (!manager) return cb('该管理员不存在')
+  //     cb(null, {
+  //       id: manager.mg_id,
+  //       rid: manager.role_id,
+  //       username: manager.mg_name,
+  //       mobile: manager.mg_mobile,
+  //       email: manager.mg_email,
+  //     })
+  //   })
+  // }
+
+  /**
+   * 通过管理员 ID 进行删除操作
+   *
+   * @param  {[type]}   id 管理员ID
+   * @param  {Function} cb 回调函数
+   */
+  async deleteManager(id) {
+    try {
+      await this.ManagerModelDom('destroy', id);
+      return true;
+    } catch (error) {
+      return '删除失败';
+    }
+  }
+
+  // /**
+  //  * 为管理员设置角色
+  //  *
+  //  * @param {[type]}   id  管理员ID
+  //  * @param {[type]}   rid 角色ID
+  //  * @param {Function} cb  回调函数
+  //  */
+  // module.exports.setRole = function (id, rid, cb) {
+  //   managersDAO.show(id, function (err, manager) {
+  //     if (err || !manager) cb('管理员ID不存在')
+
+  //     managersDAO.update({ mg_id: manager.mg_id, role_id: rid }, function (err, manager) {
+  //       if (err) return cb('设置失败')
+  //       cb(null, {
+  //         id: manager.mg_id,
+  //         rid: manager.role_id,
+  //         username: manager.mg_name,
+  //         mobile: manager.mg_mobile,
+  //         email: manager.mg_email,
+  //       })
+  //     })
+  //   })
+  // }
+
+  async updateMgrState(id, state) {
+    const ctx = this.ctx;
+    try {
+      const manager = await ctx.service.dao.index.show('managersDAO', id);
+
+      try {
+        await ctx.service.dao.index.update('managersDAO', id, {
+          mg_id: manager.mg_id,
+          mg_state: state,
+        });
+        return {
+          id: manager.mg_id,
+          rid: manager.role_id,
+          username: manager.mg_name,
+          mobile: manager.mg_mobile,
+          email: manager.mg_email,
+          mg_state: manager.mg_state ? 1 : 0,
+        };
+      } catch (error) {
+        return '设置失败';
+      }
+    } catch (error) {
+      return '管理员ID不存在';
+    }
   }
 
   // checkSuccess(result) {

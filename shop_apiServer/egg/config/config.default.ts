@@ -52,6 +52,12 @@ export default (appInfo: EggAppInfo) => {
     renew: true, // 每次访问都会刷新会话过期时间
   };
 
+  config.validate = {
+    convert: true, // 对参数可以使用 convertType 规则进行类型转换
+    // validateRoot: false,   // 限制被验证值必须是一个对象。
+    // widelyUndefined: true,
+  };
+
   // the return config will combines to EggAppConfig
   return {
     ...config,

@@ -52,7 +52,6 @@
 //       ctx.status = 404;
 //       return;
 //     }
-
 //     await user.destroy();
 //     ctx.status = 200;
 //   }

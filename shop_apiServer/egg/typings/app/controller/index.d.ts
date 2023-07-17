@@ -4,7 +4,7 @@
 
 import 'egg';
 import ExportDemo2_ from '../../../app/controller/demo2_';
-import ExportDemo_ from '../../../app/controller/demo_';
+import ExportDemo_ from '../../../app/controller/demo/demo_';
 import ExportHome from '../../../app/controller/home';
 import ExportUsers from '../../../app/controller/users';
 

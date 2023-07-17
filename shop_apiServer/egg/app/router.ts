@@ -17,4 +17,7 @@ module.exports = app => {
   );
 
   router.resources('users', '/api/private/v1/users', controller.users);
+  router.put('/api/private/v1/users/:id/state/:state', controller.home.authCallback);
+
+  router.resources('roles', '/api/private/v1/roles', controller.roles);
 };

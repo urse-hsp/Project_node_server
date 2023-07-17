@@ -131,22 +131,17 @@ class DAOService extends Service {
    * @param  {[type]}   id        主键ID
    * @param  {Function} key       删除键值
    */
-  destroy() {
-    // modelName, id, key
-    // if (key) {
-    //   // *TOP2* 直接删除，执行一遍sql
-    //   this.getModel(modelName, 'destroy', { where: { [key]: id } }, '删除失败');
-    // } else {
-    //   // *TOP1* 先查后改，执行两遍sql
-    //   this.findByPk(modelName, id, async (_err, res) => {
-    //     try {
-    //       await res.destroy();
-    //       cb(null);
-    //     } catch (error) {
-    //       cb('删除失败');
-    //     }
-    //   });
-    // }
+  async destroy(modelName, id, key) {
+    if (key) {
+      // *TOP2* 直接删除，执行一遍sql
+      return this.getModel(modelName, 'destroy', { where: { [key]: id } }, '删除失败');
+    }
+    // *TOP1* 先查后改，执行两遍sql
+    const res: any = await this.findByPk(modelName, id);
+    if (!res) {
+      return '查询失败';
+    }
+    return res.destroy();
   }
 
   /**
