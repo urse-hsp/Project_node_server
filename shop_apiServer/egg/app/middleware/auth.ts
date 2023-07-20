@@ -15,7 +15,7 @@ module.exports = (options, app) => {
     const isFlag = routerAuth.includes(url);
 
     const setReturn = () => {
-      ctx.status = 401;
+      ctx.status = 403;
       ctx.body = {
         error: 'token失效或解析错误',
       };

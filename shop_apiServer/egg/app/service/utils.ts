@@ -11,25 +11,20 @@ const resextraType_Status = {
 };
 
 class ManagerService extends Service {
-  root: string;
-  constructor(ctx) {
-    super(ctx);
-    this.root = 'https://cnodejs.org/api/v1';
-  }
-
   // 添加统一的返回结果方法
-  async resextra(type: resextraType = 'GET', data: any) {
+  async resextra(data: any, types?: resextraType) {
     const ctx = this.ctx;
+    const type: resextraType | string = ctx.request.method.toUpperCase();
+
     if (typeof data === 'string') {
       ctx.status = 422;
       ctx.body = {
         error: data,
       };
-
       return;
     }
-    ctx.status = resextraType_Status[type];
     ctx.body = data;
+    ctx.status = resextraType_Status[types ?? type];
   }
 }
 

@@ -7,15 +7,15 @@ class UserController extends Controller {
     // 参数验证
     ctx.validate(
       {
-        current: { type: 'string', message: 'current 参数错误' },
-        pageSize: { type: 'string', message: 'pageSize 参数错误' },
+        current: { type: 'current' },
+        pageSize: { type: 'pageSize' },
         query: 'string?',
       },
       ctx.query,
     );
 
     const res = await ctx.service.managerService.getAllManagers(ctx.query);
-    ctx.service.utils.resextra('GET', res);
+    ctx.service.utils.resextra(res);
   }
 
   // 创建用户
@@ -39,7 +39,7 @@ class UserController extends Controller {
       params.rid = -1; // 角色ID必须是数字
     }
     const res = await ctx.service.managerService.createManager(params);
-    ctx.service.utils.resextra('GET', res);
+    ctx.service.utils.resextra(res);
   }
 
   // 修改用户信息
@@ -50,11 +50,16 @@ class UserController extends Controller {
       {
         id: {
           type: 'id', // 直接赋值给rule传过来
-          isAdmin: true, // isAdmin管理员用户名不能有中文啊，长度至少5位啊啥的
+          // isAdmin: true, // isAdmin管理员用户名不能有中文啊，长度至少5位啊啥的
         },
       },
       ctx.params,
     );
+    if (ctx.request.body?.type === 'role') {
+      return this.role();
+    } else if (ctx.request.body?.type === 'state') {
+      return this.state();
+    }
 
     // 参数验证
     ctx.validate(
@@ -70,25 +75,28 @@ class UserController extends Controller {
       email: ctx.request.body.email,
     };
     const res = await ctx.service.managerService.updateManager(params);
-    ctx.service.utils.resextra('GET', res);
+    ctx.service.utils.resextra(res);
   }
 
   // 删除用户
   async destroy() {
     const ctx = this.ctx;
-
     // 参数验证
     ctx.validate(
       {
         id: {
-          type: 'id', // 直接赋值给rule传过来
+          type: 'managerId', // 直接赋值给rule传过来
           isAdmin: true, // isAdmin管理员用户名不能有中文啊，长度至少5位啊啥的
         },
       },
       ctx.params,
     );
+    if (Number(ctx.params.id) === 500) {
+      console.warn('不允许删除admin账户');
+      return '不允许删除admin账户';
+    }
     const res = await ctx.service.managerService.deleteManager(ctx.params.id);
-    ctx.service.utils.resextra('GET', res);
+    ctx.service.utils.resextra(res);
   }
 
   // 状态开关
@@ -97,24 +105,19 @@ class UserController extends Controller {
     // 参数验证
     ctx.validate(
       {
-        id: {
-          type: 'id', // 直接赋值给rule传过来
-          isAdmin: true, // isAdmin管理员用户名不能有中文啊，长度至少5位啊啥的
-        },
         state: {
           type: 'boolean', // 直接赋值给rule传过来
           message: '状态不能为空',
         },
       },
-      ctx.params,
+      ctx.request.body,
     );
 
-    let states = 0;
-    if (ctx.params.state && ctx.params.state === true) {
-      states = 1;
-    }
-    const res = await ctx.service.managerService.updateMgrState(ctx.params.id, states);
-    ctx.service.utils.resextra('GET', res);
+    const res = await ctx.service.managerService.updateMgrState(
+      ctx.params.id,
+      ctx.request.body.state ? 1 : 0,
+    );
+    ctx.service.utils.resextra(res);
   }
 
   //   // 获取用户信息
@@ -136,19 +139,9 @@ class UserController extends Controller {
   //   }
   // )
 
-  role() {
+  // 分配用户角色
+  async role() {
     const ctx = this.ctx;
-    // 参数验证
-    ctx.validate(
-      {
-        id: {
-          type: 'id', // 直接赋值给rule传过来
-          isAdmin: true, // isAdmin管理员用户名不能有中文啊，长度至少5位啊啥的
-        },
-      },
-      ctx.params,
-    );
-
     // 参数验证
     ctx.validate(
       {
@@ -157,9 +150,14 @@ class UserController extends Controller {
           message: '权限ID不能为空',
         },
       },
-      ctx.body,
+      ctx.request.body,
     );
-    // ManagerService.setRole(req.params.id, req.body.rid
+
+    const res = await ctx.service.managerService.setRole(
+      ctx.params.id,
+      ctx.request.body.rid,
+    );
+    ctx.service.utils.resextra(res);
   }
 }
 

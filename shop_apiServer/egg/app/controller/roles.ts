@@ -1,52 +1,35 @@
 import { Controller } from 'egg';
 
 class rolesController extends Controller {
-
   // 获取角色列表
   async index() {
     const ctx = this.ctx;
     // 参数验证
     const res = await ctx.service.roleService.getAllRoles(ctx.query);
-    ctx.service.utils.resextra('GET', res);
+    ctx.service.utils.resextra(res);
+  }
+  // 创建角色
+  async create() {
+    const ctx = this.ctx;
+    // 参数验证
+    ctx.validate(
+      {
+        roleName: {
+          type: 'string',
+          message: '角色名称不能为空',
+        },
+      },
+      ctx.request.body,
+    );
+    const { roleName, roleDesc } = ctx.request.body;
+
+    const res = await ctx.service.roleService.createRole({
+      roleName,
+      roleDesc,
+    });
+    ctx.service.utils.resextra(res);
   }
 
-  // // 获取角色列表
-  // router.get(
-  //   '/',
-  //   // 参数验证
-  //   function (req, res, next) {
-  //     next()
-  //   },
-  //   // 处理业务逻辑
-  //   function (req, res, next) {
-  //     roleServ.getAllRoles(function (err, result) {
-  //       if (err) return res.sendResult(null, 401, err)
-  //       res.sendResult(result, 200, '获取成功')
-  //     })
-  //   }
-  // )
-  // // 创建角色
-  // router.post(
-  //   '/',
-  //   // 参数验证
-  //   function (req, res, next) {
-  //     if (!req.body.roleName) return res.sendResult(null, 400, '角色名称不能为空')
-  //     next()
-  //   },
-  //   // 处理业务逻辑
-  //   function (req, res, next) {
-  //     roleServ.createRole(
-  //       {
-  //         roleName: req.body.roleName,
-  //         roleDesc: req.body.roleDesc,
-  //       },
-  //       function (err, role) {
-  //         if (err) return res.sendResult(null, 400, err)
-  //         res.sendResult(role, 200, '创建成功')
-  //       }
-  //     )
-  //   }
-  // )
   // // 获取角色详情
   // // router.get(
   // //   '/:id',
@@ -64,83 +47,97 @@ class rolesController extends Controller {
   // //     })
   // //   }
   // // )
-  // // 更新角色信息
-  // router.put(
-  //   '/:id',
-  //   // 参数验证
-  //   function (req, res, next) {
-  //     if (!req.params.id) return res.sendResult(null, 400, '角色ID不能为空')
-  //     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '角色ID必须为数字')
-  //     if (!req.body.roleName) return res.sendResult(null, 400, '角色名称不能为空')
-  //     next()
-  //   },
-  //   // 处理业务逻辑
-  //   function (req, res, next) {
-  //     roleServ.updateRole(
-  //       {
-  //         id: req.params.id,
-  //         roleName: req.body.roleName,
-  //         roleDesc: req.body.roleDesc,
-  //       },
-  //       function (err, result) {
-  //         if (err) return res.sendResult(null, 400, err)
-  //         res.sendResult(result, 200, '获取成功')
-  //       }
-  //     )
-  //   }
-  // )
-  // // 删除角色
-  // router.delete(
-  //   '/:id',
-  //   // 参数验证
-  //   function (req, res, next) {
-  //     if (!req.params.id) return res.sendResult(null, 400, '角色ID不能为空')
-  //     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '角色ID必须为数字')
-  //     next()
-  //   },
-  //   // 处理业务逻辑
-  //   function (req, res, next) {
-  //     roleServ.deleteRole(req.params.id, function (err, success) {
-  //       if (err) return res.sendResult(null, 400, err)
-  //       res.sendResult(null, 200, '删除成功')
-  //     })
-  //   }
-  // )
-  // // 为角色授权
-  // router.post(
-  //   '/:id/rights',
-  //   // 参数校验
-  //   function (req, res, next) {
-  //     if (!req.params.id) return res.sendResult(null, 400, '角色ID不能为空')
-  //     if (isNaN(parseInt(req.params.id))) res.sendResult(null, 400, '角色ID必须为数字')
-  //     next()
-  //   },
-  //   // 业务逻辑
-  //   function (req, res, next) {
-  //     roleServ.updateRoleRight(req.params.id, req.body.rids, function (err, newRole) {
-  //       if (err) return res.sendResult(null, 400, err)
-  //       res.sendResult(null, 200, '更新成功')
-  //     })
-  //   }
-  // )
-  // // 删除角色权限 id 权限,attrId id的父级
-  // router.delete(
-  //   '/:id/rights/:rightId',
-  //   // 参数验证
-  //   function (req, res, next) {
-  //     if (!req.params.id) return res.sendResult(null, 400, '角色ID不能为空')
-  //     if (isNaN(parseInt(req.params.id))) res.sendResult(null, 400, '角色ID必须为数字')
-  //     if (isNaN(parseInt(req.params.rightId))) res.sendResult(null, 400, '权限ID必须为数字')
-  //     next()
-  //   },
-  //   // 业务逻辑
-  //   function (req, res, next) {
-  //     roleServ.deleteRoleRight(req.params.id, req.params.rightId, function (err, result) {
-  //       if (err) return res.sendResult(null, 400, err)
-  //       res.sendResult(result, 200, '取消权限成功')
-  //     })
-  //   }
-  // )
+
+  // 更新角色信息
+  async update() {
+    const ctx = this.ctx;
+    // 参数验证
+    ctx.validate(
+      {
+        id: {
+          type: 'id',
+          message: '角色ID不能为空',
+        },
+      },
+      ctx.params,
+    );
+
+    if (ctx.request.body?.type === 'rights') {
+      return this.rights();
+    }
+
+    ctx.validate(
+      {
+        roleName: {
+          type: 'string',
+          message: '角色名称不能为空',
+        },
+      },
+      ctx.request.body,
+    );
+
+    const params = {
+      id: ctx.params.id,
+      roleName: ctx.request.body.roleName,
+      roleDesc: ctx.request.body.roleDesc,
+    };
+    const res = await ctx.service.roleService.updateRole(params);
+    ctx.service.utils.resextra(res);
+  }
+
+  // 删除角色
+  async destroy() {
+    const ctx = this.ctx;
+    // 参数验证
+    ctx.validate(
+      {
+        id: {
+          type: 'id', // 直接赋值给rule传过来
+        },
+      },
+      ctx.params,
+    );
+    console.log(1);
+
+    if (ctx.request.body?.type === 'rights') {
+      return this.removeRights();
+    }
+
+    const res = await ctx.service.roleService.deleteRole(ctx.params.id);
+    ctx.service.utils.resextra(res);
+  }
+
+  // 为角色授权
+  async rights() {
+    const ctx = this.ctx;
+
+    const res = await ctx.service.roleService.updateRoleRight(
+      ctx.params.id,
+      ctx.request.body.rids,
+    );
+    ctx.service.utils.resextra(res);
+  }
+
+  // 删除角色权限 id 权限,attrId id的父级
+  async removeRights() {
+    const ctx = this.ctx;
+
+    // 参数验证
+    ctx.validate(
+      {
+        rightId: {
+          type: 'rightId',
+        },
+      },
+      ctx.request.body,
+    );
+
+    const res = await ctx.service.roleService.deleteRoleRight(
+      ctx.params.id,
+      ctx.request.body.rightId,
+    );
+    ctx.service.utils.resextra(res, 'GET');
+  }
 }
 
 module.exports = rolesController;

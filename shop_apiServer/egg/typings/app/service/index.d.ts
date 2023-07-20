@@ -19,6 +19,7 @@ declare module 'egg' {
     managerService: AutoInstanceType<typeof ExportManagerService>;
     utils: AutoInstanceType<typeof ExportUtils>;
     dao: {
+      attributeDAO: any;
       permissionAPIDAO: any;
       PermissionAPIDAO: any;
       index: AutoInstanceType<typeof ExportDaoIndex>;

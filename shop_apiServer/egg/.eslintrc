@@ -2,6 +2,7 @@
   "root": true,
   "extends": "eslint-config-egg/typescript",
   "rules": {
-    "@typescript-eslint/no-empty-function": 1
+    "@typescript-eslint/no-empty-function": 1,
+    "prefer-promise-reject-errors": 0
   }
 }

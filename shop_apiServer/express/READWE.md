@@ -44,7 +44,61 @@
 6. /api/private/v1/users:id/role put 分配用户角色
 7. /api/private/v1/users:id/state/:state put 状态开关
 
-## 其他
+## upload
+
+1. /upload post 提供文件上传服务
+
+## roles
+
+1. /roles get 获取角色列表
+2. /roles post 创建角色
+3. /roles:id 获取用户信息
+4. /roles:id delete 删除用户信息
+5. /roles:id/rights put 分配用户角色
+6. /roles:id/rights/:rightId delete 删除角色权限
+
+## rights
+
+1. /rights:type get 权限列表
+
+## reports
+
+1. /rights/type:typeid get 用户管理列表
+
+## orders
+
+1. /orders get 订单列表
+   <!-- 2. /orders post 创建 -->
+   <!-- 3. /orders:id put 更新订单发送状态 -->
+   <!-- 4. /orders:id get 删除用户信息 -->
+
+## menus
+
+1. /menus get 菜单列表
+
+## goods
+
+1. /goods get 商品列表
+2. /goods post 添加商品
+3. /goods:id put 更新商品
+4. /goods:id delete 删除商品
+5. /goods:id/pics put 更新商品的图片
+6. /goods:id/attributes delete 更新商品的属性
+7. /goods:id/state/:state put 更新商品状态
+
+## categories
+
+1. /categories get 获取分类列表
+2. /categories post 创建分类
+<!-- 3. /categories get -->
+3. /categories:id put 更新分类
+4. /categories:id/attributes get 通过参数方式查询静态参数还是动态参数
+5. /categories:id/attributes/:attrId get 获取参数 详情
+6. /categories:id/attributes post 创建参数
+7. /categories:id/attributes/:attrId put 更新参数
+8. /categories:id/attributes/:attrId delete 删除参数
+
+# 其他
 
 1. /api/private/v1/login 登录
 

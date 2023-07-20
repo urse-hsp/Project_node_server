@@ -174,38 +174,51 @@ class ManagerService extends Service {
     }
   }
 
-  // /**
-  //  * 为管理员设置角色
-  //  *
-  //  * @param {[type]}   id  管理员ID
-  //  * @param {[type]}   rid 角色ID
-  //  * @param {Function} cb  回调函数
-  //  */
-  // module.exports.setRole = function (id, rid, cb) {
-  //   managersDAO.show(id, function (err, manager) {
-  //     if (err || !manager) cb('管理员ID不存在')
+  /**
+   * 为管理员设置角色
+   *
+   * @param {[type]}   id  管理员ID
+   * @param {[type]}   rid 角色ID
+   */
+  async setRole(id, rid) {
+    const ctx = this.ctx;
+    // 通过ID获取管理员对象数据
 
-  //     managersDAO.update({ mg_id: manager.mg_id, role_id: rid }, function (err, manager) {
-  //       if (err) return cb('设置失败')
-  //       cb(null, {
-  //         id: manager.mg_id,
-  //         rid: manager.role_id,
-  //         username: manager.mg_name,
-  //         mobile: manager.mg_mobile,
-  //         email: manager.mg_email,
-  //       })
-  //     })
-  //   })
-  // }
+    try {
+      const manager = await ctx.service.dao.index.show('ManagerModel', id);
+      try {
+        // 更新管理员信息
+        await ctx.service.dao.index.update('ManagerModel', id, {
+          role_id: rid,
+        });
+        return {
+          id: manager.mg_id,
+          rid: manager.role_id,
+          username: manager.mg_name,
+          mobile: manager.mg_mobile,
+          email: manager.mg_email,
+        };
+      } catch (error) {
+        return '设置失败';
+      }
+    } catch (error) {
+      return '管理员ID不存在';
+    }
+  }
 
+  // 开关
   async updateMgrState(id, state) {
     const ctx = this.ctx;
+    console.log(312);
+
     try {
-      const manager = await ctx.service.dao.index.show('managersDAO', id);
+      // 通过ID获取管理员对象数据
+      const manager = await ctx.service.dao.index.show('ManagerModel', id);
+      console.log(manager, '123');
 
       try {
-        await ctx.service.dao.index.update('managersDAO', id, {
-          mg_id: manager.mg_id,
+        // 更新管理员信息
+        await ctx.service.dao.index.update('ManagerModel', id, {
           mg_state: state,
         });
         return {
@@ -214,7 +227,7 @@ class ManagerService extends Service {
           username: manager.mg_name,
           mobile: manager.mg_mobile,
           email: manager.mg_email,
-          mg_state: manager.mg_state ? 1 : 0,
+          mg_state: !!state,
         };
       } catch (error) {
         return '设置失败';

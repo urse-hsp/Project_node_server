@@ -2,16 +2,22 @@
 
 module.exports = app => {
   const { validator } = app;
-  validator.addRule('id', (_rule, value) => {
-    console.log(6666);
+  validator.addRule('managerId', (_rule, value) => {
     if (!value) {
-      return 'ID不能为空';
+      return 'ID 不能为空';
     } else if (isNaN(parseInt(value))) {
-      console.warn('ID必须是数字');
-      return 'ID必须是数字';
+      console.warn('current 必须是数字');
+      return 'ID 必须是数字';
     } else if (value === 500) {
-      console.warn('不允许删除admin账户');
       return '不允许删除admin账户';
+    }
+  });
+  validator.addRule('id', (_rule, value) => {
+    if (!value) {
+      return 'ID 不能为空';
+    } else if (isNaN(parseInt(value))) {
+      console.warn('current 必须是数字');
+      return 'ID 必须是数字';
     }
   });
 

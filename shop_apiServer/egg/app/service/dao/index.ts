@@ -1,12 +1,13 @@
 'use strict';
 
 import { Service } from 'egg';
+import assert from 'assert';
 
-// function toInt(str) {
-//   if (typeof str === 'number') return str;
-//   if (!str) return str;
-//   return parseInt(str, 10) || 0;
-// }
+function toInt(str) {
+  if (typeof str === 'number') return str;
+  if (!str) return str;
+  return parseInt(str, 10) || 0;
+}
 
 class DAOService extends Service {
   /**
@@ -20,14 +21,20 @@ class DAOService extends Service {
   async getModel(modelName: string, type: string, conditions: any = {}, updateObj = {}) {
     const ctx = this.ctx;
     const model = ctx.model[modelName];
-    if (!model) {
-      console.warn('模型不存在');
-      return '模型不存在';
-    }
-    if (type === 'update') {
-      return model[type](updateObj, conditions);
-    }
-    return model[type](conditions);
+    return new Promise<void>((resolve, reject) => {
+      if (!model) {
+        console.warn('模型不存在');
+        this.app.logger.debug('模型不存在');
+        assert(true, '模型不存在');
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject('模型不存在');
+      }
+      if (type === 'update') {
+        resolve(model[type](updateObj, conditions));
+      } else {
+        resolve(model[type](conditions));
+      }
+    });
   }
 
   /**
@@ -58,14 +65,13 @@ class DAOService extends Service {
    * @param  {[type]}   current 页输
    * @param  {[type]}   Size 获取几条数据
    */
-  findAndCountAll(modelName: string, conditions: any, current, Size) {
+  async findAndCountAll(modelName: string, conditions: any, current, Size) {
     if (!current) return 'current 参数不合法';
     if (!Size) return 'pageSize 参数不合法';
 
     // sql 默认从0页开始
-    const currentPage = Number(current) - 1,
-      pageSize = Number(Size);
-    // sql 默认从0开始
+    const currentPage = toInt(current) - 1;
+    const pageSize = toInt(Size);
 
     const params = {
       ...conditions,
@@ -73,7 +79,11 @@ class DAOService extends Service {
       limit: pageSize, // 提取10个实例/行
     };
     try {
-      const { count, rows }: any = this.getModel(modelName, 'findAndCountAll', params);
+      const { count, rows }: any = await this.getModel(
+        modelName,
+        'findAndCountAll',
+        params,
+      );
       return {
         total: count,
         current: Number(current),
@@ -111,6 +121,8 @@ class DAOService extends Service {
     if (!res) {
       return '查询失败';
     }
+    // res.set(updateObj); // 设置对象
+    // await res.save(); // 保存
     return res.update(updateObj);
   }
 

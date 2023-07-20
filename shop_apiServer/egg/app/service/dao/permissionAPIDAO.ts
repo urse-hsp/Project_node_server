@@ -10,7 +10,6 @@ class PermissionAPIDAO extends Service {
    * @param  {Function} cb 回调函数
    */
   async list() {
-    console.log(66666);
     const ctx = this.ctx;
     const sql =
       'SELECT * FROM sp_permission_api as api LEFT JOIN sp_permission as main ON main.ps_id = api.ps_id WHERE main.ps_id is not null';

@@ -39,24 +39,6 @@ class managersDAO extends Service {
     return ctx.model.query(sql, { type: QueryTypes.SELECT });
   }
 
-  // /**
-  //  * 通过ID获取管理员对象数据
-  //  *
-  //  * @param  {[type]}   id 管理员主键ID
-  //  * @param  {Function} cb 回调函数
-  //  */
-  // module.exports.show = function (id, cb) {
-  //   daoModule.findByPk('ManagerModel', id, cb, 'mg_id')
-  // }
-  // /**
-  //  * 更新管理员信息
-  //  *
-  //  * @param  {[type]}   obj 管理员对象
-  //  * @param  {Function} cb  回调函数
-  //  */
-  // module.exports.update = function (obj, cb) {
-  //   daoModule.update('ManagerModel', obj.mg_id, obj, cb, 'mg_id')
-  // }
 
   // /**
   //  * 删除管理员对象数据
