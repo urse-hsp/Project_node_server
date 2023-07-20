@@ -51,6 +51,7 @@ class GoodsController extends Controller {
   //     })
   //   }
   // )
+
   // // 获取商品详情
   // router.get(
   //   '/:id',
@@ -70,25 +71,23 @@ class GoodsController extends Controller {
   //     })
   //   }
   // )
-  // // 删除商品
-  // router.delete(
-  //   '/:id',
-  //   // 参数验证
-  //   function (req, res, next) {
-  //     if (!req.params.id) {
-  //       return res.sendResult(null, 400, '商品ID不能为空')
-  //     }
-  //     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '商品ID必须是数字')
-  //     next()
-  //   },
-  //   // 业务逻辑
-  //   function (req, res, next) {
-  //     goodServ.deleteGood(req.params.id, function (err) {
-  //       if (err) return res.sendResult(null, 400, '删除失败')
-  //       else return res.sendResult(null, 200, '删除成功')
-  //     })
-  //   }
-  // )
+
+  // 删除商品
+  async destroy() {
+    const ctx = this.ctx;
+    // 参数验证
+    ctx.validate(
+      {
+        id: {
+          type: 'id', // 直接赋值给rule传过来
+        },
+      },
+      ctx.params,
+    );
+    const res = await ctx.service.goodService.deleteGood(ctx.params.id);
+    ctx.service.utils.resextra(res);
+  }
+
   // 更新商品的图片
   // router.put(
   //   '/:id/pics',
@@ -108,6 +107,7 @@ class GoodsController extends Controller {
   //     })(req, res, next)
   //   }
   // )
+
   // 更新商品的属性
   // router.put(
   //   '/:id/attributes',
@@ -127,6 +127,7 @@ class GoodsController extends Controller {
   //     })(req, res, next)
   //   }
   // )
+
   // 更新商品状态
   // router.put(
   //   '/:id/state/:state',

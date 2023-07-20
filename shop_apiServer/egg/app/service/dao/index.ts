@@ -155,6 +155,7 @@ class DAOService extends Service {
     }
     return res.destroy();
   }
+  delete = this.destroy;
 
   /**
    * 通过模型名称获取数据库数量 total

@@ -470,30 +470,21 @@ class GoodService extends Service {
     //   cb(err);
     // });
   }
-  // /**
-  //  * 删除商品
-  //  *
-  //  * @param  {[type]}   id 商品ID
-  //  * @param  {Function} cb 回调函数
-  //  */
-  // module.exports.deleteGood = function (id, cb) {
-  //   if (!id) return cb('产品ID不能为空')
-  //   if (isNaN(id)) return cb('产品ID必须为数字')
-  //   dao.update(
-  //     'GoodModel',
-  //     id,
-  //     {
-  //       is_del: '1',
-  //       delete_time: Date.parse(new Date()) / 1000,
-  //       upd_time: Date.parse(new Date()) / 1000,
-  //     },
-  //     function (err) {
-  //       if (err) return cb(err)
-  //       cb(null)
-  //     },
-  //     'goods_id'
-  //   )
-  // }
+
+  /**
+   * 删除商品
+   *
+   * @param  {[type]}   id 商品ID
+   */
+  deleteGood(id) {
+    const ctx = this.ctx;
+    return ctx.service.dao.index.update('GoodModel', id, {
+      is_del: '1',
+      delete_time: Date.parse(new Date().toString()) / 1000,
+      upd_time: Date.parse(new Date().toString()) / 1000,
+    });
+  }
+
   /**
    * 获取商品列表
    *

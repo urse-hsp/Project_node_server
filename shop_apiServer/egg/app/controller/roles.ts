@@ -97,7 +97,6 @@ class rolesController extends Controller {
       },
       ctx.params,
     );
-    console.log(1);
 
     if (ctx.request.body?.type === 'rights') {
       return this.removeRights();
