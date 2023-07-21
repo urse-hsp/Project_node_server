@@ -378,9 +378,8 @@ function doUpdateGoodAttributes(info) {
       if (err) return reject('清理原始的商品参数失败')
 
       var newAttrs = info.attrs ? info.attrs : []
-
+      var createFns = []
       if (newAttrs) {
-        var createFns = []
         _(newAttrs).forEach(function (newattr) {
           newattr.goods_id = good.goods_id
           if (newattr.attr_value) {

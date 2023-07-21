@@ -28,49 +28,45 @@ class GoodsController extends Controller {
   async create() {
     const ctx = this.ctx;
     const res = await ctx.service.goodService.createGood(ctx.request.body);
+    console.log(res, 6666);
+
     ctx.service.utils.resextra(res);
   }
 
-  // // 更新商品
-  // router.put(
-  //   '/:id',
-  //   // 参数验证
-  //   function (req, res, next) {
-  //     if (!req.params.id) {
-  //       return res.sendResult(null, 400, '商品ID不能为空')
-  //     }
-  //     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '商品ID必须是数字')
-  //     next()
-  //   },
-  //   // 业务逻辑
-  //   function (req, res, next) {
-  //     var params = req.body
-  //     goodServ.updateGood(req.params.id, params, function (err, newGood) {
-  //       if (err) return res.sendResult(null, 400, err)
-  //       res.sendResult(newGood, 200, '创建商品成功')
-  //     })
-  //   }
-  // )
+  // 更新商品
+  async update() {
+    const ctx = this.ctx;
+    // 参数验证
+    ctx.validate(
+      {
+        id: {
+          type: 'id', // 直接赋值给rule传过来
+        },
+      },
+      ctx.params,
+    );
 
-  // // 获取商品详情
-  // router.get(
-  //   '/:id',
-  //   // 参数验证
-  //   function (req, res, next) {
-  //     if (!req.params.id) {
-  //       return res.sendResult(null, 400, '商品ID不能为空')
-  //     }
-  //     if (isNaN(parseInt(req.params.id))) return res.sendResult(null, 400, '商品ID必须是数字')
-  //     next()
-  //   },
-  //   // 业务逻辑
-  //   function (req, res, next) {
-  //     goodServ.getGoodById(req.params.id, function (err, good) {
-  //       if (err) return res.sendResult(null, 400, err)
-  //       return res.sendResult(good, 200, '获取成功')
-  //     })
-  //   }
-  // )
+    const res = await ctx.service.goodService.updateGood(ctx.params.id, ctx.request.body);
+    ctx.service.utils.resextra(res);
+  }
+
+  // 获取商品详情
+
+  async show() {
+    const ctx = this.ctx;
+    // 参数验证
+    ctx.validate(
+      {
+        id: {
+          type: 'id', // 直接赋值给rule传过来
+        },
+      },
+      ctx.params,
+    );
+
+    const res = await ctx.service.goodService.getGoodById(ctx.params.id);
+    ctx.service.utils.resextra(res);
+  }
 
   // 删除商品
   async destroy() {
