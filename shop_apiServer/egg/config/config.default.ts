@@ -57,7 +57,9 @@ export default (appInfo: EggAppInfo) => {
     // validateRoot: false,   // 限制被验证值必须是一个对象。
     // widelyUndefined: true,
   };
-
+  // config.multipart = {
+  //   mode: 'Stream',
+  // };
   // the return config will combines to EggAppConfig
   return {
     ...config,
@@ -74,5 +76,9 @@ export default (appInfo: EggAppInfo) => {
     //     // // 还可以定义其他 LoaderOptions
     //   },
     // },
+    upload_config: {
+      baseURL: 'http://127.0.0.1:7001',
+      upload_path: '/public/comfiles/',
+    },
   };
 };

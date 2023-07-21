@@ -1,34 +1,31 @@
 import { Controller } from 'egg';
-// import path from 'path';
+import path from 'path';
 // import multer from 'multer';
 import fs from 'fs';
-import path from 'path';
-
-// 管道读入一个虫洞。
-import sendToWormhole from 'stream-wormhole';
-
-
-// // 临时上传目录
-// const upload = multer({ dest: 'tmp_uploads/' }).single('file'); // dest 值为文件存储的路径;single方法,表示上传单个文件,参数为表单数据对应的key
-// // eslint-disable-next-line @typescript-eslint/no-var-requires
-// const upload_config = require(path.join(
-//   process.cwd(),
-//   'config/default.json',
-// )).upload_config;
+import sendToWormhole from 'stream-wormhole'; // 关闭文件流
 
 class uploadController extends Controller {
   async index() {
     const { ctx } = this;
     const stream = await ctx.getFileStream();
+    const { upload_config } = this.config;
 
-    const fileName = stream.filename;
+    // const fileName = stream.filename;
+    // 获取一个随机名称 + 当前时间的时间戳 组成新的文件名
+    const fileName: any =
+      Math.random().toString(36).substr(2) +
+      new Date().getTime() +
+      path.extname(stream.filename).toLocaleLowerCase();
     const target = path.join(
       this.config.baseDir,
-      `app/public/comfiles/${stream.filename}`,
+      'app' + upload_config.upload_path,
+      fileName,
     );
+    const tmp_path = upload_config.baseURL + upload_config.upload_path + fileName;
 
     const result = await new Promise((resolve, reject) => {
-      const remoteFileStream = fs.createWriteStream(target);
+      const remoteFileStream = fs.createWriteStream(target); // 创建写入流--对文件流进行写入--第一个参数为路径，要自定义！！
+
       stream.pipe(remoteFileStream);
       let errFlag;
       remoteFileStream.on('error', err => {
@@ -40,7 +37,7 @@ class uploadController extends Controller {
 
       remoteFileStream.on('finish', async () => {
         if (errFlag) return;
-        resolve({ fileName, name: stream.fields.name });
+        resolve({ fileName, tmp_path });
       });
     });
     ctx.body = result;
