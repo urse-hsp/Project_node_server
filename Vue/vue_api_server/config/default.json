@@ -5,9 +5,9 @@
     "expiresIn": 86400
   },
   "upload_config": {
-    "baseURL": "http://127.0.0.1:8888",
+    "baseURL": "http://47.96.118.55:8888",
     "upload_ueditor": "uploads/ueditor",
-    "simple_upload_redirect": "http://127.0.0.1/reload"
+    "simple_upload_redirect": "http://47.96.118.55/reload"
   },
   "db_config": {
     "protocol": "mysql",
