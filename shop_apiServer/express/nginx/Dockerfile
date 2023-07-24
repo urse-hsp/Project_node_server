@@ -1,22 +1,15 @@
 FROM node
 
-WORKDIR /app
 COPY . /app
-RUN npm install && npm run start
+WORKDIR /app
+RUN npm install
 
-# 使用 nginx最新版本作为基础镜像
-# FROM nginx
-# COPY --from=build /app/nginx/nginx.conf /etc/nginx/nginx.conf
-
-# CMD npm start   
 EXPOSE 3333
+CMD npm run start
 
-
-
-# docker build -f /root/project/Vue/vue_api_server/Dockerfile . -t node_server
-# docker run -p 10720:8888  --name node_server -dit node_server
-# docker run -p 80:80 -v /root/nginx/nginx.conf:/etc/nginx/nginx.conf  -d nginx:latest
-
-
-# docker rm $(docker ps -a -q)
-# docker image prune -a -f
+# 参数FROM表示依赖的镜像，
+# COPY表示将宿主机的文件拷贝到容器中，
+# WORKDIR表示工作目录，
+# RUN表示编译打包前运行的命令，
+# EXPOSE表示容器暴露的端口，
+# CMD表示启动容器时运行的命令。
