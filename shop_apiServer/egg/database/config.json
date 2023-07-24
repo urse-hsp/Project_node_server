@@ -17,9 +17,10 @@
   },
   "production": {
     "username": "root",
-    "password": 12345,
-    "database": "database_production",
+    "password": "12345",
+    "database": "farms",
     "host": "47.96.118.55",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": 3306
   }
 }

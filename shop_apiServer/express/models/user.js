@@ -1,5 +1,4 @@
 const { Sequelize, DataTypes, Model } = require('sequelize')
-// const sequelize = new Sequelize('sqlite::memory:')
 const { sequelize } = require('../modules/database')
 
 // 添加与模型属性之一同名的公共类字段会出现问题. Sequelize 为通过 Model.init 定义的每个属性添加一个 getter 和一个 setter. 添加公共类字段将隐藏那些 getter 和 setter，从而阻止对模型的实际数据的访问.

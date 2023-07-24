@@ -9,7 +9,7 @@
     "simple_upload_redirect": "http://47.96.118.55/reload"
   },
   "mysql": {
-    "host": "localhost",
+    "host": "47.96.118.55",
     "user": "root",
     "password": "12345",
     "port": "3306",
