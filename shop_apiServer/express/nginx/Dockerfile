@@ -2,14 +2,14 @@ FROM node
 
 WORKDIR /app
 COPY . /app
-RUN npm install
+RUN npm install && npm run start
 
 # 使用 nginx最新版本作为基础镜像
 # FROM nginx
 # COPY --from=build /app/nginx/nginx.conf /etc/nginx/nginx.conf
 
 # EXPOSE 3333
-CMD npm start   
+# CMD npm start   
 
 
 
