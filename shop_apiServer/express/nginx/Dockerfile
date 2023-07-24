@@ -2,10 +2,10 @@ FROM node:16.17.0
 
 COPY . /app
 WORKDIR /app
-RUN npm run install
+RUN npm install
 
 EXPOSE 3333
-CMD npm run start
+CMD npm start
 
 # 参数FROM表示依赖的镜像，
 # COPY表示将宿主机的文件拷贝到容器中，
