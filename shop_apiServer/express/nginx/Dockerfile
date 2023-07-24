@@ -8,8 +8,8 @@ RUN npm install && npm run start
 # FROM nginx
 # COPY --from=build /app/nginx/nginx.conf /etc/nginx/nginx.conf
 
-# EXPOSE 3333
 # CMD npm start   
+EXPOSE 3333
 
 
 
