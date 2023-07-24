@@ -1,10 +1,10 @@
-FROM node
+FROM node:16.17.0
 
 COPY . /app
 WORKDIR /app
-RUN npm install
+RUN npm run install
 
-EXPOSE 3333
+EXPOSE 8888
 CMD npm run start
 
 # 参数FROM表示依赖的镜像，
