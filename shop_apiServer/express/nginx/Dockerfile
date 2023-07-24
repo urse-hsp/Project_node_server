@@ -4,7 +4,7 @@ COPY . /app
 WORKDIR /app
 RUN npm run install
 
-EXPOSE 8888
+EXPOSE 3333
 CMD npm run start
 
 # 参数FROM表示依赖的镜像，
