@@ -1,4 +1,0 @@
-下载phpStudy  导入数据库，密码是root
-
-vue-cli3  可视化面板无敌
-
