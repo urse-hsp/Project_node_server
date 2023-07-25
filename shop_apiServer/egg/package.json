@@ -7,7 +7,8 @@
     "typescript": true
   },
   "scripts": {
-    "start": "egg-scripts start  --port=8080  --sticky --title=egg-server-cloud-alarm.js",
+    "start2": "egg-scripts start --port=8080 --sticky --title=egg-server-cloud-alarm.js",
+    "start": " npm run tsc && egg-scripts start --title=egg-server-showcase",
     "stop": "egg-scripts stop --title=egg-server-showcase",
     "dev": "egg-bin dev",
     "test-local": "egg-bin tsport-http-beaest -p",
