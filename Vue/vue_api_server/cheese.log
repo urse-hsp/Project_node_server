@@ -512,3 +512,7 @@
 [2023-07-20T15:21:09.623] [DEBUG] cheese - admin
 [2023-07-20T15:21:09.635] [DEBUG] cheese - null
 [2023-07-20T15:21:09.636] [DEBUG] cheese - null
+[2023-07-25T09:55:06.893] [DEBUG] cheese - login => username:admin,password:123456
+[2023-07-25T09:55:06.894] [DEBUG] cheese - admin
+[2023-07-25T09:55:06.917] [DEBUG] cheese - null
+[2023-07-25T09:55:06.917] [DEBUG] cheese - null

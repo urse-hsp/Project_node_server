@@ -11,9 +11,9 @@
   "mysql": {
     "host": "47.96.118.55",
     "user": "root",
-    "password": "12345",
-    "port": "3306",
-    "database": "farms",
+    "password": "123456",
+    "port": 3306,
+    "database": "shop",
     "connectTimeout": 5000,
     "multipleStatements": false
   }
