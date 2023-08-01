@@ -13,7 +13,7 @@
     "user": "root",
     "password": "123456",
     "port": 3306,
-    "database": "shop",
+    "database": "mysql",
     "connectTimeout": 5000,
     "multipleStatements": false
   }
