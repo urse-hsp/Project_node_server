@@ -4,10 +4,8 @@ COPY . /app
 WORKDIR /app
 RUN npm install
 
-ENV HOST=""
-
 EXPOSE 80
-CMD npm start $HOST
+CMD npm start
 
 # 参数FROM表示依赖的镜像，
 # COPY表示将宿主机的文件拷贝到容器中，
