@@ -1,45 +1,47 @@
-import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
-import databaseres from '../database/config.json';
+import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg'
+import databaseres from '../database/config.json'
 
-const databasereslist: any = databaseres;
+const databasereslist: any = databaseres
 
 export default (appInfo: EggAppInfo) => {
-  const config = {} as PowerPartial<EggAppConfig>;
+  const config = {} as PowerPartial<EggAppConfig>
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1688979477290_8216';
+  config.keys = appInfo.name + '_1688979477290_8216'
 
   // add your egg config in here // 执行顺序 --->
-  config.middleware = [ 'auth', 'errorHandler' ];
+  config.middleware = ['auth', 'errorHandler']
 
   // 配置 resextra 中间件的配置
-  config.errorHandler = { match: '/' };
-  config.auth = { match: '/api' }; // /api接口 生效验证
+  config.errorHandler = { match: '/' }
+  config.auth = { match: '/api' } // /api接口 生效验证
 
   // 不需要验证token的路由
-  config.routerAuth = [ '/api/private/v1/login' ];
+  config.routerAuth = ['/api/private/v1/login']
 
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
-  };
+  }
 
-  config.sequelize = databasereslist.development;
-
+  config.sequelize = {
+    ...databasereslist.development,
+    host: process.env?.HOST ?? databasereslist.development.host,
+  }
   // https://github.com/eggjs/egg-security
   // 报错的原因 Egg 启动的是本地地址 http://127.0.0.1:7001 ，但是你请求的 POST 或 GET 接口是非本地计算机（别人的电脑），或者使用 Postman 发起请求，都会触发安防策略。
   config.security = {
     csrf: {
       enable: false,
     },
-    domainWhiteList: [ '*' ], // 配置白名单
-  };
+    domainWhiteList: ['*'], // 配置白名单
+  }
   config.cors = {
     origin: '*', // 允许所有的请求源
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
     credentials: true, // 允许携带跨域请求的 cookie
-  };
+  }
 
   // config.proxy = true;
 
@@ -50,13 +52,13 @@ export default (appInfo: EggAppInfo) => {
     httpOnly: true,
     encrypt: true,
     renew: true, // 每次访问都会刷新会话过期时间
-  };
+  }
 
   config.validate = {
     convert: true, // 对参数可以使用 convertType 规则进行类型转换
     // validateRoot: false,   // 限制被验证值必须是一个对象。
     // widelyUndefined: true,
-  };
+  }
   // config.multipart = {
   //   mode: 'Stream',
   // };
@@ -80,5 +82,5 @@ export default (appInfo: EggAppInfo) => {
       baseURL: 'http://127.0.0.1:7001',
       upload_path: '/public/comfiles/',
     },
-  };
-};
+  }
+}
