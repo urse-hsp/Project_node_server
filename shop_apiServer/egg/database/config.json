@@ -3,7 +3,7 @@
     "username": "root",
     "password": "123456",
     "database": "mysql",
-    "host": "47.96.118.55",
+    "host": "127.0.0.1",
     "dialect": "mysql",
     "port": 3306
   },
@@ -11,7 +11,7 @@
     "username": "root",
     "password": "123456",
     "database": "mysql",
-    "host": "47.96.118.55",
+    "host": "127.0.0.1",
     "dialect": "mysql",
     "port": 3306
   },
@@ -19,7 +19,7 @@
     "username": "root",
     "password": "123456",
     "database": "mysql",
-    "host": "47.96.118.55",
+    "host": "127.0.0.1",
     "dialect": "mysql",
     "port": 3306
   }
