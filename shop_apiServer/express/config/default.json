@@ -4,12 +4,12 @@
     "day": 1
   },
   "upload_config": {
-    "baseURL": "http://47.96.118.55:3333",
+    "baseURL": "http://127.0.0.1:3333",
     "upload_path": "/tmp_uploads",
-    "simple_upload_redirect": "http://47.96.118.55/reload"
+    "simple_upload_redirect": "http://127.0.0.1/reload"
   },
   "mysql": {
-    "host": "47.96.118.55",
+    "host": "127.0.0.1",
     "user": "root",
     "password": "123456",
     "port": 3306,
