@@ -6,15 +6,8 @@
 module.exports = app => {
   const { router, controller } = app;
 
-  // 鉴权成功后的回调页面
-  router.get('/api/private/v1/login', controller.home.authCallback);
-  // 登录校验
-  router.post(
-    '/api/private/v1/login',
-    app.passport.authenticate('local', {
-      successRedirect: '/api/private/v1/login',
-    }),
-  );
+  // 登录
+  router.post('/api/private/v1/login', controller.home.login);
 
   router.resources('users', '/api/private/v1/users', controller.users);
   router.resources('roles', '/api/private/v1/roles', controller.roles);

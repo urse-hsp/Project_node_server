@@ -23,7 +23,8 @@ const sequelize = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlCon
 const initialize = (req, res, next) => {
   try {
     sequelize.authenticate()
-    console.log('Connection has been established successfully.')
+    // console.log('Connection has been established successfully.')
+    console.log('连接数据库');
     next()
   } catch (error) {
     console.error('连接数据库失败失败 %s', err)

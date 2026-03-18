@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "123456",
-    "database": "mysql",
+    "database": "farms",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "port": 3306
@@ -10,7 +10,7 @@
   "test": {
     "username": "root",
     "password": "123456",
-    "database": "mysql",
+    "database": "farms",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "port": 3306
@@ -18,7 +18,7 @@
   "production": {
     "username": "root",
     "password": "123456",
-    "database": "mysql",
+    "database": "farms",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "port": 3306

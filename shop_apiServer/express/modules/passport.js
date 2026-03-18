@@ -31,7 +31,6 @@ module.exports.setup = function (app, callback) {
   // token 验证策略 verify校验token
   passport.use(
     new BearerStrategy(function (token, done) {
-      console.log('222', token)
       jwt.verify(token, jwt_config.secretKey, function (err, decode) {
         if (err) {
           return done('验证错误')
@@ -76,7 +75,6 @@ module.exports.login = function (req, res, next) {
  * @param  {Function} next 传递事件函数
  */
 module.exports.tokenAuth = function (req, res, next) {
-  console.log('4444')
   // 这里通过初始化的 Strategy 解析校验后 进行回调处理
   passport.authenticate('bearer', { session: false }, function (err, tokenData) {
     if (err) return res.sendResult(null, 400, '无效token')

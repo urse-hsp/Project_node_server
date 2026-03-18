@@ -19,7 +19,7 @@ class ManagerService extends Service {
     if (typeof data === 'string') {
       ctx.status = 422;
       ctx.body = {
-        error: data,
+        message: data,
       };
       return;
     }
