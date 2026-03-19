@@ -1,3 +1,3 @@
-shop_apiServer 指向后端项目
-
-demo 学习演示用途
+egg 框架demo
+expores 框架demo
+vue_api_server 网上找的后端服务项目demo
